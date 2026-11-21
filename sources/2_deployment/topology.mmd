@@ -1,0 +1,318 @@
+flowchart TB
+internet["Internet"]
+subgraph datacenter["Orvane datacenter (on-premises)"]
+  datacenter_vpn_router["VPN router"]
+  datacenter_erp["Accounting ERP"]
+  datacenter_wms["Warehouse management system"]
+  datacenter_directory["Active Directory"]
+  datacenter_data_warehouse["Data warehouse"]
+end
+subgraph cloud["Cloud provider"]
+  subgraph cloud_paris["Paris region"]
+    cloud_paris_transit_gateway["Transit gateway"]
+    cloud_paris_object_storage["Object storage"]
+    cloud_paris_message_queue["Message queue"]
+    cloud_paris_secrets_manager["Secrets manager"]
+    cloud_paris_email_service["Email service"]
+    subgraph cloud_paris_production["Production VPC"]
+      cloud_paris_production_internet_gateway["Internet gateway"]
+      cloud_paris_production_network_firewall["Network firewall"]
+      subgraph cloud_paris_production_zone_a["Zone a"]
+        subgraph cloud_paris_production_zone_a_public["Public subnet"]
+          cloud_paris_production_zone_a_public_web_firewall["Web application firewall"]
+          cloud_paris_production_zone_a_public_load_balancer["Load balancer"]
+          cloud_paris_production_zone_a_public_nat_gateway["NAT gateway"]
+        end
+        subgraph cloud_paris_production_zone_a_application["Application subnet"]
+          cloud_paris_production_zone_a_application_storefront_api["Storefront API"]
+          cloud_paris_production_zone_a_application_marketplace_api["Marketplace API"]
+          cloud_paris_production_zone_a_application_cart_service["Cart service"]
+          cloud_paris_production_zone_a_application_catalogue_service["Catalogue service"]
+          cloud_paris_production_zone_a_application_seller_portal["Seller portal"]
+          cloud_paris_production_zone_a_application_payment_service["Payment service"]
+          cloud_paris_production_zone_a_application_order_worker["Order worker"]
+          cloud_paris_production_zone_a_application_notification_worker["Notification worker"]
+          cloud_paris_production_zone_a_application_queue_endpoint["Private endpoint (message queue)"]
+          cloud_paris_production_zone_a_application_secrets_endpoint["Private endpoint (secrets manager)"]
+          cloud_paris_production_zone_a_application_email_endpoint["Private endpoint (email service)"]
+        end
+        subgraph cloud_paris_production_zone_a_data["Data subnet"]
+          cloud_paris_production_zone_a_data_postgresql_primary["PostgreSQL primary"]
+          cloud_paris_production_zone_a_data_redis_cache["Redis cache"]
+          cloud_paris_production_zone_a_data_search_node["Search node"]
+        end
+      end
+      subgraph cloud_paris_production_zone_b["Zone b"]
+        subgraph cloud_paris_production_zone_b_public["Public subnet"]
+          cloud_paris_production_zone_b_public_web_firewall["Web application firewall"]
+          cloud_paris_production_zone_b_public_load_balancer["Load balancer"]
+        end
+        subgraph cloud_paris_production_zone_b_application["Application subnet"]
+          cloud_paris_production_zone_b_application_billing_batch["Billing batch"]
+          cloud_paris_production_zone_b_application_storefront_api["Storefront API"]
+          cloud_paris_production_zone_b_application_marketplace_api["Marketplace API"]
+          cloud_paris_production_zone_b_application_cart_service["Cart service"]
+          cloud_paris_production_zone_b_application_catalogue_service["Catalogue service"]
+          cloud_paris_production_zone_b_application_order_worker["Order worker"]
+          cloud_paris_production_zone_b_application_notification_worker["Notification worker"]
+          cloud_paris_production_zone_b_application_queue_endpoint["Private endpoint (message queue)"]
+          cloud_paris_production_zone_b_application_storage_endpoint["Private endpoint (object storage)"]
+          cloud_paris_production_zone_b_application_email_endpoint["Private endpoint (email service)"]
+        end
+        subgraph cloud_paris_production_zone_b_data["Data subnet"]
+          cloud_paris_production_zone_b_data_postgresql_replica["PostgreSQL synchronous replica"]
+          cloud_paris_production_zone_b_data_redis_replica["Redis cache replica"]
+          cloud_paris_production_zone_b_data_search_node["Search node"]
+        end
+      end
+      subgraph cloud_paris_production_zone_c["Zone c"]
+        subgraph cloud_paris_production_zone_c_public["Public subnet"]
+          cloud_paris_production_zone_c_public_web_firewall["Web application firewall"]
+          cloud_paris_production_zone_c_public_load_balancer["Load balancer"]
+          cloud_paris_production_zone_c_public_nat_gateway["NAT gateway"]
+        end
+        subgraph cloud_paris_production_zone_c_application["Application subnet"]
+          cloud_paris_production_zone_c_application_storefront_api["Storefront API"]
+          cloud_paris_production_zone_c_application_marketplace_api["Marketplace API"]
+          cloud_paris_production_zone_c_application_cart_service["Cart service"]
+          cloud_paris_production_zone_c_application_catalogue_service["Catalogue service"]
+          cloud_paris_production_zone_c_application_seller_portal["Seller portal"]
+          cloud_paris_production_zone_c_application_payment_service["Payment service"]
+          cloud_paris_production_zone_c_application_storage_endpoint["Private endpoint (object storage)"]
+          cloud_paris_production_zone_c_application_secrets_endpoint["Private endpoint (secrets manager)"]
+        end
+        subgraph cloud_paris_production_zone_c_data["Data subnet"]
+          cloud_paris_production_zone_c_data_postgresql_replica["PostgreSQL read replica"]
+          cloud_paris_production_zone_c_data_redis_replica["Redis cache replica"]
+          cloud_paris_production_zone_c_data_search_node["Search node"]
+        end
+      end
+    end
+    subgraph cloud_paris_shared["Shared services VPC"]
+      cloud_paris_shared_vpn_gateway["VPN gateway"]
+      subgraph cloud_paris_shared_zone_a["Zone a"]
+        subgraph cloud_paris_shared_zone_a_application["Application subnet"]
+          cloud_paris_shared_zone_a_application_bastion["Bastion host"]
+          cloud_paris_shared_zone_a_application_backup_job["Backup job"]
+          cloud_paris_shared_zone_a_application_ci_runner["CI runner"]
+          cloud_paris_shared_zone_a_application_artifact_repository["Artifact repository"]
+          cloud_paris_shared_zone_a_application_storage_endpoint["Private endpoint (object storage)"]
+        end
+        subgraph cloud_paris_shared_zone_a_data["Data subnet"]
+          cloud_paris_shared_zone_a_data_metrics_database["Metrics database"]
+        end
+      end
+      subgraph cloud_paris_shared_zone_b["Zone b"]
+        subgraph cloud_paris_shared_zone_b_application["Application subnet"]
+          cloud_paris_shared_zone_b_application_monitoring["Monitoring"]
+          cloud_paris_shared_zone_b_application_log_collector["Log collector"]
+          cloud_paris_shared_zone_b_application_container_registry["Container registry"]
+          cloud_paris_shared_zone_b_application_alert_manager["Alert manager"]
+        end
+        subgraph cloud_paris_shared_zone_b_data["Data subnet"]
+          cloud_paris_shared_zone_b_data_log_store["Log store"]
+        end
+      end
+      subgraph cloud_paris_shared_zone_c["Zone c"]
+        subgraph cloud_paris_shared_zone_c_application["Application subnet"]
+          cloud_paris_shared_zone_c_application_directory_replica["Directory replica"]
+          cloud_paris_shared_zone_c_application_certificate_authority["Certificate authority"]
+        end
+      end
+    end
+  end
+  subgraph cloud_frankfurt["Frankfurt region"]
+    cloud_frankfurt_transit_gateway["Transit gateway"]
+    cloud_frankfurt_object_storage["Object storage"]
+    cloud_frankfurt_message_queue["Message queue (standby)"]
+    cloud_frankfurt_secrets_manager["Secrets manager (standby)"]
+    subgraph cloud_frankfurt_recovery["Disaster recovery VPC"]
+      cloud_frankfurt_recovery_internet_gateway["Internet gateway (standby)"]
+      cloud_frankfurt_recovery_network_firewall["Network firewall (standby)"]
+      cloud_frankfurt_recovery_vpn_gateway["VPN gateway (standby)"]
+      subgraph cloud_frankfurt_recovery_zone_a["Zone a"]
+        subgraph cloud_frankfurt_recovery_zone_a_public["Public subnet"]
+          cloud_frankfurt_recovery_zone_a_public_load_balancer["Load balancer (standby)"]
+          cloud_frankfurt_recovery_zone_a_public_nat_gateway["NAT gateway (standby)"]
+        end
+        subgraph cloud_frankfurt_recovery_zone_a_application["Application subnet"]
+          cloud_frankfurt_recovery_zone_a_application_storefront_api["Storefront API (standby)"]
+          cloud_frankfurt_recovery_zone_a_application_marketplace_api["Marketplace API (standby)"]
+          cloud_frankfurt_recovery_zone_a_application_cart_service["Cart service (standby)"]
+          cloud_frankfurt_recovery_zone_a_application_order_worker["Order worker (standby)"]
+        end
+        subgraph cloud_frankfurt_recovery_zone_a_data["Data subnet"]
+          cloud_frankfurt_recovery_zone_a_data_postgresql_recovery["PostgreSQL recovery replica"]
+          cloud_frankfurt_recovery_zone_a_data_redis_cache["Redis cache (standby)"]
+        end
+      end
+      subgraph cloud_frankfurt_recovery_zone_b["Zone b"]
+        subgraph cloud_frankfurt_recovery_zone_b_public["Public subnet"]
+          cloud_frankfurt_recovery_zone_b_public_load_balancer["Load balancer (standby)"]
+        end
+        subgraph cloud_frankfurt_recovery_zone_b_application["Application subnet"]
+          cloud_frankfurt_recovery_zone_b_application_storefront_api["Storefront API (standby)"]
+          cloud_frankfurt_recovery_zone_b_application_billing_batch["Billing batch (standby)"]
+          cloud_frankfurt_recovery_zone_b_application_catalogue_service["Catalogue service (standby)"]
+          cloud_frankfurt_recovery_zone_b_application_payment_service["Payment service (standby)"]
+        end
+        subgraph cloud_frankfurt_recovery_zone_b_data["Data subnet"]
+          cloud_frankfurt_recovery_zone_b_data_search_node["Search node (standby)"]
+        end
+      end
+      subgraph cloud_frankfurt_recovery_zone_c["Zone c"]
+        subgraph cloud_frankfurt_recovery_zone_c_application["Application subnet"]
+          cloud_frankfurt_recovery_zone_c_application_marketplace_api["Marketplace API (standby)"]
+          cloud_frankfurt_recovery_zone_c_application_directory_replica["Directory replica (standby)"]
+        end
+        subgraph cloud_frankfurt_recovery_zone_c_data["Data subnet"]
+          cloud_frankfurt_recovery_zone_c_data_search_node["Search node (standby)"]
+        end
+      end
+    end
+  end
+end
+internet -->|"HTTPS"| cloud_paris_production_internet_gateway
+cloud_paris_production_internet_gateway --> cloud_paris_production_zone_a_public_web_firewall
+cloud_paris_production_zone_a_public_web_firewall -->|"filtered requests"| cloud_paris_production_zone_a_public_load_balancer
+cloud_paris_production_zone_a_public_load_balancer --> cloud_paris_production_zone_a_application_storefront_api
+cloud_paris_production_zone_a_public_load_balancer --> cloud_paris_production_zone_a_application_marketplace_api
+cloud_paris_production_internet_gateway --> cloud_paris_production_zone_b_public_web_firewall
+cloud_paris_production_zone_b_public_web_firewall -->|"filtered requests"| cloud_paris_production_zone_b_public_load_balancer
+cloud_paris_production_zone_b_public_load_balancer --> cloud_paris_production_zone_b_application_storefront_api
+cloud_paris_production_zone_b_public_load_balancer --> cloud_paris_production_zone_b_application_marketplace_api
+cloud_paris_production_internet_gateway --> cloud_paris_production_zone_c_public_web_firewall
+cloud_paris_production_zone_c_public_web_firewall -->|"filtered requests"| cloud_paris_production_zone_c_public_load_balancer
+cloud_paris_production_zone_c_public_load_balancer --> cloud_paris_production_zone_c_application_storefront_api
+cloud_paris_production_zone_c_public_load_balancer --> cloud_paris_production_zone_c_application_marketplace_api
+cloud_paris_production_zone_a_public_load_balancer --> cloud_paris_production_zone_a_application_seller_portal
+cloud_paris_production_zone_c_public_load_balancer --> cloud_paris_production_zone_c_application_seller_portal
+cloud_paris_production_zone_a_public -->|"default route"| cloud_paris_production_internet_gateway
+cloud_paris_production_zone_b_public -->|"default route"| cloud_paris_production_internet_gateway
+cloud_paris_production_zone_c_public -->|"default route"| cloud_paris_production_internet_gateway
+cloud_paris_production_zone_a_application -->|"default route"| cloud_paris_production_zone_a_public_nat_gateway
+cloud_paris_production_zone_b_application -->|"default route"| cloud_paris_production_zone_a_public_nat_gateway
+cloud_paris_production_zone_c_application -->|"default route"| cloud_paris_production_zone_c_public_nat_gateway
+cloud_paris_production_zone_a_public_nat_gateway -->|"outbound traffic"| cloud_paris_production_network_firewall
+cloud_paris_production_zone_c_public_nat_gateway -->|"outbound traffic"| cloud_paris_production_network_firewall
+cloud_paris_production_network_firewall -->|"inspected outbound traffic"| cloud_paris_production_internet_gateway
+cloud_paris_production_internet_gateway -->|"outbound traffic"| internet
+cloud_paris_production_zone_a_application -->|"route to the shared services"| cloud_paris_shared
+cloud_paris_production_zone_b_application -->|"route to the shared services"| cloud_paris_shared
+cloud_paris_production_zone_c_application -->|"route to the shared services"| cloud_paris_shared
+cloud_paris_production_zone_a_public -->|"security rule: HTTPS from the load balancer"| cloud_paris_production_zone_a_application
+cloud_paris_production_zone_b_public -->|"security rule: HTTPS from the load balancer"| cloud_paris_production_zone_b_application
+cloud_paris_production_zone_c_public -->|"security rule: HTTPS from the load balancer"| cloud_paris_production_zone_c_application
+cloud_paris_production_zone_a_application -->|"security rule: PostgreSQL, Redis and search"| cloud_paris_production_zone_a_data
+cloud_paris_production_zone_a_application -->|"security rule: PostgreSQL, Redis and search"| cloud_paris_production_zone_b_data
+cloud_paris_production_zone_a_application -->|"security rule: PostgreSQL, Redis and search"| cloud_paris_production_zone_c_data
+cloud_paris_production_zone_b_application -->|"security rule: PostgreSQL, Redis and search"| cloud_paris_production_zone_a_data
+cloud_paris_production_zone_b_application -->|"security rule: PostgreSQL, Redis and search"| cloud_paris_production_zone_b_data
+cloud_paris_production_zone_b_application -->|"security rule: PostgreSQL, Redis and search"| cloud_paris_production_zone_c_data
+cloud_paris_production_zone_c_application -->|"security rule: PostgreSQL, Redis and search"| cloud_paris_production_zone_a_data
+cloud_paris_production_zone_c_application -->|"security rule: PostgreSQL, Redis and search"| cloud_paris_production_zone_b_data
+cloud_paris_production_zone_c_application -->|"security rule: PostgreSQL, Redis and search"| cloud_paris_production_zone_c_data
+cloud_paris_production_zone_a_application_storefront_api -->|"SQL"| cloud_paris_production_zone_a_data_postgresql_primary
+cloud_paris_production_zone_a_application_marketplace_api -->|"SQL"| cloud_paris_production_zone_a_data_postgresql_primary
+cloud_paris_production_zone_b_application_storefront_api -->|"SQL"| cloud_paris_production_zone_a_data_postgresql_primary
+cloud_paris_production_zone_b_application_marketplace_api -->|"SQL"| cloud_paris_production_zone_a_data_postgresql_primary
+cloud_paris_production_zone_c_application_storefront_api -->|"SQL"| cloud_paris_production_zone_a_data_postgresql_primary
+cloud_paris_production_zone_c_application_marketplace_api -->|"SQL"| cloud_paris_production_zone_a_data_postgresql_primary
+cloud_paris_production_zone_a_application_payment_service -->|"SQL"| cloud_paris_production_zone_a_data_postgresql_primary
+cloud_paris_production_zone_a_application_seller_portal -->|"SQL"| cloud_paris_production_zone_a_data_postgresql_primary
+cloud_paris_production_zone_c_application_payment_service -->|"SQL"| cloud_paris_production_zone_a_data_postgresql_primary
+cloud_paris_production_zone_c_application_seller_portal -->|"SQL"| cloud_paris_production_zone_a_data_postgresql_primary
+cloud_paris_production_zone_a_application_order_worker -->|"SQL"| cloud_paris_production_zone_a_data_postgresql_primary
+cloud_paris_production_zone_b_application_order_worker -->|"SQL"| cloud_paris_production_zone_a_data_postgresql_primary
+cloud_paris_production_zone_b_application_billing_batch -->|"reads"| cloud_paris_production_zone_b_data_postgresql_replica
+cloud_paris_production_zone_a_application_catalogue_service -->|"SQL"| cloud_paris_production_zone_a_data_postgresql_primary
+cloud_paris_production_zone_b_application_catalogue_service -->|"reads"| cloud_paris_production_zone_b_data_postgresql_replica
+cloud_paris_production_zone_c_application_catalogue_service -->|"reads"| cloud_paris_production_zone_c_data_postgresql_replica
+cloud_paris_production_zone_a_application_storefront_api -->|"sessions"| cloud_paris_production_zone_a_data_redis_cache
+cloud_paris_production_zone_a_application_storefront_api -->|"cart calls"| cloud_paris_production_zone_a_application_cart_service
+cloud_paris_production_zone_a_application_storefront_api -->|"catalogue calls"| cloud_paris_production_zone_a_application_catalogue_service
+cloud_paris_production_zone_a_application_marketplace_api -->|"listings"| cloud_paris_production_zone_a_application_catalogue_service
+cloud_paris_production_zone_a_application_cart_service -->|"carts"| cloud_paris_production_zone_a_data_redis_cache
+cloud_paris_production_zone_a_application_catalogue_service -->|"catalogue search"| cloud_paris_production_zone_a_data_search_node
+cloud_paris_production_zone_b_application_storefront_api -->|"sessions"| cloud_paris_production_zone_b_data_redis_replica
+cloud_paris_production_zone_b_application_storefront_api -->|"cart calls"| cloud_paris_production_zone_b_application_cart_service
+cloud_paris_production_zone_b_application_storefront_api -->|"catalogue calls"| cloud_paris_production_zone_b_application_catalogue_service
+cloud_paris_production_zone_b_application_marketplace_api -->|"listings"| cloud_paris_production_zone_b_application_catalogue_service
+cloud_paris_production_zone_b_application_cart_service -->|"carts"| cloud_paris_production_zone_b_data_redis_replica
+cloud_paris_production_zone_b_application_catalogue_service -->|"catalogue search"| cloud_paris_production_zone_b_data_search_node
+cloud_paris_production_zone_c_application_storefront_api -->|"sessions"| cloud_paris_production_zone_c_data_redis_replica
+cloud_paris_production_zone_c_application_storefront_api -->|"cart calls"| cloud_paris_production_zone_c_application_cart_service
+cloud_paris_production_zone_c_application_storefront_api -->|"catalogue calls"| cloud_paris_production_zone_c_application_catalogue_service
+cloud_paris_production_zone_c_application_marketplace_api -->|"listings"| cloud_paris_production_zone_c_application_catalogue_service
+cloud_paris_production_zone_c_application_cart_service -->|"carts"| cloud_paris_production_zone_c_data_redis_replica
+cloud_paris_production_zone_c_application_catalogue_service -->|"catalogue search"| cloud_paris_production_zone_c_data_search_node
+cloud_paris_production_zone_a_data_postgresql_primary -->|"synchronous replication"| cloud_paris_production_zone_b_data_postgresql_replica
+cloud_paris_production_zone_a_data_postgresql_primary -->|"asynchronous replication"| cloud_paris_production_zone_c_data_postgresql_replica
+cloud_paris_production_zone_a_data_redis_cache -->|"cache replication"| cloud_paris_production_zone_b_data_redis_replica
+cloud_paris_production_zone_a_data_redis_cache -->|"cache replication"| cloud_paris_production_zone_c_data_redis_replica
+cloud_paris_production_zone_a_data_search_node <-->|"index replication"| cloud_paris_production_zone_b_data_search_node
+cloud_paris_production_zone_b_data_search_node <-->|"index replication"| cloud_paris_production_zone_c_data_search_node
+cloud_paris_production_zone_a_application_storefront_api -->|"validated orders"| cloud_paris_production_zone_a_application_queue_endpoint
+cloud_paris_production_zone_a_application_order_worker -->|"orders to process"| cloud_paris_production_zone_a_application_queue_endpoint
+cloud_paris_production_zone_a_application_queue_endpoint --> cloud_paris_message_queue
+cloud_paris_production_zone_a_application_notification_worker -->|"notifications to send"| cloud_paris_production_zone_a_application_queue_endpoint
+cloud_paris_production_zone_a_application_notification_worker -->|"emails"| cloud_paris_production_zone_a_application_email_endpoint
+cloud_paris_production_zone_a_application_email_endpoint --> cloud_paris_email_service
+cloud_paris_production_zone_b_application_storefront_api -->|"validated orders"| cloud_paris_production_zone_b_application_queue_endpoint
+cloud_paris_production_zone_b_application_order_worker -->|"orders to process"| cloud_paris_production_zone_b_application_queue_endpoint
+cloud_paris_production_zone_b_application_queue_endpoint --> cloud_paris_message_queue
+cloud_paris_production_zone_b_application_notification_worker -->|"notifications to send"| cloud_paris_production_zone_b_application_queue_endpoint
+cloud_paris_production_zone_b_application_notification_worker -->|"emails"| cloud_paris_production_zone_b_application_email_endpoint
+cloud_paris_production_zone_b_application_email_endpoint --> cloud_paris_email_service
+cloud_paris_production_zone_b_application_billing_batch -->|"orders to invoice"| cloud_paris_production_zone_b_application_queue_endpoint
+cloud_paris_production_zone_b_application_billing_batch -->|"invoice files"| cloud_paris_production_zone_b_application_storage_endpoint
+cloud_paris_production_zone_c_application_marketplace_api -->|"catalogue images"| cloud_paris_production_zone_c_application_storage_endpoint
+cloud_paris_production_zone_b_application_storage_endpoint --> cloud_paris_object_storage
+cloud_paris_production_zone_c_application_storage_endpoint --> cloud_paris_object_storage
+cloud_paris_production_zone_a_application_payment_service -->|"payment keys"| cloud_paris_production_zone_a_application_secrets_endpoint
+cloud_paris_production_zone_a_application_secrets_endpoint --> cloud_paris_secrets_manager
+cloud_paris_production_zone_c_application_payment_service -->|"payment keys"| cloud_paris_production_zone_c_application_secrets_endpoint
+cloud_paris_production_zone_c_application_secrets_endpoint --> cloud_paris_secrets_manager
+cloud_paris_production <-->|"peering"| cloud_paris_shared
+cloud_paris_shared_vpn_gateway <-->|"VPN tunnel"| datacenter_vpn_router
+datacenter_vpn_router --> datacenter_erp
+datacenter_vpn_router --> datacenter_wms
+datacenter_vpn_router --> datacenter_directory
+datacenter_directory -->|"directory replication"| cloud_paris_shared_zone_c_application_directory_replica
+cloud_frankfurt_recovery_vpn_gateway <-->|"VPN tunnel (standby)"| datacenter_vpn_router
+datacenter_directory -->|"directory replication"| cloud_frankfurt_recovery_zone_c_application_directory_replica
+cloud_paris_shared_zone_a_application_bastion -->|"SSH through the peering"| cloud_paris_production
+cloud_paris_shared_zone_b_application_monitoring -->|"metrics collection through the peering"| cloud_paris_production
+cloud_paris_shared_zone_b_application_monitoring -->|"metrics"| cloud_paris_shared_zone_a_data_metrics_database
+cloud_paris_production -->|"application logs"| cloud_paris_shared_zone_b_application_log_collector
+cloud_paris_shared_zone_b_application_log_collector -->|"logs"| cloud_paris_shared_zone_b_data_log_store
+cloud_paris_shared_zone_a_application_ci_runner -->|"image builds"| cloud_paris_shared_zone_b_application_container_registry
+cloud_paris_shared_zone_a_application_ci_runner -->|"build artefacts"| cloud_paris_shared_zone_a_application_artifact_repository
+cloud_paris_shared_zone_b_application_monitoring -->|"alerts"| cloud_paris_shared_zone_b_application_alert_manager
+cloud_paris_production_zone_c_data_postgresql_replica -->|"nightly export"| datacenter_data_warehouse
+cloud_paris_shared_zone_a_application_backup_job -->|"nightly dump"| cloud_paris_production_zone_c_data_postgresql_replica
+cloud_paris_shared_zone_a_application_backup_job -->|"backups"| cloud_paris_shared_zone_a_application_storage_endpoint
+cloud_paris_production_zone_a_data_postgresql_primary -->|"asynchronous replication"| cloud_paris_transit_gateway
+cloud_paris_transit_gateway -->|"inter-region link"| cloud_frankfurt_transit_gateway
+cloud_frankfurt_transit_gateway -->|"asynchronous replication"| cloud_frankfurt_recovery_zone_a_data_postgresql_recovery
+cloud_paris_object_storage -->|"replication managed by the service"| cloud_frankfurt_object_storage
+cloud_paris_shared_zone_a_application_storage_endpoint -->|"backup writes"| cloud_frankfurt_object_storage
+internet -->|"HTTPS after a failover"| cloud_frankfurt_recovery_internet_gateway
+cloud_frankfurt_recovery_internet_gateway --> cloud_frankfurt_recovery_zone_a_public_load_balancer
+cloud_frankfurt_recovery_zone_a_public_load_balancer --> cloud_frankfurt_recovery_zone_a_application_storefront_api
+cloud_frankfurt_recovery_zone_a_public -->|"default route"| cloud_frankfurt_recovery_internet_gateway
+cloud_frankfurt_recovery_internet_gateway --> cloud_frankfurt_recovery_zone_b_public_load_balancer
+cloud_frankfurt_recovery_zone_b_public_load_balancer --> cloud_frankfurt_recovery_zone_b_application_storefront_api
+cloud_frankfurt_recovery_zone_b_public -->|"default route"| cloud_frankfurt_recovery_internet_gateway
+cloud_frankfurt_recovery_zone_a_public_load_balancer --> cloud_frankfurt_recovery_zone_a_application_marketplace_api
+cloud_frankfurt_recovery_zone_a_application -->|"default route"| cloud_frankfurt_recovery_zone_a_public_nat_gateway
+cloud_frankfurt_recovery_zone_b_application -->|"default route"| cloud_frankfurt_recovery_zone_a_public_nat_gateway
+cloud_frankfurt_recovery_zone_c_application -->|"default route"| cloud_frankfurt_recovery_zone_a_public_nat_gateway
+cloud_frankfurt_recovery_zone_a_public_nat_gateway -->|"outbound traffic"| cloud_frankfurt_recovery_network_firewall
+cloud_frankfurt_recovery_network_firewall -->|"inspected outbound traffic"| cloud_frankfurt_recovery_internet_gateway
+cloud_frankfurt_recovery_zone_a_application_storefront_api -->|"SQL"| cloud_frankfurt_recovery_zone_a_data_postgresql_recovery
+cloud_frankfurt_recovery_zone_a_application_storefront_api -->|"sessions"| cloud_frankfurt_recovery_zone_a_data_redis_cache
+cloud_frankfurt_recovery_zone_a_application_storefront_api -->|"cart calls"| cloud_frankfurt_recovery_zone_a_application_cart_service
+cloud_frankfurt_recovery_zone_a_application_cart_service -->|"carts"| cloud_frankfurt_recovery_zone_a_data_redis_cache
+cloud_frankfurt_recovery_zone_b_application_storefront_api -->|"catalogue calls"| cloud_frankfurt_recovery_zone_b_application_catalogue_service
+cloud_frankfurt_recovery_zone_b_application_catalogue_service -->|"catalogue search"| cloud_frankfurt_recovery_zone_b_data_search_node

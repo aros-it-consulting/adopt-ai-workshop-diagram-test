@@ -1,0 +1,547 @@
+erDiagram
+    CUSTOMER_GROUP {
+        bigint id PK
+        varchar(32) code
+        varchar(120) name
+        int payment_terms_days "0 when paid at checkout"
+    }
+    CUSTOMER {
+        bigint id PK
+        bigint group_id FK
+        varchar(255) email
+        varchar(120) first_name
+        varchar(120) last_name
+        varchar(120) company_name "null for an individual"
+        varchar(32) customer_type
+        timestamp created_at
+    }
+    ADDRESS {
+        bigint id PK
+        bigint owner_id FK
+        varchar(120) recipient
+        varchar(255) street
+        varchar(32) postal_code
+        varchar(120) city
+        char(2) country_code "ISO 3166-1 alpha-2"
+    }
+    LOYALTY_ACCOUNT {
+        bigint id PK
+        bigint member_id FK
+        varchar(32) tier "bronze, silver or gold"
+        int points_balance
+        date opened_on
+    }
+    LOYALTY_TRANSACTION {
+        bigint id PK
+        bigint account_id FK
+        bigint source_order_id FK
+        int points
+        varchar(32) reason "purchase, review or expiry"
+        timestamp created_at
+    }
+    WISH_LIST {
+        bigint id PK
+        bigint owner_id FK
+        varchar(120) name
+        boolean is_public "shared by link when true"
+        timestamp created_at
+    }
+    WISH_LIST_ENTRY {
+        bigint id PK
+        bigint list_id FK
+        bigint product_id FK
+        varchar(255) note
+        timestamp added_at
+    }
+    CART {
+        bigint id PK
+        bigint shopper_id FK
+        timestamp created_at
+        timestamp updated_at "purged after 30 idle days"
+    }
+    CART_LINE {
+        bigint id PK
+        bigint cart_id FK
+        bigint sku_id FK
+        int quantity
+        timestamp added_at
+    }
+    CATEGORY {
+        bigint id PK
+        varchar(120) name
+        varchar(32) department "home or garden"
+        int position
+    }
+    BRAND {
+        bigint id PK
+        varchar(120) name
+        char(2) country_code "ISO 3166-1 alpha-2"
+    }
+    TAX_CLASS {
+        bigint id PK
+        varchar(32) code "standard, reduced or zero"
+        varchar(120) label
+    }
+    TAX_RATE {
+        bigint id PK
+        bigint class_id FK
+        char(2) country_code
+        decimal(5,4) rate "0.2000 for 20 percent"
+        date valid_from
+        date valid_to
+    }
+    ITEM {
+        bigint id PK
+        bigint category_id FK
+        bigint brand_id FK
+        bigint tax_class_id FK
+        varchar(120) reference "internal catalogue code"
+        varchar(120) name
+        text description
+        date launched_on
+    }
+    VARIANT {
+        bigint id PK
+        bigint product_id FK
+        varchar(32) ean_code "13 digits, unique"
+        varchar(32) colour
+        varchar(32) size_label
+        int weight_grams
+        boolean is_active
+    }
+    PRODUCT_IMAGE {
+        bigint id PK
+        bigint product_id FK
+        varchar(255) url
+        varchar(255) alt_text
+        int position "1 is the main picture"
+    }
+    PRODUCT_DOCUMENT {
+        bigint id PK
+        bigint product_id FK
+        varchar(32) document_type "manual, warranty or safety sheet"
+        varchar(255) url
+        char(2) language_code
+    }
+    PRODUCT_REVIEW {
+        bigint id PK
+        bigint author_id FK
+        bigint product_id FK
+        int rating "from 1 to 5"
+        text comment
+        date published_on
+    }
+    CROSS_SELL {
+        bigint id PK
+        bigint source_id FK
+        bigint suggested_id FK
+        int position
+        varchar(32) reason "accessory, spare part or alternative"
+    }
+    BUNDLE_COMPONENT {
+        bigint id PK
+        bigint bundle_id FK
+        bigint component_id FK
+        int quantity "units per bundle"
+    }
+    CURRENCY {
+        bigint id PK
+        char(3) iso_code "ISO 4217"
+        varchar(32) symbol
+        int decimals
+    }
+    PRICE_LIST {
+        bigint id PK
+        bigint currency_id FK
+        bigint group_id FK
+        varchar(120) name
+        date valid_from
+        date valid_to "null while in force"
+    }
+    PRICE {
+        bigint id PK
+        bigint price_list_id FK
+        bigint sku_id FK
+        decimal(12,2) net_amount
+        int min_quantity "threshold of the price tier"
+    }
+    PROMOTION {
+        bigint id PK
+        varchar(32) code
+        varchar(120) label
+        decimal(5,4) discount_rate "0.1500 for 15 percent"
+        date starts_on
+        date ends_on
+    }
+    PROMOTION_SCOPE {
+        bigint id PK
+        bigint promotion_id FK
+        bigint product_id FK
+        bigint sku_id FK
+        date added_on
+    }
+    COUPON {
+        bigint id PK
+        bigint promotion_id FK
+        varchar(32) code
+        int max_uses "null when unlimited"
+        date expires_on
+    }
+    SALES_CHANNEL {
+        bigint id PK
+        varchar(32) code
+        varchar(120) name
+    }
+    ORDER {
+        bigint id PK
+        bigint buyer_id FK
+        bigint cart_id FK
+        bigint ship_to_id FK
+        bigint bill_to_id FK
+        bigint preferred_site_id FK
+        bigint channel_id FK
+        bigint currency_id FK
+        bigint coupon_id FK
+        varchar(32) order_number
+        varchar(32) status "placed, paid, shipped or closed"
+        timestamp placed_at
+        decimal(12,2) total_amount
+    }
+    ORDER_LINE {
+        bigint id PK
+        bigint order_id FK
+        bigint sku_id FK
+        bigint offer_id FK
+        bigint tax_rate_id FK
+        bigint promotion_id FK
+        int quantity
+        decimal(12,2) unit_price
+        varchar(120) product_label "name shown at purchase"
+    }
+    PAYMENT_METHOD {
+        bigint id PK
+        varchar(32) code
+        varchar(120) label
+        varchar(120) provider "payment service provider"
+    }
+    GIFT_CARD {
+        bigint id PK
+        bigint holder_id FK
+        varchar(32) code
+        decimal(12,2) initial_amount
+        decimal(12,2) balance "amount left to spend"
+        date expires_on
+    }
+    PAYMENT {
+        bigint id PK
+        bigint order_id FK
+        bigint method_id FK
+        bigint gift_card_id FK
+        decimal(12,2) amount
+        varchar(32) status "authorised, captured or failed"
+        timestamp paid_at
+    }
+    INVOICE {
+        bigint id PK
+        bigint order_id FK
+        varchar(32) invoice_number "sequential, never reused"
+        date issued_on
+        decimal(12,2) net_amount
+        decimal(12,2) tax_amount
+    }
+    INVOICE_LINE {
+        bigint id PK
+        bigint invoice_id FK
+        bigint order_line_id FK
+        bigint tax_rate_id FK
+        int quantity
+        decimal(12,2) net_amount "excluding tax"
+    }
+    CREDIT_NOTE {
+        bigint id PK
+        bigint invoice_id FK
+        varchar(32) credit_number
+        varchar(32) reason "return, price error or goodwill"
+        decimal(12,2) amount
+        date issued_on
+    }
+    REFUND {
+        bigint id PK
+        bigint payment_id FK
+        bigint return_id FK
+        bigint credit_note_id FK
+        decimal(12,2) amount
+        varchar(32) status "pending, sent or rejected"
+        timestamp refunded_at
+    }
+    CARRIER {
+        bigint id PK
+        varchar(120) name
+        varchar(255) tracking_url "pattern with the tracking number"
+    }
+    CARRIER_SERVICE {
+        bigint id PK
+        bigint carrier_id FK
+        varchar(32) code
+        varchar(120) label
+        int max_weight_grams
+        int lead_time_days "working days"
+    }
+    SHIPMENT {
+        bigint id PK
+        bigint order_id FK
+        bigint ship_from_id FK
+        bigint service_id FK
+        varchar(32) status "prepared, handed over or delivered"
+        timestamp shipped_at
+    }
+    PARCEL {
+        bigint id PK
+        bigint shipment_id FK
+        varchar(32) tracking_number
+        int weight_grams "measured at packing"
+        date delivered_on
+    }
+    PARCEL_LINE {
+        bigint id PK
+        bigint parcel_id FK
+        bigint order_line_id FK
+        int quantity
+    }
+    TRACKING_EVENT {
+        bigint id PK
+        bigint parcel_id FK
+        varchar(32) status "code sent by the carrier"
+        varchar(32) location
+        timestamp occurred_at
+    }
+    WAREHOUSE {
+        bigint id PK
+        varchar(32) code "three letters"
+        varchar(120) name
+        varchar(120) city
+        char(2) country_code
+    }
+    STOCK_LOCATION {
+        bigint id PK
+        bigint site_id FK
+        varchar(32) aisle
+        varchar(32) shelf
+        varchar(32) bin
+    }
+    STOCK_LEVEL {
+        bigint id PK
+        bigint sku_id FK
+        bigint site_id FK
+        int available_quantity
+        int reserved_quantity "held for open orders"
+    }
+    STOCK_MOVEMENT {
+        bigint id PK
+        bigint sku_id FK
+        bigint location_id FK
+        varchar(32) movement_type "receipt, pick, return or adjustment"
+        int quantity
+        timestamp moved_at
+    }
+    STOCK_TRANSFER {
+        bigint id PK
+        bigint sku_id FK
+        bigint origin_site_id FK
+        bigint destination_site_id FK
+        int quantity
+        varchar(32) status "requested, in transit or received"
+        date requested_on
+    }
+    PICK_LIST {
+        bigint id PK
+        bigint shipment_id FK
+        varchar(32) status "open, in progress or done"
+        timestamp started_at
+        timestamp completed_at
+    }
+    PICK_LINE {
+        bigint id PK
+        bigint pick_list_id FK
+        bigint order_line_id FK
+        bigint location_id FK
+        int quantity
+    }
+    RETURN_REASON {
+        bigint id PK
+        varchar(32) code "chosen by the customer"
+        varchar(120) label
+        boolean is_refundable
+    }
+    RETURN {
+        bigint id PK
+        bigint order_id FK
+        bigint receiving_site_id FK
+        varchar(32) return_number "printed on the return label"
+        varchar(32) status
+        date requested_on
+        date received_on
+    }
+    RETURN_LINE {
+        bigint id PK
+        bigint return_id FK
+        bigint source_line_id FK
+        bigint reason_id FK
+        int quantity
+        varchar(32) condition "new, opened or damaged"
+    }
+    SELLER {
+        bigint id PK
+        varchar(120) legal_name
+        varchar(32) vat_number "intra-community number"
+        char(2) country_code
+        date joined_on
+    }
+    OFFER {
+        bigint id PK
+        bigint seller_id FK
+        bigint sku_id FK
+        decimal(12,2) price
+        int handling_days "working days before shipping"
+        boolean is_active
+    }
+    SELLER_PAYOUT {
+        bigint id PK
+        bigint seller_id FK
+        date period_start
+        date period_end
+        decimal(12,2) amount "net of commissions"
+        date paid_on
+    }
+    COMMISSION {
+        bigint id PK
+        bigint seller_id FK
+        bigint order_line_id FK
+        bigint payout_id FK
+        decimal(5,4) rate "0.1200 for 12 percent"
+        decimal(12,2) amount
+    }
+    SUPPLIER {
+        bigint id PK
+        varchar(120) legal_name
+        char(2) country_code
+        int lead_time_days "working days"
+    }
+    SUPPLIER_REFERENCE {
+        bigint id PK
+        bigint supplier_id FK
+        bigint product_id FK
+        varchar(32) supplier_code "reference used by the supplier"
+        decimal(12,2) purchase_price
+    }
+    PURCHASE_ORDER {
+        bigint id PK
+        bigint supplier_id FK
+        bigint delivery_site_id FK
+        varchar(32) po_number
+        varchar(32) status "draft, sent or received"
+        date ordered_on
+        date expected_on
+    }
+    PURCHASE_ORDER_LINE {
+        bigint id PK
+        bigint purchase_order_id FK
+        bigint sku_id FK
+        int quantity
+        decimal(12,2) unit_cost "excluding tax"
+    }
+
+    CUSTOMER_GROUP ||--o{ CUSTOMER : "classifies"
+    CUSTOMER ||--o{ ADDRESS : "owns"
+    CUSTOMER ||--o| LOYALTY_ACCOUNT : "joins"
+    LOYALTY_ACCOUNT ||--o{ LOYALTY_TRANSACTION : "records"
+    ORDER |o--o{ LOYALTY_TRANSACTION : "earns"
+    CUSTOMER ||--o{ WISH_LIST : "keeps"
+    WISH_LIST ||--o{ WISH_LIST_ENTRY : "gathers"
+    ITEM ||--o{ WISH_LIST_ENTRY : "is wished in"
+    CUSTOMER ||--o{ CART : "fills"
+    CART ||--o{ CART_LINE : "holds"
+    VARIANT ||--o{ CART_LINE : "is added to"
+    TAX_CLASS ||--|{ TAX_RATE : "is priced at"
+    CATEGORY ||--o{ ITEM : "groups"
+    BRAND ||--o{ ITEM : "markets"
+    TAX_CLASS ||--o{ ITEM : "taxes"
+    ITEM ||--|{ VARIANT : "comes in"
+    PRODUCT_IMAGE }o--|| VARIANT : "shows"
+    PRODUCT_DOCUMENT }o--|| ITEM : "describes"
+    CUSTOMER ||--o{ PRODUCT_REVIEW : "writes"
+    ITEM ||--o{ PRODUCT_REVIEW : "is rated by"
+    ITEM ||--o{ CROSS_SELL : "suggests"
+    ITEM ||--o{ CROSS_SELL : "is suggested by"
+    VARIANT ||--o{ BUNDLE_COMPONENT : "is made of"
+    VARIANT ||--o{ BUNDLE_COMPONENT : "is part of"
+    CURRENCY ||--o{ PRICE_LIST : "denominates"
+    CUSTOMER_GROUP |o--o{ PRICE_LIST : "is granted"
+    PRICE_LIST ||--o{ PRICE : "sets"
+    PRICE }|--|| VARIANT : "applies to"
+    PROMOTION ||--|{ PROMOTION_SCOPE : "targets"
+    ITEM |o--o{ PROMOTION_SCOPE : "is covered by"
+    VARIANT |o--o{ PROMOTION_SCOPE : "is discounted by"
+    PROMOTION ||--o{ COUPON : "is unlocked by"
+    CUSTOMER ||--o{ ORDER : "places"
+    CART ||--o| ORDER : "becomes"
+    ADDRESS ||--o{ ORDER : "receives"
+    ADDRESS ||--o{ ORDER : "is billed for"
+    ORDER }o--o| WAREHOUSE : "prefers"
+    SALES_CHANNEL ||--o{ ORDER : "takes"
+    CURRENCY ||--o{ ORDER : "prices"
+    COUPON |o--o{ ORDER : "is redeemed on"
+    ORDER ||--|{ ORDER_LINE : "includes"
+    VARIANT ||--o{ ORDER_LINE : "is ordered in"
+    OFFER |o--o{ ORDER_LINE : "is chosen for"
+    TAX_RATE ||--o{ ORDER_LINE : "is charged on"
+    PROMOTION |o--o{ ORDER_LINE : "reduces"
+    CUSTOMER |o--o{ GIFT_CARD : "is offered"
+    ORDER ||--|{ PAYMENT : "is paid by"
+    PAYMENT_METHOD ||--o{ PAYMENT : "carries"
+    GIFT_CARD |o--o{ PAYMENT : "funds"
+    ORDER ||--o{ INVOICE : "is invoiced by"
+    INVOICE ||--|{ INVOICE_LINE : "lists"
+    ORDER_LINE ||--o{ INVOICE_LINE : "is invoiced in"
+    TAX_RATE ||--o{ INVOICE_LINE : "is applied to"
+    CREDIT_NOTE }o--|| INVOICE : "corrects"
+    PAYMENT ||--o{ REFUND : "is refunded by"
+    REFUND }o--o| RETURN : "follows"
+    CREDIT_NOTE |o--o{ REFUND : "justifies"
+    CARRIER ||--|{ CARRIER_SERVICE : "operates"
+    ORDER ||--o{ SHIPMENT : "is delivered by"
+    SHIPMENT }o--|| WAREHOUSE : "ships from"
+    CARRIER_SERVICE ||--o{ SHIPMENT : "transports"
+    SHIPMENT ||--|{ PARCEL : "is split into"
+    PARCEL ||--|{ PARCEL_LINE : "contains"
+    ORDER_LINE ||--|{ PARCEL_LINE : "ships in"
+    PARCEL ||--o{ TRACKING_EVENT : "is traced by"
+    WAREHOUSE ||--|{ STOCK_LOCATION : "is divided into"
+    VARIANT ||--o{ STOCK_LEVEL : "is counted in"
+    WAREHOUSE ||--o{ STOCK_LEVEL : "stores"
+    VARIANT ||--o{ STOCK_MOVEMENT : "is moved by"
+    STOCK_LOCATION ||--o{ STOCK_MOVEMENT : "logs"
+    VARIANT ||--o{ STOCK_TRANSFER : "is transferred by"
+    STOCK_TRANSFER }o--|| WAREHOUSE : "is sent by"
+    STOCK_TRANSFER }o--|| WAREHOUSE : "is sent to"
+    SHIPMENT ||--o{ PICK_LIST : "is prepared by"
+    PICK_LIST ||--|{ PICK_LINE : "details"
+    ORDER_LINE ||--o{ PICK_LINE : "is picked by"
+    STOCK_LOCATION ||--o{ PICK_LINE : "supplies"
+    ORDER ||--o{ RETURN : "is subject to"
+    RETURN }o--o| WAREHOUSE : "is received at"
+    RETURN ||--|{ RETURN_LINE : "consists of"
+    PARCEL_LINE ||--o{ RETURN_LINE : "is sent back by"
+    RETURN_REASON ||--o{ RETURN_LINE : "explains"
+    SELLER ||--o{ OFFER : "publishes"
+    VARIANT ||--o{ OFFER : "is offered in"
+    SELLER ||--o{ SELLER_PAYOUT : "is paid through"
+    SELLER ||--o{ COMMISSION : "owes"
+    ORDER_LINE ||--o| COMMISSION : "generates"
+    SELLER_PAYOUT |o--o{ COMMISSION : "deducts"
+    SUPPLIER ||--o{ SUPPLIER_REFERENCE : "catalogues"
+    ITEM ||--o{ SUPPLIER_REFERENCE : "is sourced as"
+    SUPPLIER ||--o{ PURCHASE_ORDER : "fulfils"
+    PURCHASE_ORDER }o--|| WAREHOUSE : "is delivered to"
+    PURCHASE_ORDER ||--|{ PURCHASE_ORDER_LINE : "orders"
+    VARIANT ||--o{ PURCHASE_ORDER_LINE : "is restocked by"

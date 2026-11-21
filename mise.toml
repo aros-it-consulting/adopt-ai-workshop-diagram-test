@@ -1,0 +1,19 @@
+# Tooling of the build (build/). Run `mise install` once; see README.md.
+
+[tools]
+python = "3.14"
+uv = "0.12"
+# Mermaid's CLI renders the diagrams' Mermaid, on the headless Chrome below; pandoc builds
+# the specification's HTML and Word files.
+node = "24.22.3"
+"npm:@mermaid-js/mermaid-cli" = "12.2.0"
+pandoc = "3.14"
+
+# Chrome for Testing, headless build: draws the diagrams for Mermaid's CLI and screenshots them as PNG.
+# Versions: https://googlechromelabs.github.io/chrome-for-testing/
+[tools."http:chrome-headless-shell"]
+version = "152.0.7977.75"
+url = "https://storage.googleapis.com/chrome-for-testing-public/{{ version }}/linux64/chrome-headless-shell-linux64.zip"
+bin_path = "chrome-headless-shell-linux64"
+version_list_url = "https://googlechromelabs.github.io/chrome-for-testing/last-known-good-versions.json"
+version_json_path = ".channels.Stable.version"

@@ -1,0 +1,106 @@
+{
+  "type": "object",
+  "properties": {
+    "1": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "component": {
+            "type": "string"
+          },
+          "zone": {
+            "$ref": "#/$defs/zone"
+          }
+        },
+        "required": [
+          "component",
+          "zone"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "2": {
+      "type": "object",
+      "properties": {
+        "stop": {
+          "$ref": "#/$defs/subnets"
+        },
+        "lose_internet": {
+          "$ref": "#/$defs/subnets"
+        }
+      },
+      "required": [
+        "stop",
+        "lose_internet"
+      ],
+      "additionalProperties": false
+    },
+    "3": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "4": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "component": {
+            "type": "string"
+          },
+          "zone": {
+            "$ref": "#/$defs/zone"
+          }
+        },
+        "required": [
+          "component",
+          "zone"
+        ],
+        "additionalProperties": false
+      }
+    }
+  },
+  "required": [
+    "1",
+    "2",
+    "3",
+    "4"
+  ],
+  "additionalProperties": false,
+  "$defs": {
+    "zone": {
+      "type": "string",
+      "enum": [
+        "a",
+        "b",
+        "c",
+        "none"
+      ]
+    },
+    "subnets": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "vpc": {
+            "type": "string"
+          },
+          "zone": {
+            "$ref": "#/$defs/zone"
+          },
+          "subnet": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "vpc",
+          "zone",
+          "subnet"
+        ],
+        "additionalProperties": false
+      }
+    }
+  }
+}

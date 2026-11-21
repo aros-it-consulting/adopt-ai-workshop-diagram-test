@@ -1,0 +1,1088 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="fr" xml:lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc 3.14" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Spécification fonctionnelle — Retours et remboursements</title>
+  <style>
+
+span.smallcaps{font-variant: small-caps;}
+em, em em em, em em em em em {
+font-style: italic;
+}
+em em, em em em em {
+font-style: normal;
+}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+
+ul.task-list[class]{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+font-size: inherit;
+width: 0.8em;
+margin: 0 0.8em 0.2em -1.6em;
+vertical-align: middle;
+}
+@media print {
+html {
+color-scheme: light only;
+}
+html, body, pre, code {
+background-color: transparent;
+}
+body, a, a:visited, blockquote {
+color: black;
+}
+pre, code {
+padding: 0;
+}
+p, h2, h3 {
+orphans: 3;
+widows: 3;
+}
+h2, h3, h4 {
+page-break-after: avoid;
+}
+} </style>
+  <style type="text/css">
+:root {
+--ink: #1f2a30;
+--muted: #5d6b73;
+--accent: #1d5c4d;
+--accent-tint: #eef4f1;
+--rule: #d3dbd8;
+--page: #ffffff;
+--text-width: 52rem;
+}
+html {
+background: var(--page);
+color: var(--ink);
+font-family: "Segoe UI", system-ui, -apple-system, "Helvetica Neue", Arial, sans-serif;
+font-size: 16px;
+line-height: 1.55;
+}
+body {
+max-width: var(--text-width);
+margin: 0 auto;
+padding: 3rem 1.5rem 4rem;
+}
+a {
+color: var(--accent);
+}
+
+h1,
+h2 {
+line-height: 1.3;
+break-after: avoid;
+}
+h1 {
+margin: 2.75rem 0 1rem;
+padding-bottom: 0.3rem;
+border-bottom: 1px solid var(--rule);
+font-size: 1.4rem;
+}
+h2 {
+margin: 1.75rem 0 0.6rem;
+font-size: 1.1rem;
+color: var(--accent);
+}
+
+#title-block-header {
+border-bottom: 3px solid var(--accent);
+padding-bottom: 1rem;
+}
+h1.title {
+margin: 0;
+padding: 0;
+border: 0;
+font-size: 2rem;
+line-height: 1.2;
+color: var(--accent);
+}
+#title-block-header + p {
+margin: 1.25rem 0 2.5rem;
+padding: 0.75rem 1rem;
+background: var(--accent-tint);
+color: var(--muted);
+font-size: 0.9rem;
+}
+p,
+ul,
+ol {
+margin: 0 0 0.9rem;
+}
+li {
+margin-bottom: 0.25rem;
+}
+table {
+width: 100%;
+margin: 1.1rem 0 1.5rem;
+border-collapse: collapse;
+font-size: 0.875rem;
+line-height: 1.45;
+}
+th,
+td {
+padding: 0.45rem 0.65rem;
+border-bottom: 1px solid var(--rule);
+text-align: left;
+vertical-align: top;
+}
+th {
+background: var(--accent-tint);
+border-bottom: 2px solid var(--accent);
+color: var(--accent);
+font-weight: 600;
+}
+tr {
+break-inside: avoid;
+}
+.footnote-ref {
+padding: 0 0.1em;
+font-weight: 600;
+text-decoration: none;
+}
+.footnotes {
+margin-top: 3rem;
+color: var(--muted);
+font-size: 0.85rem;
+}
+.footnotes hr {
+width: 8rem;
+margin: 0 0 1rem;
+border: 0;
+border-top: 1px solid var(--muted);
+}
+.footnote-back {
+margin-left: 0.3em;
+text-decoration: none;
+}
+@page {
+size: A4;
+margin: 20mm 18mm 22mm;
+@bottom-right {
+content: counter(page) " / " counter(pages);
+color: #5d6b73;
+font-family: "Segoe UI", system-ui, sans-serif;
+font-size: 8.5pt;
+}
+}
+@media print {
+html {
+font-size: 10.5pt;
+}
+body {
+max-width: none;
+padding: 0;
+}
+
+th,
+#title-block-header + p {
+print-color-adjust: exact;
+}
+}
+</style>
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">Spécification fonctionnelle — Retours et remboursements</h1>
+</header>
+<p>Orvane, direction de l&#39;expérience client<br />
+Référence : SF-RET<br />
+Version en vigueur : 2.3 du 12 janvier 2026<br />
+Diffusion interne : service client, entrepôt, comptabilité, équipe marketplace, équipe produit</p>
+<h1 id="objet-et-périmètre">1. Objet et périmètre</h1>
+<h2 id="objet">1.1 Objet</h2>
+<p>Orvane vend sur son site des articles pour la maison et le jardin. Une partie du catalogue vient de son propre stock : c&#39;est la vente directe. L&#39;autre partie est proposée par des vendeurs partenaires, réunis sur sa marketplace.</p>
+<p>Ce document décrit ce qu&#39;il advient d&#39;un article qu&#39;un client renvoie : les conditions auxquelles Orvane ou le vendeur le reprend, le chemin que suit le colis, le calcul du montant remboursé et le délai dans lequel le client est remboursé.</p>
+<p>Le service client, l&#39;entrepôt et la comptabilité s&#39;y réfèrent pour traiter un retour. L&#39;équipe produit, chargée de l&#39;espace client et de l&#39;outil de gestion des retours, en part pour faire évoluer ces deux outils. Les conditions générales de vente publiées sur le site reprennent les engagements qu&#39;Orvane y prend envers ses clients.</p>
+<h2 id="périmètre">1.2 Périmètre</h2>
+<p>La spécification couvre les retours d&#39;articles livrés en France métropolitaine, pour les clients particuliers et les clients professionnels, en vente directe et en marketplace.</p>
+<p>Quatre sujets voisins sont traités ailleurs :</p>
+<ul>
+<li>l&#39;annulation d&#39;une commande avant son expédition, décrite dans la spécification des commandes ;</li>
+<li>l&#39;échange d&#39;un article, qu&#39;Orvane ne propose pas : le client retourne l&#39;article, puis passe une nouvelle commande ;</li>
+<li>la panne qui survient après le délai de retour, que le service après-vente prend en charge au titre de la garantie ;</li>
+<li>les commandes livrées hors de France métropolitaine, dont le service client règle les retours au cas par cas.</li>
+</ul>
+<h2 id="versions-et-avenants">1.3 Versions et avenants</h2>
+<table>
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 15%" />
+<col style="width: 73%" />
+</colgroup>
+<thead>
+<tr>
+<th>Version</th>
+<th>Date</th>
+<th>Objet de la révision</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1.0</td>
+<td>4 mars 2024</td>
+<td>Première version : retours en vente directe</td>
+</tr>
+<tr>
+<td>2.0</td>
+<td>16 juin 2025</td>
+<td>Ouverture de la marketplace : vendeurs partenaires, canal de vente, statut RECU_VENDEUR</td>
+</tr>
+<tr>
+<td>2.1</td>
+<td>15 septembre 2025</td>
+<td>Paiement en plusieurs fois (RG-10)</td>
+</tr>
+<tr>
+<td>2.2</td>
+<td>3 novembre 2025</td>
+<td>Retours de fin d&#39;année (RG-01), remboursement sans retour (RG-24)</td>
+</tr>
+<tr>
+<td>2.3</td>
+<td>12 janvier 2026</td>
+<td>Grille de décote (annexe C), contestation des refus (RG-21)</td>
+</tr>
+</tbody>
+</table>
+<p>Entre deux versions, une modification qui ne peut pas attendre fait l&#39;objet d&#39;un avenant numéroté et daté, placé à la fin du document. Le corps du texte et les tableaux ne sont pas réécrits pour autant. Seule la colonne « Statut » du tableau des règles (section 5.2) change : elle signale la règle modifiée ou abrogée et renvoie à l&#39;avenant, qui en donne la rédaction applicable. Lorsque le corps du document et un avenant se contredisent, l&#39;avenant l&#39;emporte. La version suivante reprend le contenu des avenants dans le texte, puis les supprime.</p>
+<h1 id="définitions">2. Définitions</h1>
+<table>
+<colgroup>
+<col style="width: 21%" />
+<col style="width: 78%" />
+</colgroup>
+<thead>
+<tr>
+<th>Terme</th>
+<th>Définition</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Vente directe</td>
+<td>Vente d&#39;un article du stock d&#39;Orvane, facturée par Orvane.</td>
+</tr>
+<tr>
+<td>Marketplace</td>
+<td>Partie du site où des vendeurs partenaires proposent leurs propres articles. Le vendeur facture le client ; Orvane encaisse le paiement pour son compte et lui reverse le prix, commission déduite.</td>
+</tr>
+<tr>
+<td>Canal</td>
+<td>Vente directe ou marketplace. Le canal d&#39;une ligne de commande est celui du vendeur de l&#39;article, quel que soit l&#39;entrepôt qui l&#39;expédie<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>.</td>
+</tr>
+<tr>
+<td>Vendeur partenaire</td>
+<td>Entreprise tierce qui vend sur la marketplace, sous contrat avec Orvane.</td>
+</tr>
+<tr>
+<td>Client particulier</td>
+<td>Personne qui achète pour ses besoins personnels.</td>
+</tr>
+<tr>
+<td>Client professionnel</td>
+<td>Entreprise, artisan, collectivité ou association titulaire d&#39;un compte professionnel, ouvert sur présentation d&#39;un numéro SIRET.</td>
+</tr>
+<tr>
+<td>Retour</td>
+<td>Renvoi par le client d&#39;un ou de plusieurs articles d&#39;une même commande. Un retour porte un numéro, un statut (annexe A) et une ligne par article renvoyé.</td>
+</tr>
+<tr>
+<td>Retour de convenance</td>
+<td>Retour d&#39;un article conforme, que le client ne souhaite pas garder.</td>
+</tr>
+<tr>
+<td>Non-conformité</td>
+<td>État d&#39;un article défectueux, abîmé pendant le transport, incomplet ou différent de l&#39;article commandé.</td>
+</tr>
+<tr>
+<td>Article volumineux</td>
+<td>Article de plus de 30 kg, ou dont une dimension dépasse 150 cm, livré par un transporteur spécialisé.</td>
+</tr>
+<tr>
+<td>Contrôle</td>
+<td>Examen des articles reçus, ligne par ligne, par l&#39;entrepôt d&#39;Orvane ou par le vendeur partenaire.</td>
+</tr>
+<tr>
+<td>Décote</td>
+<td>Réduction du montant remboursé pour un article repris en moins bon état qu&#39;à la livraison (annexe C).</td>
+</tr>
+<tr>
+<td>Avoir</td>
+<td>Pièce comptable qui annule tout ou partie d&#39;une facture. Chaque remboursement s&#39;appuie sur un avoir.</td>
+</tr>
+<tr>
+<td>Carte cadeau</td>
+<td>Carte prépayée émise par Orvane, en plastique ou dématérialisée, utilisable sur les deux canaux jusqu&#39;à épuisement de son solde.</td>
+</tr>
+<tr>
+<td>Délai de remboursement</td>
+<td>Nombre de jours calendaires entre le point de départ fixé par RG-03 et l&#39;émission du remboursement par Orvane. Le temps que met ensuite la banque du client à créditer son compte n&#39;en fait pas partie.</td>
+</tr>
+<tr>
+<td>Jour ouvré</td>
+<td>Jour du lundi au vendredi, hors jours fériés.</td>
+</tr>
+</tbody>
+</table>
+<h1 id="acteurs">3. Acteurs</h1>
+<table>
+<colgroup>
+<col style="width: 21%" />
+<col style="width: 78%" />
+</colgroup>
+<thead>
+<tr>
+<th>Acteur</th>
+<th>Rôle dans un retour</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Client</td>
+<td>Dépose la demande, emballe le colis et le remet au transporteur, reçoit le remboursement. Peut contester un refus.</td>
+</tr>
+<tr>
+<td>Service client</td>
+<td>Répond au client, tranche les cas que les règles ne prévoient pas, valide les demandes pour non-conformité, instruit les contestations.</td>
+</tr>
+<tr>
+<td>Entrepôt d&#39;Orvane</td>
+<td>Reçoit et contrôle les retours de vente directe et ceux des vendeurs dont il loge le stock. Remet les articles en stock, les déclasse ou les recycle.</td>
+</tr>
+<tr>
+<td>Vendeur partenaire</td>
+<td>Reçoit et contrôle les retours des articles qu&#39;il expédie lui-même. Saisit sa décision dans l&#39;outil de gestion des retours.</td>
+</tr>
+<tr>
+<td>Transporteur</td>
+<td>Achemine le colis retourné. Un transporteur spécialisé enlève les articles volumineux chez le client.</td>
+</tr>
+<tr>
+<td>Comptabilité</td>
+<td>Émet l&#39;avoir, ordonne le remboursement, reprend au vendeur partenaire les sommes reversées.</td>
+</tr>
+<tr>
+<td>Prestataire de paiement</td>
+<td>Exécute les remboursements par carte bancaire et annule les échéances d&#39;un paiement en plusieurs fois.</td>
+</tr>
+<tr>
+<td>Outil de gestion des retours</td>
+<td>Porte le statut de chaque retour, applique les règles automatiques (recevabilité, délais, notifications) et garde la trace de chaque décision.</td>
+</tr>
+</tbody>
+</table>
+<p>En marketplace, le client n&#39;a qu&#39;un interlocuteur, Orvane. Il dépose sa demande dans le même espace client, reçoit les mêmes notifications, et c&#39;est Orvane qui le rembourse. Le vendeur partenaire intervient à deux moments : lorsqu&#39;il contrôle les articles qu&#39;il reçoit, puis lorsqu&#39;Orvane lui reprend les sommes remboursées.</p>
+<p>Un conseiller du service client peut toujours revenir sur une décision automatique, forcer un statut ou accorder un geste commercial. Il saisit alors un motif, que l&#39;outil conserve avec son nom et la date.</p>
+<h1 id="parcours-dun-retour">4. Parcours d&#39;un retour</h1>
+<p>Un retour va de la demande du client à son remboursement en six étapes, auxquelles s&#39;ajoute la contestation lorsque le client n&#39;accepte pas la décision. L&#39;annexe A donne la liste des statuts qu&#39;il prend en chemin, et l&#39;annexe B les passages autorisés de l&#39;un à l&#39;autre.</p>
+<h2 id="demande-de-retour">4.1 Demande de retour</h2>
+<p>Le client ouvre sa demande depuis son espace client, à partir de la commande concernée. Il choisit les articles à renvoyer, leur quantité et, pour chacun, un motif de la liste de l&#39;annexe D. Pour un motif de non-conformité, il joint au moins une photographie. L&#39;outil crée un retour au statut DEMANDE_RECUE, avec une ligne par article.</p>
+<p>Un retour ne part que vers une seule adresse. Une commande qui mêle des articles de vente directe et des articles de plusieurs vendeurs donne donc lieu à autant de retours qu&#39;il y a de vendeurs concernés, Orvane compris.</p>
+<p>Tant qu&#39;il n&#39;a pas remis son colis au transporteur, le client peut renoncer à son retour depuis son espace client. Le retour passe alors au statut ANNULE.</p>
+<h2 id="recevabilité">4.2 Recevabilité</h2>
+<p>L&#39;outil vérifie aussitôt le délai de retour (RG-01 pour un client particulier, RG-02 pour un client professionnel) et la présence d&#39;articles non repris. Une demande hors délai, ou qui ne porte que sur des articles non repris, passe au statut DEMANDE_IRRECEVABLE. Le client en est informé, avec le motif.</p>
+<p>Lorsque le motif déclaré est une non-conformité, la demande suit RG-17. Un conseiller du service client la valide au vu des photographies, dans les deux jours ouvrés.</p>
+<h2 id="expédition-par-le-client">4.3 Expédition par le client</h2>
+<p>Pour une demande recevable, l&#39;outil émet une étiquette de retour prépayée. S&#39;il s&#39;agit d&#39;un article volumineux, il propose un rendez-vous d&#39;enlèvement<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>. Le retour passe au statut ETIQUETTE_EMISE. Le client a alors 14 jours pour remettre son colis au transporteur (RG-19). Dès que le suivi du transporteur indique la prise en charge du colis, le retour passe au statut EN_TRANSIT.</p>
+<h2 id="réception-et-contrôle">4.4 Réception et contrôle</h2>
+<p>Le colis arrive à l&#39;entrepôt d&#39;Orvane (statut RECU_ENTREPOT) ou chez le vendeur partenaire (statut RECU_VENDEUR). Le contrôle commence à l&#39;ouverture du colis, et le retour passe au statut EN_CONTROLE. RG-23 fixe le temps laissé à l&#39;entrepôt et au vendeur pour le mener.</p>
+<p>Le contrôleur examine chaque ligne du retour. Il vérifie que l&#39;article est bien celui de la commande, qu&#39;il est complet, avec ses accessoires et sa notice, et qu&#39;il peut être remis en vente. Pour une non-conformité, il confirme ou écarte le défaut déclaré par le client. Il saisit ensuite son résultat dans l&#39;outil, ligne par ligne : article repris, article repris avec une décote (annexe C) ou article refusé. Un refus ou une décote s&#39;accompagne d&#39;un motif et d&#39;une photographie.</p>
+<p>Lorsque le contrôle ne retrouve pas le défaut déclaré, le retour redevient un retour de convenance : les frais de retour sont dus (RG-18) et un article exclu du retour de convenance est refusé.</p>
+<h2 id="décision">4.5 Décision</h2>
+<p>Le contrôle se conclut par l&#39;un de ces trois statuts :</p>
+<ul>
+<li>ACCEPTE, lorsque tous les articles sont repris sans décote ;</li>
+<li>REFUSE, lorsqu&#39;aucun article n&#39;est repris ;</li>
+<li>REFUSE_PARTIEL, lorsqu&#39;une partie seulement des articles est reprise (RG-14) ou qu&#39;une décote s&#39;applique à l&#39;un d&#39;eux au moins (RG-16).</li>
+</ul>
+<p>Le client reçoit la décision par courriel (RG-20). Les articles repris rejoignent le stock, le second choix ou le recyclage, selon leur état. Ce tri n&#39;a aucun effet sur le remboursement.</p>
+<h2 id="remboursement">4.6 Remboursement</h2>
+<p>La comptabilité émet l&#39;avoir (section 6.6), puis ordonne le remboursement vers le moyen de paiement de la commande. Le montant part du prix payé pour les articles repris (RG-11). La comptabilité y ajoute les frais de livraison de la commande lorsqu&#39;ils sont dus (RG-13) et en retranche la décote (RG-16) et les frais de retour (RG-18).</p>
+<p>Le délai dépend du canal, du moyen de paiement et du type de client (section 5.3) ; voir RG-03 pour son point de départ. L&#39;émission du remboursement fait passer le retour au statut REMBOURSE.</p>
+<h2 id="contestation">4.7 Contestation</h2>
+<p>Le client qui n&#39;accepte pas un refus ou une décote le conteste depuis son espace client. Il explique son désaccord et joint les pièces qu&#39;il juge utiles (RG-21). Le retour passe au statut LITIGE. Un conseiller du service client reprend le dossier, consulte les photographies du contrôle et peut demander un second contrôle à l&#39;entrepôt ou au vendeur partenaire. Sa décision confirme le résultat du contrôle ou le révise, en tout ou en partie.</p>
+<p>La contestation ne suspend pas le remboursement des articles déjà repris.</p>
+<h1 id="règles-de-gestion">5. Règles de gestion</h1>
+<h2 id="lecture-des-règles">5.1 Lecture des règles</h2>
+<p>Chaque règle porte un identifiant, de RG-01 à RG-24, que l&#39;outil de gestion des retours et les autres documents d&#39;Orvane reprennent tel quel. Un identifiant n&#39;est jamais réattribué, et une règle abrogée garde le sien.</p>
+<p>La colonne « Statut » dit si la règle s&#39;applique telle qu&#39;elle est écrite. Elle prend trois valeurs :</p>
+<ul>
+<li>« En vigueur » : la règle s&#39;applique dans la rédaction du tableau ;</li>
+<li>« Modifiée par l&#39;avenant n° … » : la règle s&#39;applique dans la rédaction de l&#39;avenant cité, qui remplace celle du tableau ;</li>
+<li>« Abrogée par l&#39;avenant n° … » : la règle ne s&#39;applique plus.</li>
+</ul>
+<p>Sauf mention contraire, les délais se comptent en jours calendaires et les montants s&#39;entendent toutes taxes comprises.</p>
+<h2 id="tableau-des-règles">5.2 Tableau des règles</h2>
+<table style="width:99%;">
+<colgroup>
+<col style="width: 14%" />
+<col style="width: 69%" />
+<col style="width: 16%" />
+</colgroup>
+<thead>
+<tr>
+<th>Identifiant</th>
+<th>Règle</th>
+<th>Statut</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>RG-01</td>
+<td>Un client particulier peut retourner un article dans les 30 jours qui suivent sa livraison, sans avoir à donner de raison, en vente directe comme en marketplace<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a>. Certains articles ne sont pas repris<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a>.</td>
+<td>En vigueur</td>
+</tr>
+<tr>
+<td>RG-02</td>
+<td>Un client professionnel peut retourner un article dans les 14 jours qui suivent sa livraison, à condition que l&#39;article soit dans son emballage d&#39;origine, non ouvert. Les exclusions de RG-01 s&#39;appliquent, ainsi que celle des commandes sur devis<a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a>.</td>
+<td>En vigueur</td>
+</tr>
+<tr>
+<td>RG-03</td>
+<td>Le délai de remboursement court à compter du passage du retour au statut ACCEPTE<a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a>. Orvane rembourse sur le moyen de paiement utilisé à la commande, selon RG-04 à RG-10, et sur aucun autre, même à la demande du client.</td>
+<td>En vigueur</td>
+</tr>
+<tr>
+<td>RG-04</td>
+<td>Vente directe, paiement par carte bancaire : Orvane rembourse sur la carte utilisée dans un délai de 3 jours, pour un client particulier comme pour un client professionnel.</td>
+<td>En vigueur</td>
+</tr>
+<tr>
+<td>RG-05</td>
+<td>Vente directe, paiement par virement : Orvane rembourse par virement vers le compte d&#39;origine<a href="#fn7" class="footnote-ref" id="fnref7" role="doc-noteref"><sup>7</sup></a> dans un délai de 5 jours pour un client particulier et de 10 jours pour un client professionnel, sous réserve de RG-15.</td>
+<td>En vigueur</td>
+</tr>
+<tr>
+<td>RG-06</td>
+<td>Paiement par carte cadeau : Orvane recrédite la carte cadeau utilisée<a href="#fn8" class="footnote-ref" id="fnref8" role="doc-noteref"><sup>8</sup></a> dans un délai de 2 jours en vente directe, pour tous les clients, et de 5 jours en marketplace pour un client particulier.</td>
+<td>En vigueur</td>
+</tr>
+<tr>
+<td>RG-07</td>
+<td>Marketplace, paiement par carte cadeau, client professionnel : Orvane recrédite la carte cadeau dans un délai de 30 jours, après le rapprochement mensuel des ventes et des retours avec le vendeur partenaire.</td>
+<td>Modifiée par l&#39;avenant n° 1</td>
+</tr>
+<tr>
+<td>RG-08</td>
+<td>Marketplace, paiement par carte bancaire : Orvane rembourse sur la carte utilisée dans un délai de 7 jours pour un client particulier et de 14 jours pour un client professionnel.</td>
+<td>En vigueur</td>
+</tr>
+<tr>
+<td>RG-09</td>
+<td>Marketplace, paiement par virement : Orvane rembourse par virement dans un délai de 10 jours pour un client particulier et de 21 jours pour un client professionnel, sous réserve de RG-15. Les conditions de RG-05 sur le compte d&#39;origine s&#39;appliquent.</td>
+<td>En vigueur</td>
+</tr>
+<tr>
+<td>RG-10</td>
+<td>Paiement en plusieurs fois, réservé aux clients particuliers : Orvane rembourse les échéances déjà prélevées dans un délai de 7 jours en vente directe et de 10 jours en marketplace, et fait annuler les échéances à venir<a href="#fn9" class="footnote-ref" id="fnref9" role="doc-noteref"><sup>9</sup></a>.</td>
+<td>En vigueur</td>
+</tr>
+<tr>
+<td>RG-11</td>
+<td>Orvane rembourse le prix que le client a payé pour chaque article repris, remises et codes promotionnels déduits, sous réserve de RG-12 et de RG-16. Les frais de retour sont retenus selon RG-18.</td>
+<td>En vigueur</td>
+</tr>
+<tr>
+<td>RG-12</td>
+<td>Retour de convenance d&#39;un client professionnel en vente directe : Orvane retient sur le remboursement des frais de remise en stock, égaux à 10 % du prix hors taxes des articles repris.</td>
+<td>Abrogée par l&#39;avenant n° 1</td>
+</tr>
+<tr>
+<td>RG-13</td>
+<td>Orvane rembourse les frais de livraison de la commande, au tarif de la livraison standard, lorsque le client retourne tous les articles de cette commande. Lorsqu&#39;il en garde une partie, ces frais ne sont pas remboursés. Pour une non-conformité, voir RG-17.</td>
+<td>En vigueur</td>
+</tr>
+<tr>
+<td>RG-14</td>
+<td>Lorsque le contrôle ne reprend qu&#39;une partie des articles d&#39;un retour, le retour passe au statut REFUSE_PARTIEL. Orvane ne rembourse que les articles repris.</td>
+<td>En vigueur</td>
+</tr>
+<tr>
+<td>RG-15</td>
+<td>Client professionnel qui règle par virement à échéance : tant qu&#39;il n&#39;a pas payé la facture de la commande, Orvane ne lui verse aucun remboursement. L&#39;avoir vient en déduction de la facture, et le délai de remboursement est sans objet.</td>
+<td>En vigueur</td>
+</tr>
+<tr>
+<td>RG-16</td>
+<td>Un article repris incomplet, sali, utilisé ou abîmé par le client subit une décote de 10 % à 50 % de son prix, selon la grille de l&#39;annexe C. Le retour passe alors au statut REFUSE_PARTIEL. Un article dont l&#39;état appellerait une décote supérieure est refusé.</td>
+<td>En vigueur</td>
+</tr>
+<tr>
+<td>RG-17</td>
+<td>Une non-conformité se déclare dans les 30 jours qui suivent la livraison, pour tous les clients et tous les articles, y compris ceux que RG-01 et RG-02 excluent. Orvane, ou le vendeur partenaire en marketplace, supporte les frais de retour. Orvane rembourse le prix de l&#39;article et les frais de livraison de la commande.</td>
+<td>En vigueur</td>
+</tr>
+<tr>
+<td>RG-18</td>
+<td>Les frais d&#39;un retour de convenance sont à la charge du client. Orvane retient sur le remboursement 6,90 € par colis pour une étiquette prépayée et 39 € par enlèvement pour un article volumineux<a href="#fn10" class="footnote-ref" id="fnref10" role="doc-noteref"><sup>10</sup></a>.</td>
+<td>En vigueur</td>
+</tr>
+<tr>
+<td>RG-19</td>
+<td>Le client remet son colis au transporteur dans les 14 jours qui suivent le statut ETIQUETTE_EMISE. Passé ce délai, le retour passe au statut EXPIRE. Le client peut déposer une nouvelle demande si le délai de RG-01 ou de RG-02 court encore.</td>
+<td>En vigueur</td>
+</tr>
+<tr>
+<td>RG-20</td>
+<td>L&#39;outil de gestion des retours informe le client par courriel à chaque changement de statut. Pour les statuts REFUSE et REFUSE_PARTIEL, la notification donne le motif du refus ou de la décote, article par article, et le montant qui sera remboursé.</td>
+<td>En vigueur</td>
+</tr>
+<tr>
+<td>RG-21</td>
+<td>Le client a 15 jours, à compter de la notification, pour contester un refus ou une décote. Le service client rend sa décision dans les 10 jours qui suivent la contestation. Cette décision est définitive.</td>
+<td>En vigueur</td>
+</tr>
+<tr>
+<td>RG-22</td>
+<td>Orvane, ou le vendeur partenaire, garde les articles refusés pendant 30 jours à compter de la notification. Le client peut demander qu&#39;ils lui soient réexpédiés, à ses frais. Passé ce délai, les articles sont donnés à une association ou recyclés.</td>
+<td>En vigueur</td>
+</tr>
+<tr>
+<td>RG-23</td>
+<td>Le contrôle a lieu dans les 2 jours ouvrés qui suivent le statut RECU_ENTREPOT, et dans les 5 jours ouvrés qui suivent le statut RECU_VENDEUR. Si le vendeur partenaire n&#39;a pas rendu sa décision dans ce délai, le retour passe d&#39;office au statut ACCEPTE.</td>
+<td>En vigueur</td>
+</tr>
+<tr>
+<td>RG-24</td>
+<td>Pour un article non conforme dont le prix est inférieur à 20 €, le service client peut rembourser le client sans lui demander de renvoyer l&#39;article<a href="#fn11" class="footnote-ref" id="fnref11" role="doc-noteref"><sup>11</sup></a>. Le retour passe directement au statut REMBOURSE_SANS_RETOUR.</td>
+<td>En vigueur</td>
+</tr>
+</tbody>
+</table>
+<h2 id="délais-de-remboursement-par-canal-moyen-de-paiement-et-type-de-client">5.3 Délais de remboursement par canal, moyen de paiement et type de client</h2>
+<p>Les règles RG-04 à RG-10 fixent un délai pour chaque combinaison de canal, de moyen de paiement et de type de client. Le délai se compte en jours calendaires depuis le point de départ de RG-03. Le paiement en plusieurs fois n&#39;est pas proposé aux clients professionnels et n&#39;a donc qu&#39;une ligne par canal.</p>
+<p>Chaque ligne renvoie à la règle qui la fonde, dont le statut se lit dans le tableau de la section 5.2.</p>
+<table>
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 35%" />
+<col style="width: 17%" />
+<col style="width: 16%" />
+<col style="width: 12%" />
+</colgroup>
+<thead>
+<tr>
+<th>Canal</th>
+<th>Moyen de paiement</th>
+<th>Type de client</th>
+<th>Délai de remboursement</th>
+<th>Règle</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Vente directe</td>
+<td>Carte bancaire</td>
+<td>Particulier</td>
+<td>3 jours</td>
+<td>RG-04</td>
+</tr>
+<tr>
+<td>Vente directe</td>
+<td>Carte bancaire</td>
+<td>Professionnel</td>
+<td>3 jours</td>
+<td>RG-04</td>
+</tr>
+<tr>
+<td>Vente directe</td>
+<td>Virement</td>
+<td>Particulier</td>
+<td>5 jours</td>
+<td>RG-05</td>
+</tr>
+<tr>
+<td>Vente directe</td>
+<td>Virement</td>
+<td>Professionnel</td>
+<td>10 jours</td>
+<td>RG-05</td>
+</tr>
+<tr>
+<td>Vente directe</td>
+<td>Carte cadeau</td>
+<td>Particulier</td>
+<td>2 jours</td>
+<td>RG-06</td>
+</tr>
+<tr>
+<td>Vente directe</td>
+<td>Carte cadeau</td>
+<td>Professionnel</td>
+<td>2 jours</td>
+<td>RG-06</td>
+</tr>
+<tr>
+<td>Vente directe</td>
+<td>Paiement en plusieurs fois</td>
+<td>Particulier</td>
+<td>7 jours</td>
+<td>RG-10</td>
+</tr>
+<tr>
+<td>Marketplace</td>
+<td>Carte bancaire</td>
+<td>Particulier</td>
+<td>7 jours</td>
+<td>RG-08</td>
+</tr>
+<tr>
+<td>Marketplace</td>
+<td>Carte bancaire</td>
+<td>Professionnel</td>
+<td>14 jours</td>
+<td>RG-08</td>
+</tr>
+<tr>
+<td>Marketplace</td>
+<td>Virement</td>
+<td>Particulier</td>
+<td>10 jours</td>
+<td>RG-09</td>
+</tr>
+<tr>
+<td>Marketplace</td>
+<td>Virement</td>
+<td>Professionnel</td>
+<td>21 jours</td>
+<td>RG-09</td>
+</tr>
+<tr>
+<td>Marketplace</td>
+<td>Carte cadeau</td>
+<td>Particulier</td>
+<td>5 jours</td>
+<td>RG-06</td>
+</tr>
+<tr>
+<td>Marketplace</td>
+<td>Carte cadeau</td>
+<td>Professionnel</td>
+<td>30 jours</td>
+<td>RG-07</td>
+</tr>
+<tr>
+<td>Marketplace</td>
+<td>Paiement en plusieurs fois</td>
+<td>Particulier</td>
+<td>10 jours</td>
+<td>RG-10</td>
+</tr>
+</tbody>
+</table>
+<p>Une commande réglée par plusieurs moyens de paiement suit, pour chaque part, le délai du moyen concerné (section 6.5).</p>
+<h1 id="modalités-de-remboursement">6. Modalités de remboursement</h1>
+<h2 id="carte-bancaire">6.1 Carte bancaire</h2>
+<p>Le prestataire de paiement recrédite la carte qui a servi à la commande, sur ordre de la comptabilité. Orvane ne conserve aucun numéro de carte : l&#39;ordre de remboursement désigne la transaction d&#39;origine, que le prestataire retrouve. Lorsque la carte a expiré ou a été renouvelée entre-temps, la banque du client reporte d&#39;elle-même la somme sur le compte auquel la carte était rattachée.</p>
+<p>Le remboursement apparaît sur le relevé du client sous le libellé « ORVANE REMB », suivi du numéro du retour. Selon les banques, il y figure deux à cinq jours après son émission. Ce temps bancaire s&#39;ajoute au délai de remboursement.</p>
+<h2 id="virement">6.2 Virement</h2>
+<p>Le virement sert surtout aux clients professionnels. Les clients particuliers y recourent pour les commandes dont le montant dépasse le plafond de leur carte. Orvane rembourse par virement vers le compte qui a émis le paiement, dont les coordonnées figurent sur son relevé bancaire (RG-05, RG-09).</p>
+<p>Un client professionnel peut avoir obtenu du service commercial de régler à échéance, à 30 jours fin de mois. Si son retour est accepté avant qu&#39;il ait payé sa facture, Orvane n&#39;a rien à lui rembourser : l&#39;avoir réduit d&#39;autant la somme qu&#39;il doit (RG-15). Si la facture est déjà payée, RG-05 ou RG-09 s&#39;applique.</p>
+<h2 id="carte-cadeau">6.3 Carte cadeau</h2>
+<p>Une commande réglée par carte cadeau se rembourse sur la carte cadeau. Orvane la recrédite du montant remboursé, que le client peut dépenser sur les deux canaux. Le solde d&#39;une carte cadeau ne se convertit ni en virement ni en remboursement sur carte bancaire.</p>
+<p>En vente directe, la somme n&#39;a pas quitté les comptes d&#39;Orvane et le recrédit suit de près l&#39;acceptation du retour. En marketplace, Orvane a déjà reversé le prix au vendeur partenaire. Pour un client particulier, Orvane recrédite la carte sans attendre d&#39;avoir repris cette somme au vendeur (RG-06). Les clients professionnels achètent le plus souvent leurs cartes cadeaux en nombre et sur facture : pour eux, le recrédit attend le rapprochement des ventes et des retours avec le vendeur, et une règle distincte en fixe le délai (section 5.3).</p>
+<h2 id="paiement-en-plusieurs-fois">6.4 Paiement en plusieurs fois</h2>
+<p>Les clients particuliers peuvent régler en trois ou quatre échéances mensuelles, par carte bancaire, une commande de 150 € à 3 000 €. Le prestataire de paiement prélève la première échéance à la commande. Lorsqu&#39;un retour est accepté, la comptabilité lui transmet le montant à rembourser. Le prestataire annule ou réduit les échéances à venir et, s&#39;il reste une somme due au client, recrédite sa carte (RG-10).</p>
+<p>Le prestataire facture des frais pour un paiement en quatre fois. Orvane les rembourse avec la commande lorsque le client la retourne en entier.</p>
+<h2 id="commande-réglée-par-plusieurs-moyens-de-paiement">6.5 Commande réglée par plusieurs moyens de paiement</h2>
+<p>Un client peut compléter une carte cadeau par une carte bancaire. Le remboursement se répartit alors entre les deux moyens de paiement, à proportion de ce que chacun a réglé, et chaque part suit le délai de son moyen de paiement.</p>
+<p>Ainsi, pour une commande de 200 € payée 50 € par carte cadeau et 150 € par carte bancaire, le retour d&#39;un article de 80 € donne lieu à un recrédit de 20 € sur la carte cadeau et à un remboursement de 60 € sur la carte bancaire.</p>
+<h2 id="avoir-et-écritures-comptables">6.6 Avoir et écritures comptables</h2>
+<p>La comptabilité émet un avoir avant d&#39;ordonner chaque remboursement. L&#39;avoir reprend les lignes concernées de la facture, la décote appliquée et les frais de retour retenus. En vente directe, Orvane l&#39;émet en son nom. En marketplace, Orvane l&#39;émet au nom et pour le compte du vendeur partenaire, comme la facture d&#39;origine.</p>
+<p>Orvane reprend ensuite au vendeur le montant net qui lui avait été reversé pour les articles repris, et renonce à sa commission sur ces articles. Ces écritures passent par le rapprochement périodique entre Orvane et chaque vendeur. Elles ne changent rien au délai dans lequel le client est remboursé, sauf dans le cas que décrit la section 6.3.</p>
+<h1 id="cas-particuliers">7. Cas particuliers</h1>
+<h2 id="articles-volumineux">7.1 Articles volumineux</h2>
+<p>Un article volumineux ne voyage pas par colis : le transporteur spécialisé vient le chercher chez le client, sur rendez-vous. Le client le remet démonté et emballé comme il l&#39;a reçu ou, à défaut, protégé de façon à supporter le transport. Le chauffeur ne contrôle pas l&#39;article. Il note le nombre de colis enlevés sur un bon que signe le client.</p>
+<p>Les frais d&#39;enlèvement de RG-18 s&#39;appliquent aux retours de convenance. Pour une non-conformité, RG-17 les met à la charge d&#39;Orvane ou du vendeur partenaire.</p>
+<h2 id="colis-perdu-pendant-le-retour">7.2 Colis perdu pendant le retour</h2>
+<p>Tant que le client utilise l&#39;étiquette fournie, le colis voyage aux risques d&#39;Orvane. Si le suivi ne montre plus aucun mouvement pendant 10 jours après le statut EN_TRANSIT, le service client ouvre une enquête auprès du transporteur. Sans nouvelles 10 jours plus tard, le colis est tenu pour perdu : le service client passe le retour au statut ACCEPTE, et le remboursement suit son cours.</p>
+<p>Le client qui préfère un transporteur de son choix expédie à ses risques et à ses frais. Orvane ne le rembourse qu&#39;après avoir reçu et contrôlé le colis.</p>
+<h2 id="colis-reçu-sans-demande-préalable">7.3 Colis reçu sans demande préalable</h2>
+<p>Il arrive qu&#39;un colis parvienne à l&#39;entrepôt sans numéro de retour, parce que le client a renvoyé l&#39;article de sa propre initiative. L&#39;entrepôt le met de côté et le signale au service client, qui recherche la commande à partir du nom de l&#39;expéditeur et de l&#39;article reçu. Une fois le client identifié, le conseiller crée le retour directement au statut RECU_ENTREPOT. La recevabilité s&#39;apprécie alors à la date de réception du colis.</p>
+<p>Un colis dont l&#39;expéditeur reste inconnu après 60 jours suit le sort des articles refusés que leur propriétaire n&#39;a pas réclamés (RG-22).</p>
+<h2 id="lots-et-articles-offerts">7.4 Lots et articles offerts</h2>
+<p>Un lot vendu sous une seule référence, par exemple un salon de jardin de cinq pièces, se retourne entier. Si une pièce manque à la réception, l&#39;entrepôt applique la décote de l&#39;annexe C ou refuse le lot.</p>
+<p>Lorsqu&#39;une promotion a offert un article pour l&#39;achat d&#39;un autre, le client qui retourne l&#39;article payé renvoie aussi l&#39;article offert. S&#39;il le garde, Orvane retient son prix catalogue sur le remboursement.</p>
+<h2 id="vendeur-partenaire-défaillant">7.5 Vendeur partenaire défaillant</h2>
+<p>Lorsqu&#39;un vendeur partenaire cesse de répondre, ou que son contrat prend fin alors que des retours sont en cours, Orvane prend sa place. Les retours qui ne sont pas encore expédiés sont dirigés vers l&#39;entrepôt d&#39;Orvane, qui les contrôle. Le client est remboursé dans les délais de la marketplace. Orvane réclame ensuite les sommes au vendeur, comme le prévoit son contrat.</p>
+<h1 id="annexe-a.-codes-de-statut-dun-retour">Annexe A. Codes de statut d&#39;un retour</h1>
+<p>Un retour n&#39;a qu&#39;un statut à la fois. L&#39;outil de gestion des retours, l&#39;espace client et les exports comptables emploient les mêmes codes.</p>
+<table>
+<colgroup>
+<col style="width: 22%" />
+<col style="width: 60%" />
+<col style="width: 17%" />
+</colgroup>
+<thead>
+<tr>
+<th>Code</th>
+<th>Signification</th>
+<th>Règles</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>DEMANDE_RECUE</td>
+<td>La demande est enregistrée. L&#39;outil n&#39;a pas encore vérifié sa recevabilité.</td>
+<td>RG-01, RG-02</td>
+</tr>
+<tr>
+<td>DEMANDE_IRRECEVABLE</td>
+<td>La demande est hors délai, ou ne porte que sur des articles non repris. Statut final.</td>
+<td>RG-01, RG-02</td>
+</tr>
+<tr>
+<td>ETIQUETTE_EMISE</td>
+<td>La demande est recevable. Le client a reçu son étiquette ou son rendez-vous d&#39;enlèvement.</td>
+<td>RG-18, RG-19</td>
+</tr>
+<tr>
+<td>EN_TRANSIT</td>
+<td>Le transporteur a pris le colis en charge.</td>
+<td>RG-19</td>
+</tr>
+<tr>
+<td>RECU_ENTREPOT</td>
+<td>Le colis est arrivé à l&#39;entrepôt d&#39;Orvane.</td>
+<td>RG-23</td>
+</tr>
+<tr>
+<td>RECU_VENDEUR</td>
+<td>Le colis est arrivé chez le vendeur partenaire.</td>
+<td>RG-23</td>
+</tr>
+<tr>
+<td>EN_CONTROLE</td>
+<td>Le colis est ouvert, le contrôle des articles est en cours.</td>
+<td>RG-23</td>
+</tr>
+<tr>
+<td>ACCEPTE</td>
+<td>Tous les articles du retour sont repris, sans décote.</td>
+<td>RG-03, RG-23</td>
+</tr>
+<tr>
+<td>REFUSE</td>
+<td>Aucun article n&#39;est repris.</td>
+<td>RG-20, RG-21, RG-22</td>
+</tr>
+<tr>
+<td>REFUSE_PARTIEL</td>
+<td>Une partie seulement des articles est reprise, ou une décote s&#39;applique à l&#39;un d&#39;eux au moins.</td>
+<td>RG-14, RG-16, RG-20, RG-21, RG-22</td>
+</tr>
+<tr>
+<td>LITIGE</td>
+<td>Le client conteste la décision. Le service client instruit sa contestation.</td>
+<td>RG-21</td>
+</tr>
+<tr>
+<td>REMBOURSE</td>
+<td>Orvane a émis le remboursement. Statut final, sauf contestation.</td>
+<td>RG-03</td>
+</tr>
+<tr>
+<td>REMBOURSE_SANS_RETOUR</td>
+<td>Orvane a remboursé le client sans lui demander de renvoyer l&#39;article. Statut final.</td>
+<td>RG-24</td>
+</tr>
+<tr>
+<td>EXPIRE</td>
+<td>Le client n&#39;a pas remis son colis à temps. Statut final.</td>
+<td>RG-19</td>
+</tr>
+<tr>
+<td>ANNULE</td>
+<td>Le client a renoncé à son retour avant de remettre le colis. Statut final.</td>
+<td>Aucune</td>
+</tr>
+</tbody>
+</table>
+<h1 id="annexe-b.-passages-dun-statut-à-lautre">Annexe B. Passages d&#39;un statut à l&#39;autre</h1>
+<p>L&#39;outil refuse tout passage absent de cette liste, sauf lorsqu&#39;un conseiller du service client force un statut.</p>
+<table style="width:99%;">
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 39%" />
+<col style="width: 10%" />
+</colgroup>
+<thead>
+<tr>
+<th>Statut de départ</th>
+<th>Statut d&#39;arrivée</th>
+<th>Déclencheur</th>
+<th>Règle</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>DEMANDE_RECUE</td>
+<td>DEMANDE_IRRECEVABLE</td>
+<td>Vérification automatique : délai dépassé ou articles non repris</td>
+<td>RG-01, RG-02</td>
+</tr>
+<tr>
+<td>DEMANDE_RECUE</td>
+<td>ETIQUETTE_EMISE</td>
+<td>Vérification automatique réussie, ou validation du service client pour une non-conformité</td>
+<td>RG-17</td>
+</tr>
+<tr>
+<td>DEMANDE_RECUE</td>
+<td>REMBOURSE_SANS_RETOUR</td>
+<td>Décision du service client</td>
+<td>RG-24</td>
+</tr>
+<tr>
+<td>ETIQUETTE_EMISE</td>
+<td>EN_TRANSIT</td>
+<td>Prise en charge du colis par le transporteur</td>
+<td>RG-19</td>
+</tr>
+<tr>
+<td>ETIQUETTE_EMISE</td>
+<td>EXPIRE</td>
+<td>14 jours sans prise en charge, ou deux rendez-vous d&#39;enlèvement manqués</td>
+<td>RG-19</td>
+</tr>
+<tr>
+<td>ETIQUETTE_EMISE</td>
+<td>ANNULE</td>
+<td>Renoncement du client</td>
+<td>Aucune</td>
+</tr>
+<tr>
+<td>EN_TRANSIT</td>
+<td>RECU_ENTREPOT</td>
+<td>Réception du colis à l&#39;entrepôt d&#39;Orvane</td>
+<td>Aucune</td>
+</tr>
+<tr>
+<td>EN_TRANSIT</td>
+<td>RECU_VENDEUR</td>
+<td>Réception du colis chez le vendeur partenaire</td>
+<td>Aucune</td>
+</tr>
+<tr>
+<td>EN_TRANSIT</td>
+<td>ACCEPTE</td>
+<td>Colis tenu pour perdu (section 7.2)</td>
+<td>Aucune</td>
+</tr>
+<tr>
+<td>RECU_ENTREPOT</td>
+<td>EN_CONTROLE</td>
+<td>Ouverture du colis</td>
+<td>RG-23</td>
+</tr>
+<tr>
+<td>RECU_VENDEUR</td>
+<td>EN_CONTROLE</td>
+<td>Ouverture du colis</td>
+<td>RG-23</td>
+</tr>
+<tr>
+<td>RECU_VENDEUR</td>
+<td>ACCEPTE</td>
+<td>5 jours ouvrés sans décision du vendeur partenaire</td>
+<td>RG-23</td>
+</tr>
+<tr>
+<td>EN_CONTROLE</td>
+<td>ACCEPTE</td>
+<td>Tous les articles repris, sans décote</td>
+<td>RG-23</td>
+</tr>
+<tr>
+<td>EN_CONTROLE</td>
+<td>REFUSE</td>
+<td>Aucun article repris</td>
+<td>RG-20</td>
+</tr>
+<tr>
+<td>EN_CONTROLE</td>
+<td>REFUSE_PARTIEL</td>
+<td>Une partie des articles refusée, ou une décote appliquée</td>
+<td>RG-14, RG-16</td>
+</tr>
+<tr>
+<td>ACCEPTE</td>
+<td>REMBOURSE</td>
+<td>Émission du remboursement</td>
+<td>RG-03</td>
+</tr>
+<tr>
+<td>REFUSE_PARTIEL</td>
+<td>REMBOURSE</td>
+<td>Émission du remboursement des articles repris</td>
+<td>RG-03</td>
+</tr>
+<tr>
+<td>REFUSE</td>
+<td>LITIGE</td>
+<td>Contestation du client</td>
+<td>RG-21</td>
+</tr>
+<tr>
+<td>REFUSE_PARTIEL</td>
+<td>LITIGE</td>
+<td>Contestation du client</td>
+<td>RG-21</td>
+</tr>
+<tr>
+<td>REMBOURSE</td>
+<td>LITIGE</td>
+<td>Contestation d&#39;un refus ou d&#39;une décote après le remboursement des articles repris</td>
+<td>RG-21</td>
+</tr>
+<tr>
+<td>LITIGE</td>
+<td>ACCEPTE, REFUSE ou REFUSE_PARTIEL</td>
+<td>Décision du service client</td>
+<td>RG-21</td>
+</tr>
+</tbody>
+</table>
+<h1 id="annexe-c.-grille-de-décote">Annexe C. Grille de décote</h1>
+<p>La grille s&#39;applique aux retours de convenance des clients particuliers. Un client professionnel dont l&#39;article n&#39;est plus dans son emballage d&#39;origine, non ouvert, voit cet article refusé (RG-02).</p>
+<table>
+<colgroup>
+<col style="width: 78%" />
+<col style="width: 21%" />
+</colgroup>
+<thead>
+<tr>
+<th>État constaté au contrôle</th>
+<th>Décote</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Emballage d&#39;origine absent ou détérioré, article intact</td>
+<td>10 %</td>
+</tr>
+<tr>
+<td>Notice, visserie ou accessoire manquant</td>
+<td>20 %</td>
+</tr>
+<tr>
+<td>Traces de montage ou d&#39;utilisation, article propre et complet</td>
+<td>30 %</td>
+</tr>
+<tr>
+<td>Article sali, rayé ou taché, revendable en second choix</td>
+<td>50 %</td>
+</tr>
+<tr>
+<td>Article cassé, inutilisable, ou différent de l&#39;article commandé</td>
+<td>Refus de l&#39;article</td>
+</tr>
+</tbody>
+</table>
+<p>Lorsque plusieurs états se cumulent, seule la décote la plus forte s&#39;applique. La décote se calcule sur le prix payé pour l&#39;article, remises déduites.</p>
+<h1 id="annexe-d.-motifs-de-retour">Annexe D. Motifs de retour</h1>
+<p>Le client choisit un motif par article. La nature du motif décide des règles applicables : RG-01, RG-02 et RG-18 pour un retour de convenance, RG-17 pour une non-conformité.</p>
+<table>
+<colgroup>
+<col style="width: 6%" />
+<col style="width: 71%" />
+<col style="width: 21%" />
+</colgroup>
+<thead>
+<tr>
+<th>Code</th>
+<th>Motif proposé au client</th>
+<th>Nature</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>M01</td>
+<td>L&#39;article ne me convient plus</td>
+<td>Convenance</td>
+</tr>
+<tr>
+<td>M02</td>
+<td>Les dimensions ne conviennent pas</td>
+<td>Convenance</td>
+</tr>
+<tr>
+<td>M03</td>
+<td>J&#39;ai commandé par erreur, ou en double</td>
+<td>Convenance</td>
+</tr>
+<tr>
+<td>M04</td>
+<td>J&#39;ai trouvé moins cher ailleurs</td>
+<td>Convenance</td>
+</tr>
+<tr>
+<td>M05</td>
+<td>L&#39;article est arrivé abîmé</td>
+<td>Non-conformité</td>
+</tr>
+<tr>
+<td>M06</td>
+<td>L&#39;article ne fonctionne pas</td>
+<td>Non-conformité</td>
+</tr>
+<tr>
+<td>M07</td>
+<td>Il manque une pièce ou un accessoire</td>
+<td>Non-conformité</td>
+</tr>
+<tr>
+<td>M08</td>
+<td>L&#39;article reçu n&#39;est pas celui que j&#39;ai commandé</td>
+<td>Non-conformité</td>
+</tr>
+<tr>
+<td>M09</td>
+<td>L&#39;article ne correspond pas à sa description</td>
+<td>Non-conformité</td>
+</tr>
+</tbody>
+</table>
+<h1 id="avenant-n-1">Avenant n° 1</h1>
+<p>Avenant n° 1 à la version 2.3 du 12 janvier 2026<br />
+Date d&#39;effet : 4 mai 2026</p>
+<h2 id="motif">Motif</h2>
+<p>Le rapprochement des ventes et des retours avec les vendeurs partenaires, jusqu&#39;ici mensuel, a lieu deux fois par mois depuis le 1er mai 2026. Le recrédit des cartes cadeaux des clients professionnels, qui attend ce rapprochement, peut donc intervenir plus tôt.</p>
+<p>La direction commerciale a par ailleurs décidé de ne plus facturer de frais de remise en stock aux clients professionnels.</p>
+<h2 id="article-1.-modification-de-rg-07">Article 1. Modification de RG-07</h2>
+<p>RG-07 est remplacée par la rédaction suivante :</p>
+<p>« Marketplace, paiement par carte cadeau, client professionnel : Orvane recrédite la carte cadeau dans un délai de 15 jours, après le rapprochement bimensuel des ventes et des retours avec le vendeur partenaire. »</p>
+<p>Le délai de 30 jours qui figure dans le tableau des règles (section 5.2) et dans le tableau des délais (section 5.3) est donc ramené à 15 jours. Le point de départ fixé par RG-03 ne change pas.</p>
+<h2 id="article-2.-abrogation-de-rg-12">Article 2. Abrogation de RG-12</h2>
+<p>RG-12 est abrogée. Orvane ne retient plus de frais de remise en stock sur les retours de convenance des clients professionnels en vente directe.</p>
+<p>RG-11 continue de s&#39;appliquer. Sa réserve relative à RG-12 est sans objet.</p>
+<h2 id="article-3.-autres-dispositions">Article 3. Autres dispositions</h2>
+<p>Les autres règles et les annexes restent inchangées. La colonne « Statut » du tableau des règles signale les deux règles concernées. La version 3.0 reprendra le contenu de cet avenant.</p>
+<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<hr />
+<ol>
+<li id="fn1"><p>Certains vendeurs partenaires confient leur stock à l&#39;entrepôt d&#39;Orvane. Leurs articles relèvent du canal marketplace, bien qu&#39;Orvane les expédie et en reçoive les retours.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>Le transporteur propose un créneau dans les 5 jours ouvrés. Après deux rendez-vous manqués par le client, le retour passe au statut EXPIRE.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3"><p>Un article livré entre le 1er novembre et le 24 décembre peut être retourné jusqu&#39;au 31 janvier suivant.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn4"><p>Ne sont pas repris en retour de convenance : les végétaux, les articles fabriqués sur mesure ou personnalisés, les produits phytosanitaires et les peintures dont l&#39;emballage a été ouvert, la literie sortie de son film de protection. La non-conformité de ces articles reste couverte (voir RG-17).<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn5"><p>Une commande passée sur devis, dont le service commercial a négocié les quantités ou les prix, n&#39;ouvre droit à aucun retour de convenance. Seule la non-conformité est recevable (RG-17).<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn6"><p>Pour un retour au statut REFUSE_PARTIEL, le délai court à compter de l&#39;envoi au client de la notification de la décision.<a href="#fnref6" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn7"><p>Lorsque le compte d&#39;origine est clos ou que la banque rejette le virement, le service client demande au client un relevé d&#39;identité bancaire à son nom. Le délai repart de la réception de ce relevé.<a href="#fnref7" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn8"><p>Si la carte cadeau a expiré depuis la commande, Orvane en émet une nouvelle, du montant remboursé et valable douze mois.<a href="#fnref8" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn9"><p>Lorsque le remboursement ne couvre qu&#39;une partie de la commande, notamment pour un retour au statut REFUSE_PARTIEL, son montant s&#39;impute d&#39;abord sur les échéances à venir, en commençant par la dernière. Orvane ne reverse sur la carte bancaire que ce qui dépasse le total de ces échéances.<a href="#fnref9" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn10"><p>Un retour au statut REFUSE_PARTIEL supporte ces frais en totalité, quel que soit le nombre d&#39;articles refusés.<a href="#fnref10" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn11"><p>Dans la limite de trois remboursements sans retour par client sur douze mois glissants. Au-delà, le service client exige le renvoi de l&#39;article.<a href="#fnref11" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section>
+</body>
+</html>

@@ -1,0 +1,97 @@
+{
+  "1": {
+    "expected": [
+      {
+        "component": "Billing batch",
+        "zone": "b"
+      },
+      {
+        "component": "NAT gateway",
+        "zone": "a"
+      },
+      {
+        "component": "Network firewall",
+        "zone": "none"
+      },
+      {
+        "component": "Internet gateway",
+        "zone": "none"
+      },
+      {
+        "component": "Internet",
+        "zone": "none"
+      }
+    ],
+    "ordered": true,
+    "reason": "Zone b has no NAT gateway: the default route of its Application subnet leads to the one of Zone a."
+  },
+  "2": {
+    "expected": {
+      "stop": [
+        {
+          "vpc": "Production VPC",
+          "zone": "a",
+          "subnet": "Public subnet"
+        },
+        {
+          "vpc": "Production VPC",
+          "zone": "a",
+          "subnet": "Application subnet"
+        },
+        {
+          "vpc": "Production VPC",
+          "zone": "a",
+          "subnet": "Data subnet"
+        },
+        {
+          "vpc": "Shared services VPC",
+          "zone": "a",
+          "subnet": "Application subnet"
+        },
+        {
+          "vpc": "Shared services VPC",
+          "zone": "a",
+          "subnet": "Data subnet"
+        }
+      ],
+      "lose_internet": [
+        {
+          "vpc": "Production VPC",
+          "zone": "b",
+          "subnet": "Application subnet"
+        }
+      ]
+    },
+    "reason": "Zone a exists in two VPCs of the Paris region. The Application subnet of Zone b of the Production VPC is the only one whose default route leads to the NAT gateway of Zone a: Zone c has its own, and the public subnets reach the Internet gateway directly."
+  },
+  "3": {
+    "expected": [
+      "inter-region link",
+      "replication managed by the service",
+      "backup writes"
+    ],
+    "reason": "The PostgreSQL replication takes the inter-region link between the two Transit gateways, the Object storage replicates itself, and the backups are written from the Shared services VPC. \"HTTPS after a failover\" comes from the Internet; \"VPN tunnel (standby)\" and \"directory replication\" come from the datacenter."
+  },
+  "4": {
+    "expected": [
+      {
+        "component": "Storefront API",
+        "zone": "b"
+      },
+      {
+        "component": "PostgreSQL primary",
+        "zone": "a"
+      },
+      {
+        "component": "PostgreSQL read replica",
+        "zone": "c"
+      },
+      {
+        "component": "Data warehouse",
+        "zone": "none"
+      }
+    ],
+    "ordered": true,
+    "reason": "Every SQL write goes to the PostgreSQL primary of Zone a, which replicates to the read replica of Zone c, and the \"nightly export\" leaves from that replica. Each step is one line of the text, and one long line to follow in a drawing."
+  }
+}

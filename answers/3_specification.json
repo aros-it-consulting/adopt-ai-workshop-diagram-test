@@ -1,0 +1,23 @@
+{
+  "1": {
+    "expected": 15,
+    "reason": "The time limit set by amendment no. 1 (« Avenant n° 1 »). The rules table and the table of time limits still say 30 days."
+  },
+  "2": {
+    "expected": ["RG-10", "RG-11", "RG-13", "RG-14", "RG-15"],
+    "reason": "RG-12 is repealed by amendment no. 1."
+  },
+  "3": {
+    "expected": ["RG-03", "RG-10", "RG-14", "RG-16", "RG-18", "RG-20", "RG-21", "RG-22"],
+    "tolerated": ["RG-11", "RG-13"],
+    "reason": "RG-03, RG-10 and RG-18 name the status in their footnote only, and the annexes alone link RG-21 and RG-22 to it. An answer may add RG-11 or RG-13 as indirectly concerned."
+  },
+  "4": {
+    "expected": [
+      {"kind": "section", "number": "5.2"},
+      {"kind": "section", "number": "5.3"},
+      {"kind": "article", "number": "1"}
+    ],
+    "reason": "The rules table (« Tableau des règles »), the table of refund time limits and article 1 of amendment no. 1 (« Article 1. Modification de RG-07 »)."
+  }
+}

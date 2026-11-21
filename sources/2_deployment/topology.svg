@@ -1,0 +1,518 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 4176 2008">
+<style>text{font-family:Arial,Helvetica,sans-serif;fill:#1f2937}
+.page{fill:#fff}
+.boundary>rect,.boundary>path{stroke-width:1.4}
+.cloud>path{fill:#f3f6fa;stroke:#a9b6c9}
+.region>rect{fill:#fff;stroke:#7b8ba3;stroke-dasharray:8 5}
+.vpc>rect{fill:#f7f9fc;stroke:#5f7396}
+.zone>rect{fill:#fff;stroke:#b3bfd1;stroke-dasharray:4 3}
+.site>rect{fill:#f8f4ec;stroke:#a59b8a}
+.subnet.public>rect{fill:#e8f6ed;stroke:#62b585}
+.subnet.application>rect{fill:#e9f1fe;stroke:#74a0ee}
+.subnet.data>rect{fill:#fff4dd;stroke:#e5ad45}
+.title{font-size:12px;font-weight:700;fill:#475569}
+.cloud>.title,.region>.title{font-size:14px}
+.public>.title{fill:#2c7a4d}
+.application>.title{fill:#2d5cb3}
+.data>.title{fill:#946608}
+.box>rect{fill:#fff;stroke:#64748b;stroke-width:1.2}
+.box.public>rect{stroke:#3f9a66}
+.box.application>rect{stroke:#4a7fdb}
+.box.data>rect{stroke:#cf9320}
+.box>text{font-size:11px;text-anchor:middle}
+.link{fill:none;stroke:#5b6779;stroke-width:1.3;stroke-linejoin:round}
+.link.public{stroke:#2f8a57}
+.link.application{stroke:#3b6fd4}
+.link.data{stroke:#c08410}
+.rule{stroke-dasharray:5 3}
+.arrow,.joint{fill:#5b6779}
+.arrow.public,.joint.public{fill:#2f8a57}
+.arrow.application,.joint.application{fill:#3b6fd4}
+.arrow.data,.joint.data{fill:#c08410}
+.label>rect{fill:#fff;fill-opacity:.93}
+.label>text{font-size:10px;text-anchor:middle;fill:#334155}
+.legend>text{font-size:11px;fill:#475569}
+</style>
+<defs><marker id="arrow-public" viewBox="0 0 8 8" refX="7.5" refY="4" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="arrow public" d="M0 0.8L8 4L0 7.2z"/></marker><marker id="arrow-application" viewBox="0 0 8 8" refX="7.5" refY="4" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="arrow application" d="M0 0.8L8 4L0 7.2z"/></marker><marker id="arrow-data" viewBox="0 0 8 8" refX="7.5" refY="4" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="arrow data" d="M0 0.8L8 4L0 7.2z"/></marker><marker id="arrow-plain" viewBox="0 0 8 8" refX="7.5" refY="4" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="arrow plain" d="M0 0.8L8 4L0 7.2z"/></marker></defs>
+<rect class="page" width="4176" height="2008"/>
+<g id="internet" class="box plain"><title>Internet</title><rect x="2304" y="32" width="152" height="40" rx="5"/><text><tspan x="2380" y="56">Internet</tspan></text></g>
+<g id="datacenter" class="boundary site plain">
+<rect x="2472" y="1256" width="408" height="264" rx="8"/>
+<text class="title" x="2483" y="1275">Orvane datacenter (on-premises)</text>
+<g id="datacenter.vpn_router" class="box plain"><title>VPN router</title><rect x="2504" y="1288" width="152" height="40" rx="5"/><text><tspan x="2580" y="1312">VPN router</tspan></text></g>
+<g id="datacenter.erp" class="box plain"><title>Accounting ERP</title><rect x="2696" y="1288" width="152" height="40" rx="5"/><text><tspan x="2772" y="1312">Accounting ERP</tspan></text></g>
+<g id="datacenter.wms" class="box plain"><title>Warehouse management system</title><rect x="2504" y="1368" width="152" height="40" rx="5"/><text><tspan x="2580" y="1385.5">Warehouse management</tspan><tspan x="2580" y="1398.5">system</tspan></text></g>
+<g id="datacenter.directory" class="box plain"><title>Active Directory</title><rect x="2696" y="1368" width="152" height="40" rx="5"/><text><tspan x="2772" y="1392">Active Directory</tspan></text></g>
+<g id="datacenter.data_warehouse" class="box plain"><title>Data warehouse</title><rect x="2504" y="1448" width="152" height="40" rx="5"/><text><tspan x="2580" y="1472">Data warehouse</tspan></text></g>
+</g>
+<g id="cloud" class="boundary cloud plain">
+<path d="M32,168 4144,168 4144,1160 2376,1160 2376,1976 32,1976z"/>
+<text class="title" x="43" y="187">Cloud provider</text>
+<g id="cloud.paris" class="boundary region plain">
+<rect x="64" y="200" width="2264" height="1744" rx="8"/>
+<text class="title" x="75" y="219">Paris region</text>
+<g id="cloud.paris.transit_gateway" class="box plain"><title>Transit gateway</title><rect x="2144" y="1216" width="152" height="40" rx="5"/><text><tspan x="2220" y="1240">Transit gateway</tspan></text></g>
+<g id="cloud.paris.object_storage" class="box plain"><title>Object storage</title><rect x="1952" y="1216" width="152" height="40" rx="5"/><text><tspan x="2028" y="1240">Object storage</tspan></text></g>
+<g id="cloud.paris.message_queue" class="box plain"><title>Message queue</title><rect x="1760" y="1216" width="152" height="40" rx="5"/><text><tspan x="1836" y="1240">Message queue</tspan></text></g>
+<g id="cloud.paris.secrets_manager" class="box plain"><title>Secrets manager</title><rect x="1568" y="1216" width="152" height="40" rx="5"/><text><tspan x="1644" y="1240">Secrets manager</tspan></text></g>
+<g id="cloud.paris.email_service" class="box plain"><title>Email service</title><rect x="1376" y="1216" width="152" height="40" rx="5"/><text><tspan x="1452" y="1240">Email service</tspan></text></g>
+<g id="cloud.paris.production" class="boundary vpc plain">
+<rect x="96" y="232" width="2200" height="912" rx="8"/>
+<text class="title" x="107" y="251">Production VPC</text>
+<g id="cloud.paris.production.internet_gateway" class="box plain"><title>Internet gateway</title><rect x="2112" y="264" width="152" height="40" rx="5"/><text><tspan x="2188" y="288">Internet gateway</tspan></text></g>
+<g id="cloud.paris.production.network_firewall" class="box plain"><title>Network firewall</title><rect x="1920" y="264" width="152" height="40" rx="5"/><text><tspan x="1996" y="288">Network firewall</tspan></text></g>
+<g id="cloud.paris.production.zone_a" class="boundary zone plain">
+<rect x="128" y="368" width="664" height="744" rx="8"/>
+<text class="title" x="139" y="387">Zone a</text>
+<g id="cloud.paris.production.zone_a.public" class="boundary subnet public">
+<rect x="160" y="400" width="600" height="104" rx="8"/>
+<text class="title" x="171" y="419">Public subnet</text>
+<g id="cloud.paris.production.zone_a.public.web_firewall" class="box public"><title>Web application firewall</title><rect x="192" y="432" width="152" height="40" rx="5"/><text><tspan x="268" y="449.5">Web application</tspan><tspan x="268" y="462.5">firewall</tspan></text></g>
+<g id="cloud.paris.production.zone_a.public.load_balancer" class="box public"><title>Load balancer</title><rect x="384" y="432" width="152" height="40" rx="5"/><text><tspan x="460" y="456">Load balancer</tspan></text></g>
+<g id="cloud.paris.production.zone_a.public.nat_gateway" class="box public"><title>NAT gateway</title><rect x="576" y="432" width="152" height="40" rx="5"/><text><tspan x="652" y="456">NAT gateway</tspan></text></g>
+</g>
+<g id="cloud.paris.production.zone_a.application" class="boundary subnet application">
+<rect x="160" y="568" width="600" height="344" rx="8"/>
+<text class="title" x="171" y="587">Application subnet</text>
+<g id="cloud.paris.production.zone_a.application.storefront_api" class="box application"><title>Storefront API</title><rect x="192" y="600" width="152" height="40" rx="5"/><text><tspan x="268" y="624">Storefront API</tspan></text></g>
+<g id="cloud.paris.production.zone_a.application.marketplace_api" class="box application"><title>Marketplace API</title><rect x="384" y="600" width="152" height="40" rx="5"/><text><tspan x="460" y="624">Marketplace API</tspan></text></g>
+<g id="cloud.paris.production.zone_a.application.cart_service" class="box application"><title>Cart service</title><rect x="576" y="600" width="152" height="40" rx="5"/><text><tspan x="652" y="624">Cart service</tspan></text></g>
+<g id="cloud.paris.production.zone_a.application.catalogue_service" class="box application"><title>Catalogue service</title><rect x="192" y="680" width="152" height="40" rx="5"/><text><tspan x="268" y="704">Catalogue service</tspan></text></g>
+<g id="cloud.paris.production.zone_a.application.seller_portal" class="box application"><title>Seller portal</title><rect x="384" y="680" width="152" height="40" rx="5"/><text><tspan x="460" y="704">Seller portal</tspan></text></g>
+<g id="cloud.paris.production.zone_a.application.payment_service" class="box application"><title>Payment service</title><rect x="576" y="680" width="152" height="40" rx="5"/><text><tspan x="652" y="704">Payment service</tspan></text></g>
+<g id="cloud.paris.production.zone_a.application.order_worker" class="box application"><title>Order worker</title><rect x="192" y="760" width="152" height="40" rx="5"/><text><tspan x="268" y="784">Order worker</tspan></text></g>
+<g id="cloud.paris.production.zone_a.application.notification_worker" class="box application"><title>Notification worker</title><rect x="384" y="760" width="152" height="40" rx="5"/><text><tspan x="460" y="784">Notification worker</tspan></text></g>
+<g id="cloud.paris.production.zone_a.application.queue_endpoint" class="box application"><title>Private endpoint (message queue)</title><rect x="576" y="760" width="152" height="40" rx="5"/><text><tspan x="652" y="777.5">Private endpoint</tspan><tspan x="652" y="790.5">(message queue)</tspan></text></g>
+<g id="cloud.paris.production.zone_a.application.secrets_endpoint" class="box application"><title>Private endpoint (secrets manager)</title><rect x="192" y="840" width="152" height="40" rx="5"/><text><tspan x="268" y="857.5">Private endpoint</tspan><tspan x="268" y="870.5">(secrets manager)</tspan></text></g>
+<g id="cloud.paris.production.zone_a.application.email_endpoint" class="box application"><title>Private endpoint (email service)</title><rect x="384" y="840" width="152" height="40" rx="5"/><text><tspan x="460" y="857.5">Private endpoint</tspan><tspan x="460" y="870.5">(email service)</tspan></text></g>
+</g>
+<g id="cloud.paris.production.zone_a.data" class="boundary subnet data">
+<rect x="160" y="976" width="600" height="104" rx="8"/>
+<text class="title" x="171" y="995">Data subnet</text>
+<g id="cloud.paris.production.zone_a.data.postgresql_primary" class="box data"><title>PostgreSQL primary</title><rect x="192" y="1008" width="152" height="40" rx="5"/><text><tspan x="268" y="1032">PostgreSQL primary</tspan></text></g>
+<g id="cloud.paris.production.zone_a.data.redis_cache" class="box data"><title>Redis cache</title><rect x="384" y="1008" width="152" height="40" rx="5"/><text><tspan x="460" y="1032">Redis cache</tspan></text></g>
+<g id="cloud.paris.production.zone_a.data.search_node" class="box data"><title>Search node</title><rect x="576" y="1008" width="152" height="40" rx="5"/><text><tspan x="652" y="1032">Search node</tspan></text></g>
+</g>
+</g>
+<g id="cloud.paris.production.zone_b" class="boundary zone plain">
+<rect x="864" y="368" width="664" height="744" rx="8"/>
+<text class="title" x="875" y="387">Zone b</text>
+<g id="cloud.paris.production.zone_b.public" class="boundary subnet public">
+<rect x="896" y="400" width="600" height="104" rx="8"/>
+<text class="title" x="907" y="419">Public subnet</text>
+<g id="cloud.paris.production.zone_b.public.web_firewall" class="box public"><title>Web application firewall</title><rect x="928" y="432" width="152" height="40" rx="5"/><text><tspan x="1004" y="449.5">Web application</tspan><tspan x="1004" y="462.5">firewall</tspan></text></g>
+<g id="cloud.paris.production.zone_b.public.load_balancer" class="box public"><title>Load balancer</title><rect x="1120" y="432" width="152" height="40" rx="5"/><text><tspan x="1196" y="456">Load balancer</tspan></text></g>
+</g>
+<g id="cloud.paris.production.zone_b.application" class="boundary subnet application">
+<rect x="896" y="568" width="600" height="344" rx="8"/>
+<text class="title" x="907" y="587">Application subnet</text>
+<g id="cloud.paris.production.zone_b.application.billing_batch" class="box application"><title>Billing batch</title><rect x="1120" y="680" width="152" height="40" rx="5"/><text><tspan x="1196" y="704">Billing batch</tspan></text></g>
+<g id="cloud.paris.production.zone_b.application.storefront_api" class="box application"><title>Storefront API</title><rect x="928" y="600" width="152" height="40" rx="5"/><text><tspan x="1004" y="624">Storefront API</tspan></text></g>
+<g id="cloud.paris.production.zone_b.application.marketplace_api" class="box application"><title>Marketplace API</title><rect x="1120" y="600" width="152" height="40" rx="5"/><text><tspan x="1196" y="624">Marketplace API</tspan></text></g>
+<g id="cloud.paris.production.zone_b.application.cart_service" class="box application"><title>Cart service</title><rect x="1312" y="600" width="152" height="40" rx="5"/><text><tspan x="1388" y="624">Cart service</tspan></text></g>
+<g id="cloud.paris.production.zone_b.application.catalogue_service" class="box application"><title>Catalogue service</title><rect x="928" y="680" width="152" height="40" rx="5"/><text><tspan x="1004" y="704">Catalogue service</tspan></text></g>
+<g id="cloud.paris.production.zone_b.application.order_worker" class="box application"><title>Order worker</title><rect x="928" y="760" width="152" height="40" rx="5"/><text><tspan x="1004" y="784">Order worker</tspan></text></g>
+<g id="cloud.paris.production.zone_b.application.notification_worker" class="box application"><title>Notification worker</title><rect x="1120" y="760" width="152" height="40" rx="5"/><text><tspan x="1196" y="784">Notification worker</tspan></text></g>
+<g id="cloud.paris.production.zone_b.application.queue_endpoint" class="box application"><title>Private endpoint (message queue)</title><rect x="1312" y="760" width="152" height="40" rx="5"/><text><tspan x="1388" y="777.5">Private endpoint</tspan><tspan x="1388" y="790.5">(message queue)</tspan></text></g>
+<g id="cloud.paris.production.zone_b.application.storage_endpoint" class="box application"><title>Private endpoint (object storage)</title><rect x="1312" y="840" width="152" height="40" rx="5"/><text><tspan x="1388" y="857.5">Private endpoint</tspan><tspan x="1388" y="870.5">(object storage)</tspan></text></g>
+<g id="cloud.paris.production.zone_b.application.email_endpoint" class="box application"><title>Private endpoint (email service)</title><rect x="1120" y="840" width="152" height="40" rx="5"/><text><tspan x="1196" y="857.5">Private endpoint</tspan><tspan x="1196" y="870.5">(email service)</tspan></text></g>
+</g>
+<g id="cloud.paris.production.zone_b.data" class="boundary subnet data">
+<rect x="896" y="976" width="600" height="104" rx="8"/>
+<text class="title" x="907" y="995">Data subnet</text>
+<g id="cloud.paris.production.zone_b.data.postgresql_replica" class="box data"><title>PostgreSQL synchronous replica</title><rect x="928" y="1008" width="152" height="40" rx="5"/><text><tspan x="1004" y="1025.5">PostgreSQL</tspan><tspan x="1004" y="1038.5">synchronous replica</tspan></text></g>
+<g id="cloud.paris.production.zone_b.data.redis_replica" class="box data"><title>Redis cache replica</title><rect x="1120" y="1008" width="152" height="40" rx="5"/><text><tspan x="1196" y="1032">Redis cache replica</tspan></text></g>
+<g id="cloud.paris.production.zone_b.data.search_node" class="box data"><title>Search node</title><rect x="1312" y="1008" width="152" height="40" rx="5"/><text><tspan x="1388" y="1032">Search node</tspan></text></g>
+</g>
+</g>
+<g id="cloud.paris.production.zone_c" class="boundary zone plain">
+<rect x="1600" y="368" width="664" height="744" rx="8"/>
+<text class="title" x="1611" y="387">Zone c</text>
+<g id="cloud.paris.production.zone_c.public" class="boundary subnet public">
+<rect x="1632" y="400" width="600" height="104" rx="8"/>
+<text class="title" x="1643" y="419">Public subnet</text>
+<g id="cloud.paris.production.zone_c.public.web_firewall" class="box public"><title>Web application firewall</title><rect x="1664" y="432" width="152" height="40" rx="5"/><text><tspan x="1740" y="449.5">Web application</tspan><tspan x="1740" y="462.5">firewall</tspan></text></g>
+<g id="cloud.paris.production.zone_c.public.load_balancer" class="box public"><title>Load balancer</title><rect x="1856" y="432" width="152" height="40" rx="5"/><text><tspan x="1932" y="456">Load balancer</tspan></text></g>
+<g id="cloud.paris.production.zone_c.public.nat_gateway" class="box public"><title>NAT gateway</title><rect x="2048" y="432" width="152" height="40" rx="5"/><text><tspan x="2124" y="456">NAT gateway</tspan></text></g>
+</g>
+<g id="cloud.paris.production.zone_c.application" class="boundary subnet application">
+<rect x="1632" y="568" width="600" height="344" rx="8"/>
+<text class="title" x="1643" y="587">Application subnet</text>
+<g id="cloud.paris.production.zone_c.application.storefront_api" class="box application"><title>Storefront API</title><rect x="1664" y="600" width="152" height="40" rx="5"/><text><tspan x="1740" y="624">Storefront API</tspan></text></g>
+<g id="cloud.paris.production.zone_c.application.marketplace_api" class="box application"><title>Marketplace API</title><rect x="1856" y="600" width="152" height="40" rx="5"/><text><tspan x="1932" y="624">Marketplace API</tspan></text></g>
+<g id="cloud.paris.production.zone_c.application.cart_service" class="box application"><title>Cart service</title><rect x="2048" y="600" width="152" height="40" rx="5"/><text><tspan x="2124" y="624">Cart service</tspan></text></g>
+<g id="cloud.paris.production.zone_c.application.catalogue_service" class="box application"><title>Catalogue service</title><rect x="1664" y="680" width="152" height="40" rx="5"/><text><tspan x="1740" y="704">Catalogue service</tspan></text></g>
+<g id="cloud.paris.production.zone_c.application.seller_portal" class="box application"><title>Seller portal</title><rect x="1856" y="680" width="152" height="40" rx="5"/><text><tspan x="1932" y="704">Seller portal</tspan></text></g>
+<g id="cloud.paris.production.zone_c.application.payment_service" class="box application"><title>Payment service</title><rect x="2048" y="680" width="152" height="40" rx="5"/><text><tspan x="2124" y="704">Payment service</tspan></text></g>
+<g id="cloud.paris.production.zone_c.application.storage_endpoint" class="box application"><title>Private endpoint (object storage)</title><rect x="2048" y="840" width="152" height="40" rx="5"/><text><tspan x="2124" y="857.5">Private endpoint</tspan><tspan x="2124" y="870.5">(object storage)</tspan></text></g>
+<g id="cloud.paris.production.zone_c.application.secrets_endpoint" class="box application"><title>Private endpoint (secrets manager)</title><rect x="1664" y="840" width="152" height="40" rx="5"/><text><tspan x="1740" y="857.5">Private endpoint</tspan><tspan x="1740" y="870.5">(secrets manager)</tspan></text></g>
+</g>
+<g id="cloud.paris.production.zone_c.data" class="boundary subnet data">
+<rect x="1632" y="976" width="600" height="104" rx="8"/>
+<text class="title" x="1643" y="995">Data subnet</text>
+<g id="cloud.paris.production.zone_c.data.postgresql_replica" class="box data"><title>PostgreSQL read replica</title><rect x="1664" y="1008" width="152" height="40" rx="5"/><text><tspan x="1740" y="1025.5">PostgreSQL read</tspan><tspan x="1740" y="1038.5">replica</tspan></text></g>
+<g id="cloud.paris.production.zone_c.data.redis_replica" class="box data"><title>Redis cache replica</title><rect x="1856" y="1008" width="152" height="40" rx="5"/><text><tspan x="1932" y="1032">Redis cache replica</tspan></text></g>
+<g id="cloud.paris.production.zone_c.data.search_node" class="box data"><title>Search node</title><rect x="2048" y="1008" width="152" height="40" rx="5"/><text><tspan x="2124" y="1032">Search node</tspan></text></g>
+</g>
+</g>
+</g>
+<g id="cloud.paris.shared" class="boundary vpc plain">
+<rect x="96" y="1328" width="2200" height="584" rx="8"/>
+<text class="title" x="107" y="1347">Shared services VPC</text>
+<g id="cloud.paris.shared.vpn_gateway" class="box plain"><title>VPN gateway</title><rect x="2112" y="1360" width="152" height="40" rx="5"/><text><tspan x="2188" y="1384">VPN gateway</tspan></text></g>
+<g id="cloud.paris.shared.zone_a" class="boundary zone plain">
+<rect x="128" y="1464" width="664" height="416" rx="8"/>
+<text class="title" x="139" y="1483">Zone a</text>
+<g id="cloud.paris.shared.zone_a.application" class="boundary subnet application">
+<rect x="160" y="1496" width="600" height="184" rx="8"/>
+<text class="title" x="171" y="1515">Application subnet</text>
+<g id="cloud.paris.shared.zone_a.application.bastion" class="box application"><title>Bastion host</title><rect x="192" y="1528" width="152" height="40" rx="5"/><text><tspan x="268" y="1552">Bastion host</tspan></text></g>
+<g id="cloud.paris.shared.zone_a.application.backup_job" class="box application"><title>Backup job</title><rect x="384" y="1528" width="152" height="40" rx="5"/><text><tspan x="460" y="1552">Backup job</tspan></text></g>
+<g id="cloud.paris.shared.zone_a.application.ci_runner" class="box application"><title>CI runner</title><rect x="576" y="1528" width="152" height="40" rx="5"/><text><tspan x="652" y="1552">CI runner</tspan></text></g>
+<g id="cloud.paris.shared.zone_a.application.artifact_repository" class="box application"><title>Artifact repository</title><rect x="192" y="1608" width="152" height="40" rx="5"/><text><tspan x="268" y="1632">Artifact repository</tspan></text></g>
+<g id="cloud.paris.shared.zone_a.application.storage_endpoint" class="box application"><title>Private endpoint (object storage)</title><rect x="384" y="1608" width="152" height="40" rx="5"/><text><tspan x="460" y="1625.5">Private endpoint</tspan><tspan x="460" y="1638.5">(object storage)</tspan></text></g>
+</g>
+<g id="cloud.paris.shared.zone_a.data" class="boundary subnet data">
+<rect x="160" y="1744" width="600" height="104" rx="8"/>
+<text class="title" x="171" y="1763">Data subnet</text>
+<g id="cloud.paris.shared.zone_a.data.metrics_database" class="box data"><title>Metrics database</title><rect x="192" y="1776" width="152" height="40" rx="5"/><text><tspan x="268" y="1800">Metrics database</tspan></text></g>
+</g>
+</g>
+<g id="cloud.paris.shared.zone_b" class="boundary zone plain">
+<rect x="864" y="1464" width="664" height="416" rx="8"/>
+<text class="title" x="875" y="1483">Zone b</text>
+<g id="cloud.paris.shared.zone_b.application" class="boundary subnet application">
+<rect x="896" y="1496" width="600" height="184" rx="8"/>
+<text class="title" x="907" y="1515">Application subnet</text>
+<g id="cloud.paris.shared.zone_b.application.monitoring" class="box application"><title>Monitoring</title><rect x="928" y="1528" width="152" height="40" rx="5"/><text><tspan x="1004" y="1552">Monitoring</tspan></text></g>
+<g id="cloud.paris.shared.zone_b.application.log_collector" class="box application"><title>Log collector</title><rect x="1120" y="1528" width="152" height="40" rx="5"/><text><tspan x="1196" y="1552">Log collector</tspan></text></g>
+<g id="cloud.paris.shared.zone_b.application.container_registry" class="box application"><title>Container registry</title><rect x="1312" y="1528" width="152" height="40" rx="5"/><text><tspan x="1388" y="1552">Container registry</tspan></text></g>
+<g id="cloud.paris.shared.zone_b.application.alert_manager" class="box application"><title>Alert manager</title><rect x="928" y="1608" width="152" height="40" rx="5"/><text><tspan x="1004" y="1632">Alert manager</tspan></text></g>
+</g>
+<g id="cloud.paris.shared.zone_b.data" class="boundary subnet data">
+<rect x="896" y="1744" width="600" height="104" rx="8"/>
+<text class="title" x="907" y="1763">Data subnet</text>
+<g id="cloud.paris.shared.zone_b.data.log_store" class="box data"><title>Log store</title><rect x="928" y="1776" width="152" height="40" rx="5"/><text><tspan x="1004" y="1800">Log store</tspan></text></g>
+</g>
+</g>
+<g id="cloud.paris.shared.zone_c" class="boundary zone plain">
+<rect x="1600" y="1464" width="664" height="416" rx="8"/>
+<text class="title" x="1611" y="1483">Zone c</text>
+<g id="cloud.paris.shared.zone_c.application" class="boundary subnet application">
+<rect x="1632" y="1496" width="600" height="184" rx="8"/>
+<text class="title" x="1643" y="1515">Application subnet</text>
+<g id="cloud.paris.shared.zone_c.application.directory_replica" class="box application"><title>Directory replica</title><rect x="1664" y="1528" width="152" height="40" rx="5"/><text><tspan x="1740" y="1552">Directory replica</tspan></text></g>
+<g id="cloud.paris.shared.zone_c.application.certificate_authority" class="box application"><title>Certificate authority</title><rect x="1856" y="1528" width="152" height="40" rx="5"/><text><tspan x="1932" y="1545.5">Certificate</tspan><tspan x="1932" y="1558.5">authority</tspan></text></g>
+</g>
+</g>
+</g>
+</g>
+<g id="cloud.frankfurt" class="boundary region plain">
+<rect x="2424" y="200" width="1688" height="928" rx="8"/>
+<text class="title" x="2435" y="219">Frankfurt region</text>
+<g id="cloud.frankfurt.transit_gateway" class="box plain"><title>Transit gateway</title><rect x="2456" y="1056" width="152" height="40" rx="5"/><text><tspan x="2532" y="1080">Transit gateway</tspan></text></g>
+<g id="cloud.frankfurt.object_storage" class="box plain"><title>Object storage</title><rect x="2648" y="1056" width="152" height="40" rx="5"/><text><tspan x="2724" y="1080">Object storage</tspan></text></g>
+<g id="cloud.frankfurt.message_queue" class="box plain"><title>Message queue (standby)</title><rect x="2840" y="1056" width="152" height="40" rx="5"/><text><tspan x="2916" y="1073.5">Message queue</tspan><tspan x="2916" y="1086.5">(standby)</tspan></text></g>
+<g id="cloud.frankfurt.secrets_manager" class="box plain"><title>Secrets manager (standby)</title><rect x="3032" y="1056" width="152" height="40" rx="5"/><text><tspan x="3108" y="1073.5">Secrets manager</tspan><tspan x="3108" y="1086.5">(standby)</tspan></text></g>
+<g id="cloud.frankfurt.recovery" class="boundary vpc plain">
+<rect x="2456" y="232" width="1624" height="752" rx="8"/>
+<text class="title" x="2467" y="251">Disaster recovery VPC</text>
+<g id="cloud.frankfurt.recovery.internet_gateway" class="box plain"><title>Internet gateway (standby)</title><rect x="2488" y="264" width="152" height="40" rx="5"/><text><tspan x="2564" y="281.5">Internet gateway</tspan><tspan x="2564" y="294.5">(standby)</tspan></text></g>
+<g id="cloud.frankfurt.recovery.network_firewall" class="box plain"><title>Network firewall (standby)</title><rect x="2680" y="264" width="152" height="40" rx="5"/><text><tspan x="2756" y="281.5">Network firewall</tspan><tspan x="2756" y="294.5">(standby)</tspan></text></g>
+<g id="cloud.frankfurt.recovery.vpn_gateway" class="box plain"><title>VPN gateway (standby)</title><rect x="2872" y="264" width="152" height="40" rx="5"/><text><tspan x="2948" y="281.5">VPN gateway</tspan><tspan x="2948" y="294.5">(standby)</tspan></text></g>
+<g id="cloud.frankfurt.recovery.zone_a" class="boundary zone plain">
+<rect x="2488" y="368" width="472" height="584" rx="8"/>
+<text class="title" x="2499" y="387">Zone a</text>
+<g id="cloud.frankfurt.recovery.zone_a.public" class="boundary subnet public">
+<rect x="2520" y="400" width="408" height="104" rx="8"/>
+<text class="title" x="2531" y="419">Public subnet</text>
+<g id="cloud.frankfurt.recovery.zone_a.public.load_balancer" class="box public"><title>Load balancer (standby)</title><rect x="2552" y="432" width="152" height="40" rx="5"/><text><tspan x="2628" y="449.5">Load balancer</tspan><tspan x="2628" y="462.5">(standby)</tspan></text></g>
+<g id="cloud.frankfurt.recovery.zone_a.public.nat_gateway" class="box public"><title>NAT gateway (standby)</title><rect x="2744" y="432" width="152" height="40" rx="5"/><text><tspan x="2820" y="449.5">NAT gateway</tspan><tspan x="2820" y="462.5">(standby)</tspan></text></g>
+</g>
+<g id="cloud.frankfurt.recovery.zone_a.application" class="boundary subnet application">
+<rect x="2520" y="568" width="408" height="184" rx="8"/>
+<text class="title" x="2531" y="587">Application subnet</text>
+<g id="cloud.frankfurt.recovery.zone_a.application.storefront_api" class="box application"><title>Storefront API (standby)</title><rect x="2552" y="600" width="152" height="40" rx="5"/><text><tspan x="2628" y="617.5">Storefront API</tspan><tspan x="2628" y="630.5">(standby)</tspan></text></g>
+<g id="cloud.frankfurt.recovery.zone_a.application.marketplace_api" class="box application"><title>Marketplace API (standby)</title><rect x="2744" y="600" width="152" height="40" rx="5"/><text><tspan x="2820" y="617.5">Marketplace API</tspan><tspan x="2820" y="630.5">(standby)</tspan></text></g>
+<g id="cloud.frankfurt.recovery.zone_a.application.cart_service" class="box application"><title>Cart service (standby)</title><rect x="2552" y="680" width="152" height="40" rx="5"/><text><tspan x="2628" y="697.5">Cart service</tspan><tspan x="2628" y="710.5">(standby)</tspan></text></g>
+<g id="cloud.frankfurt.recovery.zone_a.application.order_worker" class="box application"><title>Order worker (standby)</title><rect x="2744" y="680" width="152" height="40" rx="5"/><text><tspan x="2820" y="697.5">Order worker</tspan><tspan x="2820" y="710.5">(standby)</tspan></text></g>
+</g>
+<g id="cloud.frankfurt.recovery.zone_a.data" class="boundary subnet data">
+<rect x="2520" y="816" width="408" height="104" rx="8"/>
+<text class="title" x="2531" y="835">Data subnet</text>
+<g id="cloud.frankfurt.recovery.zone_a.data.postgresql_recovery" class="box data"><title>PostgreSQL recovery replica</title><rect x="2552" y="848" width="152" height="40" rx="5"/><text><tspan x="2628" y="865.5">PostgreSQL recovery</tspan><tspan x="2628" y="878.5">replica</tspan></text></g>
+<g id="cloud.frankfurt.recovery.zone_a.data.redis_cache" class="box data"><title>Redis cache (standby)</title><rect x="2744" y="848" width="152" height="40" rx="5"/><text><tspan x="2820" y="865.5">Redis cache</tspan><tspan x="2820" y="878.5">(standby)</tspan></text></g>
+</g>
+</g>
+<g id="cloud.frankfurt.recovery.zone_b" class="boundary zone plain">
+<rect x="3032" y="368" width="472" height="584" rx="8"/>
+<text class="title" x="3043" y="387">Zone b</text>
+<g id="cloud.frankfurt.recovery.zone_b.public" class="boundary subnet public">
+<rect x="3064" y="400" width="408" height="104" rx="8"/>
+<text class="title" x="3075" y="419">Public subnet</text>
+<g id="cloud.frankfurt.recovery.zone_b.public.load_balancer" class="box public"><title>Load balancer (standby)</title><rect x="3096" y="432" width="152" height="40" rx="5"/><text><tspan x="3172" y="449.5">Load balancer</tspan><tspan x="3172" y="462.5">(standby)</tspan></text></g>
+</g>
+<g id="cloud.frankfurt.recovery.zone_b.application" class="boundary subnet application">
+<rect x="3064" y="568" width="408" height="184" rx="8"/>
+<text class="title" x="3075" y="587">Application subnet</text>
+<g id="cloud.frankfurt.recovery.zone_b.application.storefront_api" class="box application"><title>Storefront API (standby)</title><rect x="3096" y="600" width="152" height="40" rx="5"/><text><tspan x="3172" y="617.5">Storefront API</tspan><tspan x="3172" y="630.5">(standby)</tspan></text></g>
+<g id="cloud.frankfurt.recovery.zone_b.application.billing_batch" class="box application"><title>Billing batch (standby)</title><rect x="3288" y="600" width="152" height="40" rx="5"/><text><tspan x="3364" y="617.5">Billing batch</tspan><tspan x="3364" y="630.5">(standby)</tspan></text></g>
+<g id="cloud.frankfurt.recovery.zone_b.application.catalogue_service" class="box application"><title>Catalogue service (standby)</title><rect x="3096" y="680" width="152" height="40" rx="5"/><text><tspan x="3172" y="697.5">Catalogue service</tspan><tspan x="3172" y="710.5">(standby)</tspan></text></g>
+<g id="cloud.frankfurt.recovery.zone_b.application.payment_service" class="box application"><title>Payment service (standby)</title><rect x="3288" y="680" width="152" height="40" rx="5"/><text><tspan x="3364" y="697.5">Payment service</tspan><tspan x="3364" y="710.5">(standby)</tspan></text></g>
+</g>
+<g id="cloud.frankfurt.recovery.zone_b.data" class="boundary subnet data">
+<rect x="3064" y="816" width="408" height="104" rx="8"/>
+<text class="title" x="3075" y="835">Data subnet</text>
+<g id="cloud.frankfurt.recovery.zone_b.data.search_node" class="box data"><title>Search node (standby)</title><rect x="3096" y="848" width="152" height="40" rx="5"/><text><tspan x="3172" y="865.5">Search node</tspan><tspan x="3172" y="878.5">(standby)</tspan></text></g>
+</g>
+</g>
+<g id="cloud.frankfurt.recovery.zone_c" class="boundary zone plain">
+<rect x="3576" y="368" width="472" height="584" rx="8"/>
+<text class="title" x="3587" y="387">Zone c</text>
+<g id="cloud.frankfurt.recovery.zone_c.application" class="boundary subnet application">
+<rect x="3608" y="568" width="408" height="184" rx="8"/>
+<text class="title" x="3619" y="587">Application subnet</text>
+<g id="cloud.frankfurt.recovery.zone_c.application.marketplace_api" class="box application"><title>Marketplace API (standby)</title><rect x="3832" y="600" width="152" height="40" rx="5"/><text><tspan x="3908" y="617.5">Marketplace API</tspan><tspan x="3908" y="630.5">(standby)</tspan></text></g>
+<g id="cloud.frankfurt.recovery.zone_c.application.directory_replica" class="box application"><title>Directory replica (standby)</title><rect x="3640" y="600" width="152" height="40" rx="5"/><text><tspan x="3716" y="617.5">Directory replica</tspan><tspan x="3716" y="630.5">(standby)</tspan></text></g>
+</g>
+<g id="cloud.frankfurt.recovery.zone_c.data" class="boundary subnet data">
+<rect x="3608" y="816" width="408" height="104" rx="8"/>
+<text class="title" x="3619" y="835">Data subnet</text>
+<g id="cloud.frankfurt.recovery.zone_c.data.search_node" class="box data"><title>Search node (standby)</title><rect x="3640" y="848" width="152" height="40" rx="5"/><text><tspan x="3716" y="865.5">Search node</tspan><tspan x="3716" y="878.5">(standby)</tspan></text></g>
+</g>
+</g>
+</g>
+</g>
+</g>
+<path class="link plain" data-from="internet" data-to="cloud.paris.production.internet_gateway" d="M2304 60H2252V264" marker-end="url(#arrow-plain)"><title>Internet → Internet gateway: HTTPS</title></path>
+<path class="link plain" data-from="cloud.paris.production.internet_gateway" data-to="cloud.paris.production.zone_a.public.web_firewall" d="M2140 304V348H332V432" marker-end="url(#arrow-plain)"><title>Internet gateway → Web application firewall</title></path><circle class="joint plain" cx="1068" cy="348" r="2.6"/>
+<path class="link public" data-from="cloud.paris.production.zone_a.public.web_firewall" data-to="cloud.paris.production.zone_a.public.load_balancer" d="M344 444H384" marker-end="url(#arrow-public)"><title>Web application firewall → Load balancer: filtered requests</title></path>
+<path class="link public" data-from="cloud.paris.production.zone_a.public.load_balancer" data-to="cloud.paris.production.zone_a.application.storefront_api" d="M396 472V588H372V612H344" marker-end="url(#arrow-public)"><title>Load balancer → Storefront API</title></path><circle class="joint public" cx="372" cy="612" r="2.6"/>
+<path class="link public" data-from="cloud.paris.production.zone_a.public.load_balancer" data-to="cloud.paris.production.zone_a.application.marketplace_api" d="M396 472V600" marker-end="url(#arrow-public)"><title>Load balancer → Marketplace API</title></path>
+<path class="link plain" data-from="cloud.paris.production.internet_gateway" data-to="cloud.paris.production.zone_b.public.web_firewall" d="M2140 304V348H1068V432" marker-end="url(#arrow-plain)"><title>Internet gateway → Web application firewall</title></path><circle class="joint plain" cx="2140" cy="348" r="2.6"/>
+<path class="link public" data-from="cloud.paris.production.zone_b.public.web_firewall" data-to="cloud.paris.production.zone_b.public.load_balancer" d="M1080 444H1120" marker-end="url(#arrow-public)"><title>Web application firewall → Load balancer: filtered requests</title></path>
+<path class="link public" data-from="cloud.paris.production.zone_b.public.load_balancer" data-to="cloud.paris.production.zone_b.application.storefront_api" d="M1132 472V588H1068V600" marker-end="url(#arrow-public)"><title>Load balancer → Storefront API</title></path><circle class="joint public" cx="1132" cy="588" r="2.6"/>
+<path class="link public" data-from="cloud.paris.production.zone_b.public.load_balancer" data-to="cloud.paris.production.zone_b.application.marketplace_api" d="M1132 472V600" marker-end="url(#arrow-public)"><title>Load balancer → Marketplace API</title></path>
+<path class="link plain" data-from="cloud.paris.production.internet_gateway" data-to="cloud.paris.production.zone_c.public.web_firewall" d="M2140 304V412H1804V432" marker-end="url(#arrow-plain)"><title>Internet gateway → Web application firewall</title></path>
+<path class="link public" data-from="cloud.paris.production.zone_c.public.web_firewall" data-to="cloud.paris.production.zone_c.public.load_balancer" d="M1816 444H1856" marker-end="url(#arrow-public)"><title>Web application firewall → Load balancer: filtered requests</title></path>
+<path class="link public" data-from="cloud.paris.production.zone_c.public.load_balancer" data-to="cloud.paris.production.zone_c.application.storefront_api" d="M1868 472V588H1844V612H1816" marker-end="url(#arrow-public)"><title>Load balancer → Storefront API</title></path><circle class="joint public" cx="1844" cy="612" r="2.6"/>
+<path class="link public" data-from="cloud.paris.production.zone_c.public.load_balancer" data-to="cloud.paris.production.zone_c.application.marketplace_api" d="M1868 472V600" marker-end="url(#arrow-public)"><title>Load balancer → Marketplace API</title></path>
+<path class="link public" data-from="cloud.paris.production.zone_a.public.load_balancer" data-to="cloud.paris.production.zone_a.application.seller_portal" d="M396 472V588H372V692H384" marker-end="url(#arrow-public)"><title>Load balancer → Seller portal</title></path><circle class="joint public" cx="396" cy="588" r="2.6"/>
+<path class="link public" data-from="cloud.paris.production.zone_c.public.load_balancer" data-to="cloud.paris.production.zone_c.application.seller_portal" d="M1868 472V588H1844V692H1856" marker-end="url(#arrow-public)"><title>Load balancer → Seller portal</title></path><circle class="joint public" cx="1868" cy="588" r="2.6"/>
+<path class="link public rule" data-from="cloud.paris.production.zone_a.public" data-to="cloud.paris.production.internet_gateway" d="M740 400V356H2124V304" marker-end="url(#arrow-public)"><title>Public subnet → Internet gateway: default route</title></path><circle class="joint public" cx="1476" cy="356" r="2.6"/>
+<path class="link public rule" data-from="cloud.paris.production.zone_b.public" data-to="cloud.paris.production.internet_gateway" d="M1476 400V356H2124V304" marker-end="url(#arrow-public)"><title>Public subnet → Internet gateway: default route</title></path><circle class="joint public" cx="2124" cy="356" r="2.6"/>
+<path class="link public rule" data-from="cloud.paris.production.zone_c.public" data-to="cloud.paris.production.internet_gateway" d="M2124 400V304" marker-end="url(#arrow-public)"><title>Public subnet → Internet gateway: default route</title></path>
+<path class="link application rule" data-from="cloud.paris.production.zone_a.application" data-to="cloud.paris.production.zone_a.public.nat_gateway" d="M588 568V472" marker-end="url(#arrow-application)"><title>Application subnet → NAT gateway: default route</title></path>
+<path class="link application rule" data-from="cloud.paris.production.zone_b.application" data-to="cloud.paris.production.zone_a.public.nat_gateway" d="M896 588H772V460H728" marker-end="url(#arrow-application)"><title>Application subnet → NAT gateway: default route</title></path>
+<path class="link application rule" data-from="cloud.paris.production.zone_c.application" data-to="cloud.paris.production.zone_c.public.nat_gateway" d="M2060 568V472" marker-end="url(#arrow-application)"><title>Application subnet → NAT gateway: default route</title></path>
+<path class="link public" data-from="cloud.paris.production.zone_a.public.nat_gateway" data-to="cloud.paris.production.network_firewall" d="M716 432V292H1920" marker-end="url(#arrow-public)"><title>NAT gateway → Network firewall: outbound traffic</title></path>
+<path class="link public" data-from="cloud.paris.production.zone_c.public.nat_gateway" data-to="cloud.paris.production.network_firewall" d="M2060 432V304" marker-end="url(#arrow-public)"><title>NAT gateway → Network firewall: outbound traffic</title></path>
+<path class="link plain" data-from="cloud.paris.production.network_firewall" data-to="cloud.paris.production.internet_gateway" d="M2072 276H2112" marker-end="url(#arrow-plain)"><title>Network firewall → Internet gateway: inspected outbound traffic</title></path>
+<path class="link plain" data-from="cloud.paris.production.internet_gateway" data-to="internet" d="M2264 276H2316V72" marker-end="url(#arrow-plain)"><title>Internet gateway → Internet: outbound traffic</title></path>
+<path class="link application rule" data-from="cloud.paris.production.zone_a.application" data-to="cloud.paris.shared" d="M160 892H148V1328" marker-end="url(#arrow-application)"><title>Application subnet → Shared services VPC: route to the shared services</title></path>
+<path class="link application rule" data-from="cloud.paris.production.zone_b.application" data-to="cloud.paris.shared" d="M1496 892H1540V1328" marker-end="url(#arrow-application)"><title>Application subnet → Shared services VPC: route to the shared services</title></path>
+<path class="link application rule" data-from="cloud.paris.production.zone_c.application" data-to="cloud.paris.shared" d="M1632 884H1540V1328" marker-end="url(#arrow-application)"><title>Application subnet → Shared services VPC: route to the shared services</title></path><circle class="joint application" cx="1540" cy="892" r="2.6"/>
+<path class="link public rule" data-from="cloud.paris.production.zone_a.public" data-to="cloud.paris.production.zone_a.application" d="M180 504V568" marker-end="url(#arrow-public)"><title>Public subnet → Application subnet: security rule: HTTPS from the load balancer</title></path>
+<path class="link public rule" data-from="cloud.paris.production.zone_b.public" data-to="cloud.paris.production.zone_b.application" d="M916 504V568" marker-end="url(#arrow-public)"><title>Public subnet → Application subnet: security rule: HTTPS from the load balancer</title></path>
+<path class="link public rule" data-from="cloud.paris.production.zone_c.public" data-to="cloud.paris.production.zone_c.application" d="M1652 504V568" marker-end="url(#arrow-public)"><title>Public subnet → Application subnet: security rule: HTTPS from the load balancer</title></path>
+<path class="link application rule" data-from="cloud.paris.production.zone_a.application" data-to="cloud.paris.production.zone_a.data" d="M180 912V976" marker-end="url(#arrow-application)"><title>Application subnet → Data subnet: security rule: PostgreSQL, Redis and search</title></path>
+<path class="link application rule" data-from="cloud.paris.production.zone_a.application" data-to="cloud.paris.production.zone_b.data" d="M740 912V932H916V976" marker-end="url(#arrow-application)"><title>Application subnet → Data subnet: security rule: PostgreSQL, Redis and search</title></path><circle class="joint application" cx="916" cy="932" r="2.6"/>
+<path class="link application rule" data-from="cloud.paris.production.zone_a.application" data-to="cloud.paris.production.zone_c.data" d="M732 912V964H1252V924H1652V976" marker-end="url(#arrow-application)"><title>Application subnet → Data subnet: security rule: PostgreSQL, Redis and search</title></path><circle class="joint application" cx="1476" cy="924" r="2.6"/>
+<path class="link application rule" data-from="cloud.paris.production.zone_b.application" data-to="cloud.paris.production.zone_a.data" d="M896 892H772V996H760" marker-end="url(#arrow-application)"><title>Application subnet → Data subnet: security rule: PostgreSQL, Redis and search</title></path>
+<path class="link application rule" data-from="cloud.paris.production.zone_b.application" data-to="cloud.paris.production.zone_b.data" d="M916 912V976" marker-end="url(#arrow-application)"><title>Application subnet → Data subnet: security rule: PostgreSQL, Redis and search</title></path>
+<path class="link application rule" data-from="cloud.paris.production.zone_b.application" data-to="cloud.paris.production.zone_c.data" d="M1476 912V924H1652V976" marker-end="url(#arrow-application)"><title>Application subnet → Data subnet: security rule: PostgreSQL, Redis and search</title></path><circle class="joint application" cx="1652" cy="924" r="2.6"/>
+<path class="link application rule" data-from="cloud.paris.production.zone_c.application" data-to="cloud.paris.production.zone_a.data" d="M1660 568V548H876V892H772V996H760" marker-end="url(#arrow-application)"><title>Application subnet → Data subnet: security rule: PostgreSQL, Redis and search</title></path><circle class="joint application" cx="876" cy="892" r="2.6"/>
+<path class="link application rule" data-from="cloud.paris.production.zone_c.application" data-to="cloud.paris.production.zone_b.data" d="M1632 892H1548V996H1496" marker-end="url(#arrow-application)"><title>Application subnet → Data subnet: security rule: PostgreSQL, Redis and search</title></path>
+<path class="link application rule" data-from="cloud.paris.production.zone_c.application" data-to="cloud.paris.production.zone_c.data" d="M1652 912V976" marker-end="url(#arrow-application)"><title>Application subnet → Data subnet: security rule: PostgreSQL, Redis and search</title></path>
+<path class="link application" data-from="cloud.paris.production.zone_a.application.storefront_api" data-to="cloud.paris.production.zone_a.data.postgresql_primary" d="M344 628H356V1020H344" marker-end="url(#arrow-application)"><title>Storefront API → PostgreSQL primary: SQL</title></path><circle class="joint application" cx="356" cy="708" r="2.6"/>
+<path class="link application" data-from="cloud.paris.production.zone_a.application.marketplace_api" data-to="cloud.paris.production.zone_a.data.postgresql_primary" d="M384 628H356V1020H344" marker-end="url(#arrow-application)"><title>Marketplace API → PostgreSQL primary: SQL</title></path><circle class="joint application" cx="356" cy="628" r="2.6"/>
+<path class="link application" data-from="cloud.paris.production.zone_b.application.storefront_api" data-to="cloud.paris.production.zone_a.data.postgresql_primary" d="M928 628H916V812H940V924H356V1020H344" marker-end="url(#arrow-application)"><title>Storefront API → PostgreSQL primary: SQL</title></path><circle class="joint application" cx="940" cy="812" r="2.6"/>
+<path class="link application" data-from="cloud.paris.production.zone_b.application.marketplace_api" data-to="cloud.paris.production.zone_a.data.postgresql_primary" d="M1148 600V556H884V924H356V1020H344" marker-end="url(#arrow-application)"><title>Marketplace API → PostgreSQL primary: SQL</title></path><circle class="joint application" cx="884" cy="924" r="2.6"/>
+<path class="link application" data-from="cloud.paris.production.zone_c.application.storefront_api" data-to="cloud.paris.production.zone_a.data.postgresql_primary" d="M1664 612H1508V556H884V924H356V1020H344" marker-end="url(#arrow-application)"><title>Storefront API → PostgreSQL primary: SQL</title></path><circle class="joint application" cx="1148" cy="556" r="2.6"/>
+<path class="link application" data-from="cloud.paris.production.zone_c.application.marketplace_api" data-to="cloud.paris.production.zone_a.data.postgresql_primary" d="M1884 640V652H1652V612H1508V556H884V924H356V1020H344" marker-end="url(#arrow-application)"><title>Marketplace API → PostgreSQL primary: SQL</title></path><circle class="joint application" cx="1884" cy="652" r="2.6"/>
+<path class="link application" data-from="cloud.paris.production.zone_a.application.payment_service" data-to="cloud.paris.production.zone_a.data.postgresql_primary" d="M604 720V732H356V1020H344" marker-end="url(#arrow-application)"><title>Payment service → PostgreSQL primary: SQL</title></path><circle class="joint application" cx="356" cy="732" r="2.6"/>
+<path class="link application" data-from="cloud.paris.production.zone_a.application.seller_portal" data-to="cloud.paris.production.zone_a.data.postgresql_primary" d="M384 708H356V1020H344" marker-end="url(#arrow-application)"><title>Seller portal → PostgreSQL primary: SQL</title></path><circle class="joint application" cx="356" cy="708" r="2.6"/>
+<path class="link application" data-from="cloud.paris.production.zone_c.application.payment_service" data-to="cloud.paris.production.zone_a.data.postgresql_primary" d="M2060 680V668H1884V652H1652V612H1508V556H884V924H356V1020H344" marker-end="url(#arrow-application)"><title>Payment service → PostgreSQL primary: SQL</title></path><circle class="joint application" cx="1884" cy="668" r="2.6"/>
+<path class="link application" data-from="cloud.paris.production.zone_c.application.seller_portal" data-to="cloud.paris.production.zone_a.data.postgresql_primary" d="M1884 680V652H1652V612H1508V556H884V924H356V1020H344" marker-end="url(#arrow-application)"><title>Seller portal → PostgreSQL primary: SQL</title></path><circle class="joint application" cx="1652" cy="612" r="2.6"/>
+<path class="link application" data-from="cloud.paris.production.zone_a.application.order_worker" data-to="cloud.paris.production.zone_a.data.postgresql_primary" d="M344 788H356V1020H344" marker-end="url(#arrow-application)"><title>Order worker → PostgreSQL primary: SQL</title></path>
+<path class="link application" data-from="cloud.paris.production.zone_b.application.order_worker" data-to="cloud.paris.production.zone_a.data.postgresql_primary" d="M940 800V924H356V1020H344" marker-end="url(#arrow-application)"><title>Order worker → PostgreSQL primary: SQL</title></path><circle class="joint application" cx="356" cy="924" r="2.6"/>
+<path class="link application" data-from="cloud.paris.production.zone_b.application.billing_batch" data-to="cloud.paris.production.zone_b.data.postgresql_replica" d="M1120 708H1092V1020H1080" marker-end="url(#arrow-application)"><title>Billing batch → PostgreSQL synchronous replica: reads</title></path><circle class="joint application" cx="1092" cy="708" r="2.6"/>
+<path class="link application" data-from="cloud.paris.production.zone_a.application.catalogue_service" data-to="cloud.paris.production.zone_a.data.postgresql_primary" d="M344 708H356V1020H344" marker-end="url(#arrow-application)"><title>Catalogue service → PostgreSQL primary: SQL</title></path><circle class="joint application" cx="356" cy="788" r="2.6"/>
+<path class="link application" data-from="cloud.paris.production.zone_b.application.catalogue_service" data-to="cloud.paris.production.zone_b.data.postgresql_replica" d="M1080 708H1092V1020H1080" marker-end="url(#arrow-application)"><title>Catalogue service → PostgreSQL synchronous replica: reads</title></path>
+<path class="link application" data-from="cloud.paris.production.zone_c.application.catalogue_service" data-to="cloud.paris.production.zone_c.data.postgresql_replica" d="M1816 708H1828V1020H1816" marker-end="url(#arrow-application)"><title>Catalogue service → PostgreSQL read replica: reads</title></path>
+<path class="link application" data-from="cloud.paris.production.zone_a.application.storefront_api" data-to="cloud.paris.production.zone_a.data.redis_cache" d="M192 628H180V900H396V1008" marker-end="url(#arrow-application)"><title>Storefront API → Redis cache: sessions</title></path>
+<path class="link application" data-from="cloud.paris.production.zone_a.application.storefront_api" data-to="cloud.paris.production.zone_a.application.cart_service" d="M332 600V580H588V600" marker-end="url(#arrow-application)"><title>Storefront API → Cart service: cart calls</title></path>
+<path class="link application" data-from="cloud.paris.production.zone_a.application.storefront_api" data-to="cloud.paris.production.zone_a.application.catalogue_service" d="M204 640V680" marker-end="url(#arrow-application)"><title>Storefront API → Catalogue service: catalogue calls</title></path>
+<path class="link application" data-from="cloud.paris.production.zone_a.application.marketplace_api" data-to="cloud.paris.production.zone_a.application.catalogue_service" d="M396 640V668H332V680" marker-end="url(#arrow-application)"><title>Marketplace API → Catalogue service: listings</title></path>
+<path class="link application" data-from="cloud.paris.production.zone_a.application.cart_service" data-to="cloud.paris.production.zone_a.data.redis_cache" d="M576 628H548V1020H536" marker-end="url(#arrow-application)"><title>Cart service → Redis cache: carts</title></path>
+<path class="link application" data-from="cloud.paris.production.zone_a.application.catalogue_service" data-to="cloud.paris.production.zone_a.data.search_node" d="M344 692H364V724H372V892H588V1008" marker-end="url(#arrow-application)"><title>Catalogue service → Search node: catalogue search</title></path>
+<path class="link application" data-from="cloud.paris.production.zone_b.application.storefront_api" data-to="cloud.paris.production.zone_b.data.redis_replica" d="M1080 628H1108V1020H1120" marker-end="url(#arrow-application)"><title>Storefront API → Redis cache replica: sessions</title></path>
+<path class="link application" data-from="cloud.paris.production.zone_b.application.storefront_api" data-to="cloud.paris.production.zone_b.application.cart_service" d="M1068 640V652H1324V640" marker-end="url(#arrow-application)"><title>Storefront API → Cart service: cart calls</title></path>
+<path class="link application" data-from="cloud.paris.production.zone_b.application.storefront_api" data-to="cloud.paris.production.zone_b.application.catalogue_service" d="M940 640V680" marker-end="url(#arrow-application)"><title>Storefront API → Catalogue service: catalogue calls</title></path>
+<path class="link application" data-from="cloud.paris.production.zone_b.application.marketplace_api" data-to="cloud.paris.production.zone_b.application.catalogue_service" d="M1132 640V668H1068V680" marker-end="url(#arrow-application)"><title>Marketplace API → Catalogue service: listings</title></path>
+<path class="link application" data-from="cloud.paris.production.zone_b.application.cart_service" data-to="cloud.paris.production.zone_b.data.redis_replica" d="M1312 628H1284V1020H1272" marker-end="url(#arrow-application)"><title>Cart service → Redis cache replica: carts</title></path>
+<path class="link application" data-from="cloud.paris.production.zone_b.application.catalogue_service" data-to="cloud.paris.production.zone_b.data.search_node" d="M1080 692H1100V996H1324V1008" marker-end="url(#arrow-application)"><title>Catalogue service → Search node: catalogue search</title></path>
+<path class="link application" data-from="cloud.paris.production.zone_c.application.storefront_api" data-to="cloud.paris.production.zone_c.data.redis_replica" d="M1816 628H1836V1020H1856" marker-end="url(#arrow-application)"><title>Storefront API → Redis cache replica: sessions</title></path>
+<path class="link application" data-from="cloud.paris.production.zone_c.application.storefront_api" data-to="cloud.paris.production.zone_c.application.cart_service" d="M1804 600V580H2060V600" marker-end="url(#arrow-application)"><title>Storefront API → Cart service: cart calls</title></path>
+<path class="link application" data-from="cloud.paris.production.zone_c.application.storefront_api" data-to="cloud.paris.production.zone_c.application.catalogue_service" d="M1676 640V680" marker-end="url(#arrow-application)"><title>Storefront API → Catalogue service: catalogue calls</title></path>
+<path class="link application" data-from="cloud.paris.production.zone_c.application.marketplace_api" data-to="cloud.paris.production.zone_c.application.catalogue_service" d="M1868 640V668H1804V680" marker-end="url(#arrow-application)"><title>Marketplace API → Catalogue service: listings</title></path>
+<path class="link application" data-from="cloud.paris.production.zone_c.application.cart_service" data-to="cloud.paris.production.zone_c.data.redis_replica" d="M2048 612H2020V1020H2008" marker-end="url(#arrow-application)"><title>Cart service → Redis cache replica: carts</title></path>
+<path class="link application" data-from="cloud.paris.production.zone_c.application.catalogue_service" data-to="cloud.paris.production.zone_c.data.search_node" d="M1804 720V820H2028V1020H2048" marker-end="url(#arrow-application)"><title>Catalogue service → Search node: catalogue search</title></path>
+<path class="link data" data-from="cloud.paris.production.zone_a.data.postgresql_primary" data-to="cloud.paris.production.zone_b.data.postgresql_replica" d="M332 1048V1060H940V1048" marker-end="url(#arrow-data)"><title>PostgreSQL primary → PostgreSQL synchronous replica: synchronous replication</title></path>
+<path class="link data" data-from="cloud.paris.production.zone_a.data.postgresql_primary" data-to="cloud.paris.production.zone_c.data.postgresql_replica" d="M316 1048V1124H1676V1048" marker-end="url(#arrow-data)"><title>PostgreSQL primary → PostgreSQL read replica: asynchronous replication</title></path>
+<path class="link data" data-from="cloud.paris.production.zone_a.data.redis_cache" data-to="cloud.paris.production.zone_b.data.redis_replica" d="M524 1048V1068H1132V1048" marker-end="url(#arrow-data)"><title>Redis cache → Redis cache replica: cache replication</title></path>
+<path class="link data" data-from="cloud.paris.production.zone_a.data.redis_cache" data-to="cloud.paris.production.zone_c.data.redis_replica" d="M524 1048V1068H1132V1100H1868V1048" marker-end="url(#arrow-data)"><title>Redis cache → Redis cache replica: cache replication</title></path><circle class="joint data" cx="1132" cy="1068" r="2.6"/>
+<path class="link data" data-from="cloud.paris.production.zone_a.data.search_node" data-to="cloud.paris.production.zone_b.data.search_node" d="M716 1048V1092H1324V1048" marker-end="url(#arrow-data)" marker-start="url(#arrow-data)"><title>Search node ↔ Search node: index replication</title></path>
+<path class="link data" data-from="cloud.paris.production.zone_b.data.search_node" data-to="cloud.paris.production.zone_c.data.search_node" d="M1452 1048V1060H2060V1048" marker-end="url(#arrow-data)" marker-start="url(#arrow-data)"><title>Search node ↔ Search node: index replication</title></path>
+<path class="link application" data-from="cloud.paris.production.zone_a.application.storefront_api" data-to="cloud.paris.production.zone_a.application.queue_endpoint" d="M332 640V660H564V788H576" marker-end="url(#arrow-application)"><title>Storefront API → Private endpoint (message queue): validated orders</title></path>
+<path class="link application" data-from="cloud.paris.production.zone_a.application.order_worker" data-to="cloud.paris.production.zone_a.application.queue_endpoint" d="M332 760V748H588V760" marker-end="url(#arrow-application)"><title>Order worker → Private endpoint (message queue): orders to process</title></path>
+<path class="link application" data-from="cloud.paris.production.zone_a.application.queue_endpoint" data-to="cloud.paris.message_queue" d="M716 800V948H1588V1204H1772V1216" marker-end="url(#arrow-application)"><title>Private endpoint (message queue) → Message queue</title></path><circle class="joint application" cx="1588" cy="948" r="2.6"/>
+<path class="link application" data-from="cloud.paris.production.zone_a.application.notification_worker" data-to="cloud.paris.production.zone_a.application.queue_endpoint" d="M536 772H576" marker-end="url(#arrow-application)"><title>Notification worker → Private endpoint (message queue): notifications to send</title></path>
+<path class="link application" data-from="cloud.paris.production.zone_a.application.notification_worker" data-to="cloud.paris.production.zone_a.application.email_endpoint" d="M396 800V840" marker-end="url(#arrow-application)"><title>Notification worker → Private endpoint (email service): emails</title></path>
+<path class="link application" data-from="cloud.paris.production.zone_a.application.email_endpoint" data-to="cloud.paris.email_service" d="M524 880V940H1260V964H1516V1216" marker-end="url(#arrow-application)"><title>Private endpoint (email service) → Email service</title></path><circle class="joint application" cx="1260" cy="940" r="2.6"/>
+<path class="link application" data-from="cloud.paris.production.zone_b.application.storefront_api" data-to="cloud.paris.production.zone_b.application.queue_endpoint" d="M1052 640V660H1340V760" marker-end="url(#arrow-application)"><title>Storefront API → Private endpoint (message queue): validated orders</title></path>
+<path class="link application" data-from="cloud.paris.production.zone_b.application.order_worker" data-to="cloud.paris.production.zone_b.application.queue_endpoint" d="M1068 800V812H1324V800" marker-end="url(#arrow-application)"><title>Order worker → Private endpoint (message queue): orders to process</title></path>
+<path class="link application" data-from="cloud.paris.production.zone_b.application.queue_endpoint" data-to="cloud.paris.message_queue" d="M1464 788H1588V1204H1772V1216" marker-end="url(#arrow-application)"><title>Private endpoint (message queue) → Message queue</title></path>
+<path class="link application" data-from="cloud.paris.production.zone_b.application.notification_worker" data-to="cloud.paris.production.zone_b.application.queue_endpoint" d="M1272 772H1312" marker-end="url(#arrow-application)"><title>Notification worker → Private endpoint (message queue): notifications to send</title></path>
+<path class="link application" data-from="cloud.paris.production.zone_b.application.notification_worker" data-to="cloud.paris.production.zone_b.application.email_endpoint" d="M1132 800V840" marker-end="url(#arrow-application)"><title>Notification worker → Private endpoint (email service): emails</title></path>
+<path class="link application" data-from="cloud.paris.production.zone_b.application.email_endpoint" data-to="cloud.paris.email_service" d="M1260 880V964H1516V1216" marker-end="url(#arrow-application)"><title>Private endpoint (email service) → Email service</title></path>
+<path class="link application" data-from="cloud.paris.production.zone_b.application.billing_batch" data-to="cloud.paris.production.zone_b.application.queue_endpoint" d="M1272 708H1324V760" marker-end="url(#arrow-application)"><title>Billing batch → Private endpoint (message queue): orders to invoice</title></path>
+<path class="link application" data-from="cloud.paris.production.zone_b.application.billing_batch" data-to="cloud.paris.production.zone_b.application.storage_endpoint" d="M1272 692H1300V852H1312" marker-end="url(#arrow-application)"><title>Billing batch → Private endpoint (object storage): invoice files</title></path>
+<path class="link application" data-from="cloud.paris.production.zone_c.application.marketplace_api" data-to="cloud.paris.production.zone_c.application.storage_endpoint" d="M2008 628H2036V852H2048" marker-end="url(#arrow-application)"><title>Marketplace API → Private endpoint (object storage): catalogue images</title></path>
+<path class="link application" data-from="cloud.paris.production.zone_b.application.storage_endpoint" data-to="cloud.paris.object_storage" d="M1464 868H1580V1196H1964V1216" marker-end="url(#arrow-application)"><title>Private endpoint (object storage) → Object storage</title></path>
+<path class="link application" data-from="cloud.paris.production.zone_c.application.storage_endpoint" data-to="cloud.paris.object_storage" d="M2200 868H2244V1204H2092V1216" marker-end="url(#arrow-application)"><title>Private endpoint (object storage) → Object storage</title></path>
+<path class="link application" data-from="cloud.paris.production.zone_a.application.payment_service" data-to="cloud.paris.production.zone_a.application.secrets_endpoint" d="M588 720V740H364V852H344" marker-end="url(#arrow-application)"><title>Payment service → Private endpoint (secrets manager): payment keys</title></path>
+<path class="link application" data-from="cloud.paris.production.zone_a.application.secrets_endpoint" data-to="cloud.paris.secrets_manager" d="M332 880V956H1612V1216" marker-end="url(#arrow-application)"><title>Private endpoint (secrets manager) → Secrets manager</title></path><circle class="joint application" cx="1612" cy="956" r="2.6"/>
+<path class="link application" data-from="cloud.paris.production.zone_c.application.payment_service" data-to="cloud.paris.production.zone_c.application.secrets_endpoint" d="M2060 720V828H1804V840" marker-end="url(#arrow-application)"><title>Payment service → Private endpoint (secrets manager): payment keys</title></path>
+<path class="link application" data-from="cloud.paris.production.zone_c.application.secrets_endpoint" data-to="cloud.paris.secrets_manager" d="M1664 868H1612V1216" marker-end="url(#arrow-application)"><title>Private endpoint (secrets manager) → Secrets manager</title></path>
+<path class="link plain rule" data-from="cloud.paris.production" data-to="cloud.paris.shared" d="M116 1144V1328" marker-end="url(#arrow-plain)" marker-start="url(#arrow-plain)"><title>Production VPC ↔ Shared services VPC: peering</title></path>
+<path class="link plain" data-from="cloud.paris.shared.vpn_gateway" data-to="datacenter.vpn_router" d="M2252 1360V1316H2504" marker-end="url(#arrow-plain)" marker-start="url(#arrow-plain)"><title>VPN gateway ↔ VPN router: VPN tunnel</title></path>
+<path class="link plain" data-from="datacenter.vpn_router" data-to="datacenter.erp" d="M2656 1300H2696" marker-end="url(#arrow-plain)"><title>VPN router → Accounting ERP</title></path>
+<path class="link plain" data-from="datacenter.vpn_router" data-to="datacenter.wms" d="M2516 1328V1368" marker-end="url(#arrow-plain)"><title>VPN router → Warehouse management system</title></path>
+<path class="link plain" data-from="datacenter.vpn_router" data-to="datacenter.directory" d="M2656 1300H2684V1380H2696" marker-end="url(#arrow-plain)"><title>VPN router → Active Directory</title></path><circle class="joint plain" cx="2684" cy="1300" r="2.6"/>
+<path class="link plain" data-from="datacenter.directory" data-to="cloud.paris.shared.zone_c.application.directory_replica" d="M2708 1408V1420H1804V1528" marker-end="url(#arrow-plain)"><title>Active Directory → Directory replica: directory replication</title></path>
+<path class="link plain" data-from="cloud.frankfurt.recovery.vpn_gateway" data-to="datacenter.vpn_router" d="M3012 304V1340H2644V1328" marker-end="url(#arrow-plain)" marker-start="url(#arrow-plain)"><title>VPN gateway (standby) ↔ VPN router: VPN tunnel (standby)</title></path>
+<path class="link plain" data-from="datacenter.directory" data-to="cloud.frankfurt.recovery.zone_c.application.directory_replica" d="M2848 1380H3516V628H3640" marker-end="url(#arrow-plain)"><title>Active Directory → Directory replica (standby): directory replication</title></path>
+<path class="link application rule" data-from="cloud.paris.shared.zone_a.application.bastion" data-to="cloud.paris.production" d="M316 1528V1144" marker-end="url(#arrow-application)"><title>Bastion host → Production VPC: SSH through the peering</title></path>
+<path class="link application rule" data-from="cloud.paris.shared.zone_b.application.monitoring" data-to="cloud.paris.production" d="M1052 1528V1144" marker-end="url(#arrow-application)"><title>Monitoring → Production VPC: metrics collection through the peering</title></path>
+<path class="link application" data-from="cloud.paris.shared.zone_b.application.monitoring" data-to="cloud.paris.shared.zone_a.data.metrics_database" d="M928 1556H772V1788H344" marker-end="url(#arrow-application)"><title>Monitoring → Metrics database: metrics</title></path>
+<path class="link plain rule" data-from="cloud.paris.production" data-to="cloud.paris.shared.zone_b.application.log_collector" d="M1132 1144V1528" marker-end="url(#arrow-plain)"><title>Production VPC → Log collector: application logs</title></path>
+<path class="link application" data-from="cloud.paris.shared.zone_b.application.log_collector" data-to="cloud.paris.shared.zone_b.data.log_store" d="M1132 1568V1788H1080" marker-end="url(#arrow-application)"><title>Log collector → Log store: logs</title></path>
+<path class="link application" data-from="cloud.paris.shared.zone_a.application.ci_runner" data-to="cloud.paris.shared.zone_b.application.container_registry" d="M716 1568V1580H1324V1568" marker-end="url(#arrow-application)"><title>CI runner → Container registry: image builds</title></path>
+<path class="link application" data-from="cloud.paris.shared.zone_a.application.ci_runner" data-to="cloud.paris.shared.zone_a.application.artifact_repository" d="M588 1568V1596H332V1608" marker-end="url(#arrow-application)"><title>CI runner → Artifact repository: build artefacts</title></path>
+<path class="link application" data-from="cloud.paris.shared.zone_b.application.monitoring" data-to="cloud.paris.shared.zone_b.application.alert_manager" d="M940 1568V1608" marker-end="url(#arrow-application)"><title>Monitoring → Alert manager: alerts</title></path>
+<path class="link data" data-from="cloud.paris.production.zone_c.data.postgresql_replica" data-to="datacenter.data_warehouse" d="M1804 1048V1188H2460V1460H2504" marker-end="url(#arrow-data)"><title>PostgreSQL read replica → Data warehouse: nightly export</title></path>
+<path class="link application" data-from="cloud.paris.shared.zone_a.application.backup_job" data-to="cloud.paris.production.zone_c.data.postgresql_replica" d="M524 1528V1132H1692V1048" marker-end="url(#arrow-application)"><title>Backup job → PostgreSQL read replica: nightly dump</title></path>
+<path class="link application" data-from="cloud.paris.shared.zone_a.application.backup_job" data-to="cloud.paris.shared.zone_a.application.storage_endpoint" d="M396 1568V1608" marker-end="url(#arrow-application)"><title>Backup job → Private endpoint (object storage): backups</title></path>
+<path class="link data" data-from="cloud.paris.production.zone_a.data.postgresql_primary" data-to="cloud.paris.transit_gateway" d="M316 1048V1124H2156V1216" marker-end="url(#arrow-data)"><title>PostgreSQL primary → Transit gateway: asynchronous replication</title></path><circle class="joint data" cx="1676" cy="1124" r="2.6"/>
+<path class="link plain" data-from="cloud.paris.transit_gateway" data-to="cloud.frankfurt.transit_gateway" d="M2296 1228H2364V1084H2456" marker-end="url(#arrow-plain)"><title>Transit gateway → Transit gateway: inter-region link</title></path>
+<path class="link plain" data-from="cloud.frankfurt.transit_gateway" data-to="cloud.frankfurt.recovery.zone_a.data.postgresql_recovery" d="M2564 1056V888" marker-end="url(#arrow-plain)"><title>Transit gateway → PostgreSQL recovery replica: asynchronous replication</title></path>
+<path class="link plain" data-from="cloud.paris.object_storage" data-to="cloud.frankfurt.object_storage" d="M2076 1216V1172H2660V1096" marker-end="url(#arrow-plain)"><title>Object storage → Object storage: replication managed by the service</title></path>
+<path class="link application" data-from="cloud.paris.shared.zone_a.application.storage_endpoint" data-to="cloud.frankfurt.object_storage" d="M536 1620H748V1268H2356V1108H2676V1096" marker-end="url(#arrow-application)"><title>Private endpoint (object storage) → Object storage: backup writes</title></path>
+<path class="link plain" data-from="internet" data-to="cloud.frankfurt.recovery.internet_gateway" d="M2412 72V276H2488" marker-end="url(#arrow-plain)"><title>Internet → Internet gateway (standby): HTTPS after a failover</title></path>
+<path class="link plain" data-from="cloud.frankfurt.recovery.internet_gateway" data-to="cloud.frankfurt.recovery.zone_a.public.load_balancer" d="M2640 292H2660V432" marker-end="url(#arrow-plain)"><title>Internet gateway (standby) → Load balancer (standby)</title></path>
+<path class="link public" data-from="cloud.frankfurt.recovery.zone_a.public.load_balancer" data-to="cloud.frankfurt.recovery.zone_a.application.storefront_api" d="M2676 472V600" marker-end="url(#arrow-public)"><title>Load balancer (standby) → Storefront API (standby)</title></path>
+<path class="link public rule" data-from="cloud.frankfurt.recovery.zone_a.public" data-to="cloud.frankfurt.recovery.internet_gateway" d="M2548 400V304" marker-end="url(#arrow-public)"><title>Public subnet → Internet gateway (standby): default route</title></path>
+<path class="link plain" data-from="cloud.frankfurt.recovery.internet_gateway" data-to="cloud.frankfurt.recovery.zone_b.public.load_balancer" d="M2640 292H2660V356H2972V444H3096" marker-end="url(#arrow-plain)"><title>Internet gateway (standby) → Load balancer (standby)</title></path><circle class="joint plain" cx="2660" cy="356" r="2.6"/>
+<path class="link public" data-from="cloud.frankfurt.recovery.zone_b.public.load_balancer" data-to="cloud.frankfurt.recovery.zone_b.application.storefront_api" d="M3220 472V600" marker-end="url(#arrow-public)"><title>Load balancer (standby) → Storefront API (standby)</title></path>
+<path class="link public rule" data-from="cloud.frankfurt.recovery.zone_b.public" data-to="cloud.frankfurt.recovery.internet_gateway" d="M3092 400V348H2548V304" marker-end="url(#arrow-public)"><title>Public subnet → Internet gateway (standby): default route</title></path><circle class="joint public" cx="2548" cy="348" r="2.6"/>
+<path class="link public" data-from="cloud.frankfurt.recovery.zone_a.public.load_balancer" data-to="cloud.frankfurt.recovery.zone_a.application.marketplace_api" d="M2676 472V588H2756V600" marker-end="url(#arrow-public)"><title>Load balancer (standby) → Marketplace API (standby)</title></path><circle class="joint public" cx="2676" cy="588" r="2.6"/>
+<path class="link application rule" data-from="cloud.frankfurt.recovery.zone_a.application" data-to="cloud.frankfurt.recovery.zone_a.public.nat_gateway" d="M2756 568V472" marker-end="url(#arrow-application)"><title>Application subnet → NAT gateway (standby): default route</title></path>
+<path class="link application rule" data-from="cloud.frankfurt.recovery.zone_b.application" data-to="cloud.frankfurt.recovery.zone_a.public.nat_gateway" d="M3084 568V556H2756V472" marker-end="url(#arrow-application)"><title>Application subnet → NAT gateway (standby): default route</title></path><circle class="joint application" cx="2756" cy="556" r="2.6"/>
+<path class="link application rule" data-from="cloud.frankfurt.recovery.zone_c.application" data-to="cloud.frankfurt.recovery.zone_a.public.nat_gateway" d="M3628 568V556H2756V472" marker-end="url(#arrow-application)"><title>Application subnet → NAT gateway (standby): default route</title></path><circle class="joint application" cx="3084" cy="556" r="2.6"/>
+<path class="link public" data-from="cloud.frankfurt.recovery.zone_a.public.nat_gateway" data-to="cloud.frankfurt.recovery.network_firewall" d="M2756 432V304" marker-end="url(#arrow-public)"><title>NAT gateway (standby) → Network firewall (standby): outbound traffic</title></path>
+<path class="link plain" data-from="cloud.frankfurt.recovery.network_firewall" data-to="cloud.frankfurt.recovery.internet_gateway" d="M2680 276H2640" marker-end="url(#arrow-plain)"><title>Network firewall (standby) → Internet gateway (standby): inspected outbound traffic</title></path>
+<path class="link application" data-from="cloud.frankfurt.recovery.zone_a.application.storefront_api" data-to="cloud.frankfurt.recovery.zone_a.data.postgresql_recovery" d="M2704 628H2716V860H2704" marker-end="url(#arrow-application)"><title>Storefront API (standby) → PostgreSQL recovery replica: SQL</title></path>
+<path class="link application" data-from="cloud.frankfurt.recovery.zone_a.application.storefront_api" data-to="cloud.frankfurt.recovery.zone_a.data.redis_cache" d="M2704 612H2732V860H2744" marker-end="url(#arrow-application)"><title>Storefront API (standby) → Redis cache (standby): sessions</title></path>
+<path class="link application" data-from="cloud.frankfurt.recovery.zone_a.application.storefront_api" data-to="cloud.frankfurt.recovery.zone_a.application.cart_service" d="M2564 640V680" marker-end="url(#arrow-application)"><title>Storefront API (standby) → Cart service (standby): cart calls</title></path>
+<path class="link application" data-from="cloud.frankfurt.recovery.zone_a.application.cart_service" data-to="cloud.frankfurt.recovery.zone_a.data.redis_cache" d="M2692 720V836H2756V848" marker-end="url(#arrow-application)"><title>Cart service (standby) → Redis cache (standby): carts</title></path>
+<path class="link application" data-from="cloud.frankfurt.recovery.zone_b.application.storefront_api" data-to="cloud.frankfurt.recovery.zone_b.application.catalogue_service" d="M3108 640V680" marker-end="url(#arrow-application)"><title>Storefront API (standby) → Catalogue service (standby): catalogue calls</title></path>
+<path class="link application" data-from="cloud.frankfurt.recovery.zone_b.application.catalogue_service" data-to="cloud.frankfurt.recovery.zone_b.data.search_node" d="M3172 720V848" marker-end="url(#arrow-application)"><title>Catalogue service (standby) → Search node (standby): catalogue search</title></path>
+<g class="label plain"><rect x="2243.5" y="52" width="33" height="16" rx="3"/><text><tspan x="2260" y="63.5">HTTPS</tspan></text></g>
+<g class="label public"><rect x="312.7" y="412" width="102.6" height="16" rx="3"/><text><tspan x="364" y="423.5">filtered requests</tspan></text></g>
+<g class="label public"><rect x="1048.7" y="412" width="102.6" height="16" rx="3"/><text><tspan x="1100" y="423.5">filtered requests</tspan></text></g>
+<g class="label public"><rect x="1784.7" y="476" width="102.6" height="16" rx="3"/><text><tspan x="1836" y="487.5">filtered requests</tspan></text></g>
+<g class="label public"><rect x="1396.3" y="324" width="79.4" height="16" rx="3"/><text><tspan x="1436" y="335.5">default route</tspan></text></g>
+<g class="label application"><rect x="548.3" y="516" width="79.4" height="16" rx="3"/><text><tspan x="588" y="527.5">default route</tspan></text></g>
+<g class="label application"><rect x="2020.3" y="516" width="79.4" height="16" rx="3"/><text><tspan x="2060" y="527.5">default route</tspan></text></g>
+<g class="label public"><rect x="1203.6" y="284" width="96.8" height="16" rx="3"/><text><tspan x="1252" y="295.5">outbound traffic</tspan></text></g>
+<g class="label plain"><rect x="2014.6" y="244" width="154.8" height="16" rx="3"/><text><tspan x="2092" y="255.5">inspected outbound traffic</tspan></text></g>
+<g class="label plain"><rect x="2267.6" y="140" width="96.8" height="16" rx="3"/><text><tspan x="2316" y="151.5">outbound traffic</tspan></text></g>
+<g class="label application"><rect x="1482.9" y="1278" width="114.2" height="28" rx="3"/><text><tspan x="1540" y="1289.5">route to the shared</tspan><tspan x="1540" y="1301.5">services</tspan></text></g>
+<g class="label public"><rect x="185.5" y="526" width="149" height="28" rx="3"/><text><tspan x="260" y="537.5">security rule: HTTPS from</tspan><tspan x="260" y="549.5">the load balancer</tspan></text></g>
+<g class="label public"><rect x="841.5" y="510" width="149" height="28" rx="3"/><text><tspan x="916" y="521.5">security rule: HTTPS from</tspan><tspan x="916" y="533.5">the load balancer</tspan></text></g>
+<g class="label public"><rect x="1657.5" y="518" width="149" height="28" rx="3"/><text><tspan x="1732" y="529.5">security rule: HTTPS from</tspan><tspan x="1732" y="541.5">the load balancer</tspan></text></g>
+<g class="label application"><rect x="1142.6" y="518" width="154.8" height="28" rx="3"/><text><tspan x="1220" y="529.5">security rule: PostgreSQL,</tspan><tspan x="1220" y="541.5">Redis and search</tspan></text></g>
+<g class="label application"><rect x="670.6" y="870" width="154.8" height="28" rx="3"/><text><tspan x="748" y="881.5">security rule: PostgreSQL,</tspan><tspan x="748" y="893.5">Redis and search</tspan></text></g>
+<g class="label application"><rect x="1662.6" y="934" width="154.8" height="28" rx="3"/><text><tspan x="1740" y="945.5">security rule: PostgreSQL,</tspan><tspan x="1740" y="957.5">Redis and search</tspan></text></g>
+<g class="label application"><rect x="921.3" y="804" width="21.4" height="16" rx="3"/><text><tspan x="932" y="815.5">SQL</tspan></text></g>
+<g class="label application"><rect x="1051.5" y="852" width="33" height="16" rx="3"/><text><tspan x="1068" y="863.5">reads</tspan></text></g>
+<g class="label application"><rect x="1787.5" y="884" width="33" height="16" rx="3"/><text><tspan x="1804" y="895.5">reads</tspan></text></g>
+<g class="label application"><rect x="178.8" y="884" width="50.4" height="16" rx="3"/><text><tspan x="204" y="895.5">sessions</tspan></text></g>
+<g class="label application"><rect x="429" y="580" width="62" height="16" rx="3"/><text><tspan x="460" y="591.5">cart calls</tspan></text></g>
+<g class="label application"><rect x="214.5" y="652" width="91" height="16" rx="3"/><text><tspan x="260" y="663.5">catalogue calls</tspan></text></g>
+<g class="label application"><rect x="386.8" y="660" width="50.4" height="16" rx="3"/><text><tspan x="412" y="671.5">listings</tspan></text></g>
+<g class="label application"><rect x="531.5" y="812" width="33" height="16" rx="3"/><text><tspan x="548" y="823.5">carts</tspan></text></g>
+<g class="label application"><rect x="403.6" y="884" width="96.8" height="16" rx="3"/><text><tspan x="452" y="895.5">catalogue search</tspan></text></g>
+<g class="label application"><rect x="1114.8" y="740" width="50.4" height="16" rx="3"/><text><tspan x="1140" y="751.5">sessions</tspan></text></g>
+<g class="label application"><rect x="1317" y="644" width="62" height="16" rx="3"/><text><tspan x="1348" y="655.5">cart calls</tspan></text></g>
+<g class="label application"><rect x="950.5" y="652" width="91" height="16" rx="3"/><text><tspan x="996" y="663.5">catalogue calls</tspan></text></g>
+<g class="label application"><rect x="1122.8" y="660" width="50.4" height="16" rx="3"/><text><tspan x="1148" y="671.5">listings</tspan></text></g>
+<g class="label application"><rect x="1267.5" y="884" width="33" height="16" rx="3"/><text><tspan x="1284" y="895.5">carts</tspan></text></g>
+<g class="label application"><rect x="1115.6" y="988" width="96.8" height="16" rx="3"/><text><tspan x="1164" y="999.5">catalogue search</tspan></text></g>
+<g class="label application"><rect x="1842.8" y="836" width="50.4" height="16" rx="3"/><text><tspan x="1868" y="847.5">sessions</tspan></text></g>
+<g class="label application"><rect x="1901" y="580" width="62" height="16" rx="3"/><text><tspan x="1932" y="591.5">cart calls</tspan></text></g>
+<g class="label application"><rect x="1630.5" y="660" width="91" height="16" rx="3"/><text><tspan x="1676" y="671.5">catalogue calls</tspan></text></g>
+<g class="label application"><rect x="1770.8" y="660" width="50.4" height="16" rx="3"/><text><tspan x="1796" y="671.5">listings</tspan></text></g>
+<g class="label application"><rect x="1979.5" y="796" width="33" height="16" rx="3"/><text><tspan x="1996" y="807.5">carts</tspan></text></g>
+<g class="label application"><rect x="1875.6" y="804" width="96.8" height="16" rx="3"/><text><tspan x="1924" y="815.5">catalogue search</tspan></text></g>
+<g class="label data"><rect x="375.3" y="1052" width="137.4" height="16" rx="3"/><text><tspan x="444" y="1063.5">synchronous replication</tspan></text></g>
+<g class="label data"><rect x="1172.4" y="1156" width="143.2" height="16" rx="3"/><text><tspan x="1244" y="1167.5">asynchronous replication</tspan></text></g>
+<g class="label data"><rect x="1072.7" y="1052" width="102.6" height="16" rx="3"/><text><tspan x="1124" y="1063.5">cache replication</tspan></text></g>
+<g class="label data"><rect x="1272.7" y="1052" width="102.6" height="16" rx="3"/><text><tspan x="1324" y="1063.5">index replication</tspan></text></g>
+<g class="label data"><rect x="1696.7" y="1052" width="102.6" height="16" rx="3"/><text><tspan x="1748" y="1063.5">index replication</tspan></text></g>
+<g class="label application"><rect x="443.6" y="652" width="96.8" height="16" rx="3"/><text><tspan x="492" y="663.5">validated orders</tspan></text></g>
+<g class="label application"><rect x="240.7" y="740" width="102.6" height="16" rx="3"/><text><tspan x="292" y="751.5">orders to process</tspan></text></g>
+<g class="label application"><rect x="493.1" y="740" width="125.8" height="16" rx="3"/><text><tspan x="556" y="751.5">notifications to send</tspan></text></g>
+<g class="label application"><rect x="376.6" y="812" width="38.8" height="16" rx="3"/><text><tspan x="396" y="823.5">emails</tspan></text></g>
+<g class="label application"><rect x="1179.6" y="660" width="96.8" height="16" rx="3"/><text><tspan x="1228" y="671.5">validated orders</tspan></text></g>
+<g class="label application"><rect x="1144.7" y="804" width="102.6" height="16" rx="3"/><text><tspan x="1196" y="815.5">orders to process</tspan></text></g>
+<g class="label application"><rect x="1229.1" y="740" width="125.8" height="16" rx="3"/><text><tspan x="1292" y="751.5">notifications to send</tspan></text></g>
+<g class="label application"><rect x="1112.6" y="820" width="38.8" height="16" rx="3"/><text><tspan x="1132" y="831.5">emails</tspan></text></g>
+<g class="label application"><rect x="1320.7" y="700" width="102.6" height="16" rx="3"/><text><tspan x="1372" y="711.5">orders to invoice</tspan></text></g>
+<g class="label application"><rect x="1308.3" y="820" width="79.4" height="16" rx="3"/><text><tspan x="1348" y="831.5">invoice files</tspan></text></g>
+<g class="label application"><rect x="2043.6" y="644" width="96.8" height="16" rx="3"/><text><tspan x="2092" y="655.5">catalogue images</tspan></text></g>
+<g class="label application"><rect x="279.2" y="804" width="73.6" height="16" rx="3"/><text><tspan x="316" y="815.5">payment keys</tspan></text></g>
+<g class="label application"><rect x="1935.2" y="828" width="73.6" height="16" rx="3"/><text><tspan x="1972" y="839.5">payment keys</tspan></text></g>
+<g class="label plain"><rect x="93.7" y="1228" width="44.6" height="16" rx="3"/><text><tspan x="116" y="1239.5">peering</tspan></text></g>
+<g class="label plain"><rect x="2389" y="1308" width="62" height="16" rx="3"/><text><tspan x="2420" y="1319.5">VPN tunnel</tspan></text></g>
+<g class="label plain"><rect x="2141.1" y="1412" width="125.8" height="16" rx="3"/><text><tspan x="2204" y="1423.5">directory replication</tspan></text></g>
+<g class="label plain"><rect x="2944" y="1332" width="120" height="16" rx="3"/><text><tspan x="3004" y="1343.5">VPN tunnel (standby)</tspan></text></g>
+<g class="label application"><rect x="247.3" y="1300" width="137.4" height="16" rx="3"/><text><tspan x="316" y="1311.5">SSH through the peering</tspan></text></g>
+<g class="label application"><rect x="886.6" y="1342" width="154.8" height="28" rx="3"/><text><tspan x="964" y="1353.5">metrics collection through</tspan><tspan x="964" y="1365.5">the peering</tspan></text></g>
+<g class="label application"><rect x="701.7" y="1780" width="44.6" height="16" rx="3"/><text><tspan x="724" y="1791.5">metrics</tspan></text></g>
+<g class="label plain"><rect x="1083.6" y="1340" width="96.8" height="16" rx="3"/><text><tspan x="1132" y="1351.5">application logs</tspan></text></g>
+<g class="label application"><rect x="1110.4" y="1780" width="27.2" height="16" rx="3"/><text><tspan x="1124" y="1791.5">logs</tspan></text></g>
+<g class="label application"><rect x="983.2" y="1572" width="73.6" height="16" rx="3"/><text><tspan x="1020" y="1583.5">image builds</tspan></text></g>
+<g class="label application"><rect x="422.5" y="1588" width="91" height="16" rx="3"/><text><tspan x="468" y="1599.5">build artefacts</tspan></text></g>
+<g class="label application"><rect x="920.6" y="1588" width="38.8" height="16" rx="3"/><text><tspan x="940" y="1599.5">alerts</tspan></text></g>
+<g class="label data"><rect x="1985.4" y="1180" width="85.2" height="16" rx="3"/><text><tspan x="2028" y="1191.5">nightly export</tspan></text></g>
+<g class="label application"><rect x="487.2" y="1156" width="73.6" height="16" rx="3"/><text><tspan x="524" y="1167.5">nightly dump</tspan></text></g>
+<g class="label application"><rect x="341.7" y="1580" width="44.6" height="16" rx="3"/><text><tspan x="364" y="1591.5">backups</tspan></text></g>
+<g class="label plain"><rect x="2336.7" y="1076" width="102.6" height="16" rx="3"/><text><tspan x="2388" y="1087.5">inter-region link</tspan></text></g>
+<g class="label plain"><rect x="2492.4" y="996" width="143.2" height="16" rx="3"/><text><tspan x="2564" y="1007.5">asynchronous replication</tspan></text></g>
+<g class="label plain"><rect x="2470.6" y="1174" width="154.8" height="28" rx="3"/><text><tspan x="2548" y="1185.5">replication managed by the</tspan><tspan x="2548" y="1197.5">service</tspan></text></g>
+<g class="label application"><rect x="1396.3" y="1260" width="79.4" height="16" rx="3"/><text><tspan x="1436" y="1271.5">backup writes</tspan></text></g>
+<g class="label plain"><rect x="2346.2" y="116" width="131.6" height="16" rx="3"/><text><tspan x="2412" y="127.5">HTTPS after a failover</tspan></text></g>
+<g class="label public"><rect x="2572.3" y="340" width="79.4" height="16" rx="3"/><text><tspan x="2612" y="351.5">default route</tspan></text></g>
+<g class="label application"><rect x="2844.3" y="540" width="79.4" height="16" rx="3"/><text><tspan x="2884" y="551.5">default route</tspan></text></g>
+<g class="label public"><rect x="2707.6" y="324" width="96.8" height="16" rx="3"/><text><tspan x="2756" y="335.5">outbound traffic</tspan></text></g>
+<g class="label plain"><rect x="2582.6" y="220" width="154.8" height="16" rx="3"/><text><tspan x="2660" y="231.5">inspected outbound traffic</tspan></text></g>
+<g class="label application"><rect x="2705.3" y="724" width="21.4" height="16" rx="3"/><text><tspan x="2716" y="735.5">SQL</tspan></text></g>
+<g class="label application"><rect x="2738.8" y="724" width="50.4" height="16" rx="3"/><text><tspan x="2764" y="735.5">sessions</tspan></text></g>
+<g class="label application"><rect x="2533" y="652" width="62" height="16" rx="3"/><text><tspan x="2564" y="663.5">cart calls</tspan></text></g>
+<g class="label application"><rect x="2675.5" y="828" width="33" height="16" rx="3"/><text><tspan x="2692" y="839.5">carts</tspan></text></g>
+<g class="label application"><rect x="3118.5" y="652" width="91" height="16" rx="3"/><text><tspan x="3164" y="663.5">catalogue calls</tspan></text></g>
+<g class="label application"><rect x="3123.6" y="780" width="96.8" height="16" rx="3"/><text><tspan x="3172" y="791.5">catalogue search</tspan></text></g>
+<g class="legend"><path class="link plain" d="M2472 1616H2528" marker-end="url(#arrow-plain)"/><text x="2542" y="1620">Traffic or data between two components</text><path class="link plain rule" d="M2472 1638H2528" marker-end="url(#arrow-plain)"/><text x="2542" y="1642">Route or rule of a whole subnet or VPC</text><path class="link application" d="M2472 1660H2528" marker-end="url(#arrow-application)"/><text x="2542" y="1664">A link has the colour of the subnet it starts from</text><circle class="joint" cx="2500" cy="1682" r="2.6"/><text x="2542" y="1686">Links to one component, or from one, run together from the dot</text></g>
+</svg>

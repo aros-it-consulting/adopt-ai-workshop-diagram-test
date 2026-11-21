@@ -1,0 +1,129 @@
+{
+  "model": "haiku",
+  "folder": "1_data_model",
+  "file": "order_model.png",
+  "trial": 5,
+  "prompt": "Read the file sources/1_data_model/order_model.png, which describes the data model of an online shop.\nDo not open any other file of the current folder or of its subfolders, whether to read it or to search it.\nAnswer the four questions from this file alone, as one JSON object whose keys are \"1\", \"2\", \"3\" and \"4\".\nWrite each entity's name as the file writes it.\n\n1. A customer returns an item of an order shipped in several parcels. Which entities must be crossed, in order, to go from RETURN_LINE to the warehouse the item left from? Give the list of the entities in that order, from RETURN_LINE to the last one, both included.\n2. True or false? Give an object whose keys are \"a\", \"b\", \"c\" and \"d\", each true or false.\n   a. A refund can exist without being attached to a return.\n   b. One order line can be split across several parcels.\n   c. One credit note can cover several invoices.\n   d. One order can be paid by several payments.\n3. Which entities hold a foreign key to VARIANT, and which hold a foreign key to ITEM? Give an object whose keys are \"VARIANT\" and \"ITEM\", each the list of the entities that hold a foreign key to it.\n4. A seller of the marketplace receives a payout, from which commissions are deducted. Which entities must be crossed, in order, to go from SELLER_PAYOUT to the customers whose purchases generated these commissions? Give the list of the entities in that order, from SELLER_PAYOUT to the last one, both included.\n",
+  "structured_output": {
+    "1": [
+      "RETURN_LINE",
+      "PARCEL_LINE",
+      "PARCEL",
+      "SHIPMENT",
+      "WAREHOUSE"
+    ],
+    "2": {
+      "a": false,
+      "b": true,
+      "c": false,
+      "d": true
+    },
+    "3": {
+      "VARIANT": [],
+      "ITEM": []
+    },
+    "4": []
+  },
+  "total_cost_usd": 0.007280170000000001,
+  "usage": {
+    "input_tokens": 14,
+    "cache_creation_input_tokens": 20793,
+    "cache_read_input_tokens": 130967,
+    "output_tokens": 3621,
+    "output_tokens_details": {
+      "thinking_tokens": 1905
+    },
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 20793,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "global",
+    "iterations": [
+      {
+        "input_tokens": 4,
+        "output_tokens": 564,
+        "cache_read_input_tokens": 32813,
+        "cache_creation_input_tokens": 1704,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 1704
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard",
+    "fallback_credit": null
+  },
+  "num_turns": 13,
+  "duration_ms": 28385,
+  "is_error": false,
+  "tool_calls": [
+    {
+      "tool": "Read",
+      "input": {
+        "file_path": "/tmp/bench-zs8mfbln/sources/1_data_model/order_model.png"
+      }
+    },
+    {
+      "tool": "Bash",
+      "input": {
+        "command": "cd /tmp && (command -v convert || command -v magick || python3 -c \"import PIL; print('PIL ok')\") 2>&1; identify /tmp/bench-zs8mfbln/sources/1_data_model/order_model.png 2>&1 | head -1",
+        "description": "Check available image tools"
+      }
+    },
+    {
+      "tool": "Bash",
+      "input": {
+        "command": "mkdir -p /tmp/crops_out && cat > /tmp/crop_script.py <<'EOF'\nfrom PIL import Image\nim = Image.open(\"/tmp/bench-zs8mfbln/sources/1_data_model/order_model.png\")\nW,H = im.size\n# 4 columns x 3 rows tiles, upscaled\ncols, rows = 4, 3\nfor r in range(rows):\n    for c in range(cols):\n        box = (int(c*W/cols), int(r*H/rows), int((c+1)*W/cols), int((r+1)*H/rows))\n        t = im.crop(box)\n        t = t.resize((t.width*1, t.height*1))\n        t.save(f\"/tmp/crops_out/tile_{r}_{c}.png\")\nprint(W,H)\nEOF\npython3 -I /tmp/crop_script.py",
+        "description": "Split diagram into tiles for reading"
+      }
+    },
+    {
+      "tool": "Read",
+      "input": {
+        "file_path": "/tmp/crops_out/tile_2_3.png"
+      }
+    },
+    {
+      "tool": "Read",
+      "input": {
+        "file_path": "/tmp/crops_out/tile_1_3.png"
+      }
+    },
+    {
+      "tool": "Read",
+      "input": {
+        "file_path": "/tmp/crops_out/tile_1_2.png"
+      }
+    },
+    {
+      "tool": "StructuredOutput",
+      "input": {
+        "1": [
+          "RETURN_LINE",
+          "PARCEL_LINE",
+          "PARCEL",
+          "SHIPMENT",
+          "WAREHOUSE"
+        ],
+        "2": {
+          "a": false,
+          "b": true,
+          "c": false,
+          "d": true
+        },
+        "3": {
+          "VARIANT": [],
+          "ITEM": []
+        },
+        "4": []
+      }
+    }
+  ],
+  "error": null
+}

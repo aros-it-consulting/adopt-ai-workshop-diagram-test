@@ -1,0 +1,262 @@
+{
+  "model": "haiku",
+  "folder": "3_specification",
+  "file": "spec.bad.docx",
+  "trial": 5,
+  "prompt": "Read the file sources/3_specification/spec.bad.docx, the specification of the returns and refunds of an online shop.\nDo not open any other file of the current folder or of its subfolders, whether to read it or to search it.\nAnswer the four questions from this file alone, as one JSON object whose keys are \"1\", \"2\", \"3\" and \"4\".\nWrite each rule's identifier as the file writes it, RG-01 for example.\n\n1. What is the refund time limit of a marketplace order paid by gift card, for a business customer? Give the number of days.\n2. Among the rules RG-10 to RG-15, which are still in force? Give the list of their identifiers.\n3. The status REFUSE_PARTIEL is to be removed. Which rules does the document link to this status, in the rule itself or anywhere else in the document? Give the list of their identifiers.\n4. In which places of the document is the identifier RG-07 written? Give the list of those places, each an object whose keys are \"kind\" and \"number\": \"kind\" is \"section\", \"annex\" or \"article\", after the heading the place sits under, and \"number\" is the number or the letter of that heading, at its most precise level, 4.1 for example.\n",
+  "structured_output": {
+    "1": 15,
+    "2": [
+      "RG-10",
+      "RG-11",
+      "RG-13",
+      "RG-14",
+      "RG-15"
+    ],
+    "3": [
+      "RG-03",
+      "RG-10",
+      "RG-14",
+      "RG-16",
+      "RG-18",
+      "RG-20",
+      "RG-21",
+      "RG-22"
+    ],
+    "4": [
+      {
+        "kind": "section",
+        "number": "5.2"
+      },
+      {
+        "kind": "section",
+        "number": "5.3"
+      },
+      {
+        "kind": "annex",
+        "number": "D"
+      }
+    ]
+  },
+  "total_cost_usd": 0.025669210000000005,
+  "usage": {
+    "input_tokens": 18,
+    "cache_creation_input_tokens": 84308,
+    "cache_read_input_tokens": 340681,
+    "output_tokens": 10798,
+    "output_tokens_details": {
+      "thinking_tokens": 7346
+    },
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 84308,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "global",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 1717,
+        "cache_read_input_tokens": 83877,
+        "cache_creation_input_tokens": 14955,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 14955
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard",
+    "fallback_credit": null
+  },
+  "num_turns": 25,
+  "duration_ms": 59481,
+  "is_error": false,
+  "tool_calls": [
+    {
+      "tool": "Bash",
+      "input": {
+        "command": "unzip -l sources/3_specification/spec.bad.docx && unzip -p sources/3_specification/spec.bad.docx word/document.xml | wc -c",
+        "description": "List parts of the docx and size of main document XML"
+      }
+    },
+    {
+      "tool": "Bash",
+      "input": {
+        "command": "unzip -p sources/3_specification/spec.bad.docx word/document.xml | python3 -I -c '\nimport sys,re\nfrom xml.dom import minidom\nd=minidom.parseString(sys.stdin.buffer.read())\nW=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"\nbody=d.getElementsByTagNameNS(W,\"body\")[0]\ndef txt(n):\n    out=[]\n    for c in n.childNodes:\n        if c.nodeType!=1: continue\n        ln=c.localName\n        if ln==\"t\": out.append(c.firstChild.data if c.firstChild else \"\")\n        elif ln==\"delText\": out.append(\"[DEL:\"+(c.firstChild.data if c.firstChild else \"\")+\"]\")\n        elif ln==\"tab\": out.append(\"\\t\")\n        elif ln in(\"br\",\"cr\"): out.append(\" / \")\n        elif ln==\"vanish\": pass\n        else: out.append(txt(c))\n    return \"\".join(out)\ni=0\nfor el in body.childNodes:\n    if el.nodeType!=1: continue\n    if el.localName==\"p\":\n        st=el.getElementsByTagNameNS(W,\"pStyle\")\n        s=st[0].getAttributeNS(W,\"val\") if st else \"\"\n        print(f\"[{i}] ({s}) {txt(el)}\")\n    elif el.localName==\"tbl\":\n        print(f\"[{i}] TABLE\")\n        for r in el.getElementsByTagNameNS(W,\"tr\"):\n            print(\"   | \"+\" | \".join(txt(c) for c in r.getElementsByTagNameNS(W,\"tc\")))\n    i+=1\n'",
+        "description": "Extract document paragraphs and tables as text"
+      }
+    },
+    {
+      "tool": "Bash",
+      "input": {
+        "command": "unzip -p sources/3_specification/spec.bad.docx word/document.xml | python3 -I -c '\nimport sys\nfrom xml.dom import minidom\nd=minidom.parseString(sys.stdin.buffer.read())\nW=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"\nfrom collections import Counter\nc=Counter()\nfor n in d.getElementsByTagName(\"*\"): c[n.tagName]+=1\nfor k,v in sorted(c.items()): print(k,v)\n' ; unzip -p sources/3_specification/spec.bad.docx word/document.xml | python3 -I -c '\nimport sys,re\ns=sys.stdin.read()\ni=s.find(\"RG-07\"); print(\"RG-07 at\",i)\nfor m in re.finditer(\"RG-07\",s): print(s[max(0,m.start()-200):m.start()+60].replace(\"\\n\",\" \")); print(\"----\")\n'",
+        "description": "Count XML element types and locate RG-07 raw occurrences"
+      }
+    },
+    {
+      "tool": "Bash",
+      "input": {
+        "command": "unzip -p sources/3_specification/spec.bad.docx word/_rels/document.xml.rels | tr '>' '>\\n' | grep -i image ; echo ====; unzip -p sources/3_specification/spec.bad.docx word/document.xml | python3 -I -c '\nimport sys\nfrom xml.dom import minidom\nd=minidom.parseString(sys.stdin.buffer.read())\nW=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"\nR=\"http://schemas.openxmlformats.org/officeDocument/2006/relationships\"\nA=\"http://schemas.openxmlformats.org/drawingml/2006/main\"\ndef walk(n, depth):\n    out=[]\n    for c in n.childNodes:\n        if c.nodeType!=1: continue\n        ln=c.localName\n        if ln==\"Fallback\": continue\n        if ln==\"t\": out.append(c.firstChild.data if c.firstChild else \"\")\n        elif ln==\"tab\": out.append(\"\\t\")\n        elif ln==\"blip\": out.append(\"<IMG:\"+c.getAttributeNS(R,\"embed\")+\">\")\n        elif ln==\"p\": out.append(\" ¶ \"+walk(c,depth+1)+\" \")\n        else: out.append(walk(c,depth))\n    return \"\".join(out)\nbody=d.getElementsByTagNameNS(W,\"body\")[0]\nfor i,p in enumerate(body.getElementsByTagNameNS(W,\"p\")):\n    t=walk(p,0)\n    if t.strip(): print(i, t)\n' | cut -c1-600",
+        "description": "Map images and text box contents in document order"
+      }
+    },
+    {
+      "tool": "Bash",
+      "input": {
+        "command": "mkdir -p /tmp/spec-media-$$ && cd /tmp/spec-media-$$ && unzip -j -q /tmp/bench-r7cywpld/sources/3_specification/spec.bad.docx 'word/media/*' && ls -la && python3 -I -c 'import sys;print(sys.version)' && file * 2>/dev/null | head -30; echo $PWD",
+        "description": "Extract the docx images into a fresh temp directory"
+      }
+    },
+    {
+      "tool": "Read",
+      "input": {
+        "file_path": "/tmp/spec-media-450020/image5.jpg"
+      }
+    },
+    {
+      "tool": "Read",
+      "input": {
+        "file_path": "/tmp/spec-media-450020/image6.jpg"
+      }
+    },
+    {
+      "tool": "Read",
+      "input": {
+        "file_path": "/tmp/spec-media-450020/image7.jpg"
+      }
+    },
+    {
+      "tool": "Read",
+      "input": {
+        "file_path": "/tmp/spec-media-450020/image8.jpg"
+      }
+    },
+    {
+      "tool": "Read",
+      "input": {
+        "file_path": "/tmp/spec-media-450020/image9.jpg"
+      }
+    },
+    {
+      "tool": "Read",
+      "input": {
+        "file_path": "/tmp/spec-media-450020/image10.jpg"
+      }
+    },
+    {
+      "tool": "Read",
+      "input": {
+        "file_path": "/tmp/spec-media-450020/image11.jpg"
+      }
+    },
+    {
+      "tool": "Read",
+      "input": {
+        "file_path": "/tmp/spec-media-450020/image12.jpg"
+      }
+    },
+    {
+      "tool": "Read",
+      "input": {
+        "file_path": "/tmp/spec-media-450020/image13.jpg"
+      }
+    },
+    {
+      "tool": "Read",
+      "input": {
+        "file_path": "/tmp/spec-media-450020/image14.jpg"
+      }
+    },
+    {
+      "tool": "Read",
+      "input": {
+        "file_path": "/tmp/spec-media-450020/image15.jpg"
+      }
+    },
+    {
+      "tool": "Read",
+      "input": {
+        "file_path": "/tmp/spec-media-450020/image16.jpg"
+      }
+    },
+    {
+      "tool": "Read",
+      "input": {
+        "file_path": "/tmp/spec-media-450020/image17.jpg"
+      }
+    },
+    {
+      "tool": "Read",
+      "input": {
+        "file_path": "/tmp/spec-media-450020/image18.jpg"
+      }
+    },
+    {
+      "tool": "Read",
+      "input": {
+        "file_path": "/tmp/spec-media-450020/image1.jpg"
+      }
+    },
+    {
+      "tool": "Read",
+      "input": {
+        "file_path": "/tmp/spec-media-450020/image2.jpg"
+      }
+    },
+    {
+      "tool": "Read",
+      "input": {
+        "file_path": "/tmp/spec-media-450020/image3.jpg"
+      }
+    },
+    {
+      "tool": "Read",
+      "input": {
+        "file_path": "/tmp/spec-media-450020/image4.jpg"
+      }
+    },
+    {
+      "tool": "StructuredOutput",
+      "input": {
+        "1": 15,
+        "2": [
+          "RG-10",
+          "RG-11",
+          "RG-13",
+          "RG-14",
+          "RG-15"
+        ],
+        "3": [
+          "RG-03",
+          "RG-10",
+          "RG-14",
+          "RG-16",
+          "RG-18",
+          "RG-20",
+          "RG-21",
+          "RG-22"
+        ],
+        "4": [
+          {
+            "kind": "section",
+            "number": "5.2"
+          },
+          {
+            "kind": "section",
+            "number": "5.3"
+          },
+          {
+            "kind": "annex",
+            "number": "D"
+          }
+        ]
+      }
+    }
+  ],
+  "error": null
+}

@@ -1,0 +1,66 @@
+{
+  "type": "object",
+  "properties": {
+    "1": {
+      "$ref": "#/$defs/names"
+    },
+    "2": {
+      "type": "object",
+      "properties": {
+        "a": {
+          "type": "boolean"
+        },
+        "b": {
+          "type": "boolean"
+        },
+        "c": {
+          "type": "boolean"
+        },
+        "d": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "a",
+        "b",
+        "c",
+        "d"
+      ],
+      "additionalProperties": false
+    },
+    "3": {
+      "type": "object",
+      "properties": {
+        "VARIANT": {
+          "$ref": "#/$defs/names"
+        },
+        "ITEM": {
+          "$ref": "#/$defs/names"
+        }
+      },
+      "required": [
+        "VARIANT",
+        "ITEM"
+      ],
+      "additionalProperties": false
+    },
+    "4": {
+      "$ref": "#/$defs/names"
+    }
+  },
+  "required": [
+    "1",
+    "2",
+    "3",
+    "4"
+  ],
+  "additionalProperties": false,
+  "$defs": {
+    "names": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  }
+}

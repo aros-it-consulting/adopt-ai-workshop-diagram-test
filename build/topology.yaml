@@ -1,0 +1,729 @@
+# The cloud deployment of Orvane. A boundary holds boxes and other boundaries;
+# a link joins two boxes or boundaries, each named by its path from the root.
+
+boxes:
+  - id: internet
+    label: Internet
+boundaries:
+  - id: datacenter
+    label: Orvane datacenter (on-premises)
+    boxes:
+      - id: vpn_router
+        label: VPN router
+      - id: erp
+        label: Accounting ERP
+      - id: wms
+        label: Warehouse management system
+      - id: directory
+        label: Active Directory
+      - id: data_warehouse
+        label: Data warehouse
+  - id: cloud
+    label: Cloud provider
+    boundaries:
+      - id: paris
+        label: Paris region
+        boxes:
+          - id: transit_gateway
+            label: Transit gateway
+          - id: object_storage
+            label: Object storage
+          - id: message_queue
+            label: Message queue
+          - id: secrets_manager
+            label: Secrets manager
+          - id: email_service
+            label: Email service
+        boundaries:
+          - id: production
+            label: Production VPC
+            boxes:
+              - id: internet_gateway
+                label: Internet gateway
+              - id: network_firewall
+                label: Network firewall
+            boundaries:
+              - id: zone_a
+                label: Zone a
+                boundaries:
+                  - id: public
+                    label: Public subnet
+                    boxes:
+                      - id: web_firewall
+                        label: Web application firewall
+                      - id: load_balancer
+                        label: Load balancer
+                      - id: nat_gateway
+                        label: NAT gateway
+                  - id: application
+                    label: Application subnet
+                    boxes:
+                      - id: storefront_api
+                        label: Storefront API
+                      - id: marketplace_api
+                        label: Marketplace API
+                      - id: cart_service
+                        label: Cart service
+                      - id: catalogue_service
+                        label: Catalogue service
+                      - id: seller_portal
+                        label: Seller portal
+                      - id: payment_service
+                        label: Payment service
+                      - id: order_worker
+                        label: Order worker
+                      - id: notification_worker
+                        label: Notification worker
+                      - id: queue_endpoint
+                        label: Private endpoint (message queue)
+                      - id: secrets_endpoint
+                        label: Private endpoint (secrets manager)
+                      - id: email_endpoint
+                        label: Private endpoint (email service)
+                  - id: data
+                    label: Data subnet
+                    boxes:
+                      - id: postgresql_primary
+                        label: PostgreSQL primary
+                      - id: redis_cache
+                        label: Redis cache
+                      - id: search_node
+                        label: Search node
+              - id: zone_b
+                label: Zone b
+                boundaries:
+                  - id: public
+                    label: Public subnet
+                    boxes:
+                      - id: web_firewall
+                        label: Web application firewall
+                      - id: load_balancer
+                        label: Load balancer
+                  - id: application
+                    label: Application subnet
+                    boxes:
+                      - id: billing_batch
+                        label: Billing batch
+                      - id: storefront_api
+                        label: Storefront API
+                      - id: marketplace_api
+                        label: Marketplace API
+                      - id: cart_service
+                        label: Cart service
+                      - id: catalogue_service
+                        label: Catalogue service
+                      - id: order_worker
+                        label: Order worker
+                      - id: notification_worker
+                        label: Notification worker
+                      - id: queue_endpoint
+                        label: Private endpoint (message queue)
+                      - id: storage_endpoint
+                        label: Private endpoint (object storage)
+                      - id: email_endpoint
+                        label: Private endpoint (email service)
+                  - id: data
+                    label: Data subnet
+                    boxes:
+                      - id: postgresql_replica
+                        label: PostgreSQL synchronous replica
+                      - id: redis_replica
+                        label: Redis cache replica
+                      - id: search_node
+                        label: Search node
+              - id: zone_c
+                label: Zone c
+                boundaries:
+                  - id: public
+                    label: Public subnet
+                    boxes:
+                      - id: web_firewall
+                        label: Web application firewall
+                      - id: load_balancer
+                        label: Load balancer
+                      - id: nat_gateway
+                        label: NAT gateway
+                  - id: application
+                    label: Application subnet
+                    boxes:
+                      - id: storefront_api
+                        label: Storefront API
+                      - id: marketplace_api
+                        label: Marketplace API
+                      - id: cart_service
+                        label: Cart service
+                      - id: catalogue_service
+                        label: Catalogue service
+                      - id: seller_portal
+                        label: Seller portal
+                      - id: payment_service
+                        label: Payment service
+                      - id: storage_endpoint
+                        label: Private endpoint (object storage)
+                      - id: secrets_endpoint
+                        label: Private endpoint (secrets manager)
+                  - id: data
+                    label: Data subnet
+                    boxes:
+                      - id: postgresql_replica
+                        label: PostgreSQL read replica
+                      - id: redis_replica
+                        label: Redis cache replica
+                      - id: search_node
+                        label: Search node
+          - id: shared
+            label: Shared services VPC
+            boxes:
+              - id: vpn_gateway
+                label: VPN gateway
+            boundaries:
+              - id: zone_a
+                label: Zone a
+                boundaries:
+                  - id: application
+                    label: Application subnet
+                    boxes:
+                      - id: bastion
+                        label: Bastion host
+                      - id: backup_job
+                        label: Backup job
+                      - id: ci_runner
+                        label: CI runner
+                      - id: artifact_repository
+                        label: Artifact repository
+                      - id: storage_endpoint
+                        label: Private endpoint (object storage)
+                  - id: data
+                    label: Data subnet
+                    boxes:
+                      - id: metrics_database
+                        label: Metrics database
+              - id: zone_b
+                label: Zone b
+                boundaries:
+                  - id: application
+                    label: Application subnet
+                    boxes:
+                      - id: monitoring
+                        label: Monitoring
+                      - id: log_collector
+                        label: Log collector
+                      - id: container_registry
+                        label: Container registry
+                      - id: alert_manager
+                        label: Alert manager
+                  - id: data
+                    label: Data subnet
+                    boxes:
+                      - id: log_store
+                        label: Log store
+              - id: zone_c
+                label: Zone c
+                boundaries:
+                  - id: application
+                    label: Application subnet
+                    boxes:
+                      - id: directory_replica
+                        label: Directory replica
+                      - id: certificate_authority
+                        label: Certificate authority
+      - id: frankfurt
+        label: Frankfurt region
+        boxes:
+          - id: transit_gateway
+            label: Transit gateway
+          - id: object_storage
+            label: Object storage
+          - id: message_queue
+            label: Message queue (standby)
+          - id: secrets_manager
+            label: Secrets manager (standby)
+        boundaries:
+          - id: recovery
+            label: Disaster recovery VPC
+            boxes:
+              - id: internet_gateway
+                label: Internet gateway (standby)
+              - id: network_firewall
+                label: Network firewall (standby)
+              - id: vpn_gateway
+                label: VPN gateway (standby)
+            boundaries:
+              - id: zone_a
+                label: Zone a
+                boundaries:
+                  - id: public
+                    label: Public subnet
+                    boxes:
+                      - id: load_balancer
+                        label: Load balancer (standby)
+                      - id: nat_gateway
+                        label: NAT gateway (standby)
+                  - id: application
+                    label: Application subnet
+                    boxes:
+                      - id: storefront_api
+                        label: Storefront API (standby)
+                      - id: marketplace_api
+                        label: Marketplace API (standby)
+                      - id: cart_service
+                        label: Cart service (standby)
+                      - id: order_worker
+                        label: Order worker (standby)
+                  - id: data
+                    label: Data subnet
+                    boxes:
+                      - id: postgresql_recovery
+                        label: PostgreSQL recovery replica
+                      - id: redis_cache
+                        label: Redis cache (standby)
+              - id: zone_b
+                label: Zone b
+                boundaries:
+                  - id: public
+                    label: Public subnet
+                    boxes:
+                      - id: load_balancer
+                        label: Load balancer (standby)
+                  - id: application
+                    label: Application subnet
+                    boxes:
+                      - id: storefront_api
+                        label: Storefront API (standby)
+                      - id: billing_batch
+                        label: Billing batch (standby)
+                      - id: catalogue_service
+                        label: Catalogue service (standby)
+                      - id: payment_service
+                        label: Payment service (standby)
+                  - id: data
+                    label: Data subnet
+                    boxes:
+                      - id: search_node
+                        label: Search node (standby)
+              - id: zone_c
+                label: Zone c
+                boundaries:
+                  - id: application
+                    label: Application subnet
+                    boxes:
+                      - id: marketplace_api
+                        label: Marketplace API (standby)
+                      - id: directory_replica
+                        label: Directory replica (standby)
+                  - id: data
+                    label: Data subnet
+                    boxes:
+                      - id: search_node
+                        label: Search node (standby)
+links:
+  - from: internet
+    to: cloud.paris.production.internet_gateway
+    label: HTTPS
+  - from: cloud.paris.production.internet_gateway
+    to: cloud.paris.production.zone_a.public.web_firewall
+  - from: cloud.paris.production.zone_a.public.web_firewall
+    to: cloud.paris.production.zone_a.public.load_balancer
+    label: filtered requests
+  - from: cloud.paris.production.zone_a.public.load_balancer
+    to: cloud.paris.production.zone_a.application.storefront_api
+  - from: cloud.paris.production.zone_a.public.load_balancer
+    to: cloud.paris.production.zone_a.application.marketplace_api
+  - from: cloud.paris.production.internet_gateway
+    to: cloud.paris.production.zone_b.public.web_firewall
+  - from: cloud.paris.production.zone_b.public.web_firewall
+    to: cloud.paris.production.zone_b.public.load_balancer
+    label: filtered requests
+  - from: cloud.paris.production.zone_b.public.load_balancer
+    to: cloud.paris.production.zone_b.application.storefront_api
+  - from: cloud.paris.production.zone_b.public.load_balancer
+    to: cloud.paris.production.zone_b.application.marketplace_api
+  - from: cloud.paris.production.internet_gateway
+    to: cloud.paris.production.zone_c.public.web_firewall
+  - from: cloud.paris.production.zone_c.public.web_firewall
+    to: cloud.paris.production.zone_c.public.load_balancer
+    label: filtered requests
+  - from: cloud.paris.production.zone_c.public.load_balancer
+    to: cloud.paris.production.zone_c.application.storefront_api
+  - from: cloud.paris.production.zone_c.public.load_balancer
+    to: cloud.paris.production.zone_c.application.marketplace_api
+  - from: cloud.paris.production.zone_a.public.load_balancer
+    to: cloud.paris.production.zone_a.application.seller_portal
+  - from: cloud.paris.production.zone_c.public.load_balancer
+    to: cloud.paris.production.zone_c.application.seller_portal
+  - from: cloud.paris.production.zone_a.public
+    to: cloud.paris.production.internet_gateway
+    label: default route
+  - from: cloud.paris.production.zone_b.public
+    to: cloud.paris.production.internet_gateway
+    label: default route
+  - from: cloud.paris.production.zone_c.public
+    to: cloud.paris.production.internet_gateway
+    label: default route
+  - from: cloud.paris.production.zone_a.application
+    to: cloud.paris.production.zone_a.public.nat_gateway
+    label: default route
+  - from: cloud.paris.production.zone_b.application
+    to: cloud.paris.production.zone_a.public.nat_gateway
+    label: default route
+  - from: cloud.paris.production.zone_c.application
+    to: cloud.paris.production.zone_c.public.nat_gateway
+    label: default route
+  - from: cloud.paris.production.zone_a.public.nat_gateway
+    to: cloud.paris.production.network_firewall
+    label: outbound traffic
+  - from: cloud.paris.production.zone_c.public.nat_gateway
+    to: cloud.paris.production.network_firewall
+    label: outbound traffic
+  - from: cloud.paris.production.network_firewall
+    to: cloud.paris.production.internet_gateway
+    label: inspected outbound traffic
+  - from: cloud.paris.production.internet_gateway
+    to: internet
+    label: outbound traffic
+  - from: cloud.paris.production.zone_a.application
+    to: cloud.paris.shared
+    label: route to the shared services
+  - from: cloud.paris.production.zone_b.application
+    to: cloud.paris.shared
+    label: route to the shared services
+  - from: cloud.paris.production.zone_c.application
+    to: cloud.paris.shared
+    label: route to the shared services
+  - from: cloud.paris.production.zone_a.public
+    to: cloud.paris.production.zone_a.application
+    label: 'security rule: HTTPS from the load balancer'
+  - from: cloud.paris.production.zone_b.public
+    to: cloud.paris.production.zone_b.application
+    label: 'security rule: HTTPS from the load balancer'
+  - from: cloud.paris.production.zone_c.public
+    to: cloud.paris.production.zone_c.application
+    label: 'security rule: HTTPS from the load balancer'
+  - from: cloud.paris.production.zone_a.application
+    to: cloud.paris.production.zone_a.data
+    label: 'security rule: PostgreSQL, Redis and search'
+  - from: cloud.paris.production.zone_a.application
+    to: cloud.paris.production.zone_b.data
+    label: 'security rule: PostgreSQL, Redis and search'
+  - from: cloud.paris.production.zone_a.application
+    to: cloud.paris.production.zone_c.data
+    label: 'security rule: PostgreSQL, Redis and search'
+  - from: cloud.paris.production.zone_b.application
+    to: cloud.paris.production.zone_a.data
+    label: 'security rule: PostgreSQL, Redis and search'
+  - from: cloud.paris.production.zone_b.application
+    to: cloud.paris.production.zone_b.data
+    label: 'security rule: PostgreSQL, Redis and search'
+  - from: cloud.paris.production.zone_b.application
+    to: cloud.paris.production.zone_c.data
+    label: 'security rule: PostgreSQL, Redis and search'
+  - from: cloud.paris.production.zone_c.application
+    to: cloud.paris.production.zone_a.data
+    label: 'security rule: PostgreSQL, Redis and search'
+  - from: cloud.paris.production.zone_c.application
+    to: cloud.paris.production.zone_b.data
+    label: 'security rule: PostgreSQL, Redis and search'
+  - from: cloud.paris.production.zone_c.application
+    to: cloud.paris.production.zone_c.data
+    label: 'security rule: PostgreSQL, Redis and search'
+  - from: cloud.paris.production.zone_a.application.storefront_api
+    to: cloud.paris.production.zone_a.data.postgresql_primary
+    label: SQL
+  - from: cloud.paris.production.zone_a.application.marketplace_api
+    to: cloud.paris.production.zone_a.data.postgresql_primary
+    label: SQL
+  - from: cloud.paris.production.zone_b.application.storefront_api
+    to: cloud.paris.production.zone_a.data.postgresql_primary
+    label: SQL
+  - from: cloud.paris.production.zone_b.application.marketplace_api
+    to: cloud.paris.production.zone_a.data.postgresql_primary
+    label: SQL
+  - from: cloud.paris.production.zone_c.application.storefront_api
+    to: cloud.paris.production.zone_a.data.postgresql_primary
+    label: SQL
+  - from: cloud.paris.production.zone_c.application.marketplace_api
+    to: cloud.paris.production.zone_a.data.postgresql_primary
+    label: SQL
+  - from: cloud.paris.production.zone_a.application.payment_service
+    to: cloud.paris.production.zone_a.data.postgresql_primary
+    label: SQL
+  - from: cloud.paris.production.zone_a.application.seller_portal
+    to: cloud.paris.production.zone_a.data.postgresql_primary
+    label: SQL
+  - from: cloud.paris.production.zone_c.application.payment_service
+    to: cloud.paris.production.zone_a.data.postgresql_primary
+    label: SQL
+  - from: cloud.paris.production.zone_c.application.seller_portal
+    to: cloud.paris.production.zone_a.data.postgresql_primary
+    label: SQL
+  - from: cloud.paris.production.zone_a.application.order_worker
+    to: cloud.paris.production.zone_a.data.postgresql_primary
+    label: SQL
+  - from: cloud.paris.production.zone_b.application.order_worker
+    to: cloud.paris.production.zone_a.data.postgresql_primary
+    label: SQL
+  - from: cloud.paris.production.zone_b.application.billing_batch
+    to: cloud.paris.production.zone_b.data.postgresql_replica
+    label: reads
+  - from: cloud.paris.production.zone_a.application.catalogue_service
+    to: cloud.paris.production.zone_a.data.postgresql_primary
+    label: SQL
+  - from: cloud.paris.production.zone_b.application.catalogue_service
+    to: cloud.paris.production.zone_b.data.postgresql_replica
+    label: reads
+  - from: cloud.paris.production.zone_c.application.catalogue_service
+    to: cloud.paris.production.zone_c.data.postgresql_replica
+    label: reads
+  - from: cloud.paris.production.zone_a.application.storefront_api
+    to: cloud.paris.production.zone_a.data.redis_cache
+    label: sessions
+  - from: cloud.paris.production.zone_a.application.storefront_api
+    to: cloud.paris.production.zone_a.application.cart_service
+    label: cart calls
+  - from: cloud.paris.production.zone_a.application.storefront_api
+    to: cloud.paris.production.zone_a.application.catalogue_service
+    label: catalogue calls
+  - from: cloud.paris.production.zone_a.application.marketplace_api
+    to: cloud.paris.production.zone_a.application.catalogue_service
+    label: listings
+  - from: cloud.paris.production.zone_a.application.cart_service
+    to: cloud.paris.production.zone_a.data.redis_cache
+    label: carts
+  - from: cloud.paris.production.zone_a.application.catalogue_service
+    to: cloud.paris.production.zone_a.data.search_node
+    label: catalogue search
+  - from: cloud.paris.production.zone_b.application.storefront_api
+    to: cloud.paris.production.zone_b.data.redis_replica
+    label: sessions
+  - from: cloud.paris.production.zone_b.application.storefront_api
+    to: cloud.paris.production.zone_b.application.cart_service
+    label: cart calls
+  - from: cloud.paris.production.zone_b.application.storefront_api
+    to: cloud.paris.production.zone_b.application.catalogue_service
+    label: catalogue calls
+  - from: cloud.paris.production.zone_b.application.marketplace_api
+    to: cloud.paris.production.zone_b.application.catalogue_service
+    label: listings
+  - from: cloud.paris.production.zone_b.application.cart_service
+    to: cloud.paris.production.zone_b.data.redis_replica
+    label: carts
+  - from: cloud.paris.production.zone_b.application.catalogue_service
+    to: cloud.paris.production.zone_b.data.search_node
+    label: catalogue search
+  - from: cloud.paris.production.zone_c.application.storefront_api
+    to: cloud.paris.production.zone_c.data.redis_replica
+    label: sessions
+  - from: cloud.paris.production.zone_c.application.storefront_api
+    to: cloud.paris.production.zone_c.application.cart_service
+    label: cart calls
+  - from: cloud.paris.production.zone_c.application.storefront_api
+    to: cloud.paris.production.zone_c.application.catalogue_service
+    label: catalogue calls
+  - from: cloud.paris.production.zone_c.application.marketplace_api
+    to: cloud.paris.production.zone_c.application.catalogue_service
+    label: listings
+  - from: cloud.paris.production.zone_c.application.cart_service
+    to: cloud.paris.production.zone_c.data.redis_replica
+    label: carts
+  - from: cloud.paris.production.zone_c.application.catalogue_service
+    to: cloud.paris.production.zone_c.data.search_node
+    label: catalogue search
+  - from: cloud.paris.production.zone_a.data.postgresql_primary
+    to: cloud.paris.production.zone_b.data.postgresql_replica
+    label: synchronous replication
+  - from: cloud.paris.production.zone_a.data.postgresql_primary
+    to: cloud.paris.production.zone_c.data.postgresql_replica
+    label: asynchronous replication
+  - from: cloud.paris.production.zone_a.data.redis_cache
+    to: cloud.paris.production.zone_b.data.redis_replica
+    label: cache replication
+  - from: cloud.paris.production.zone_a.data.redis_cache
+    to: cloud.paris.production.zone_c.data.redis_replica
+    label: cache replication
+  - from: cloud.paris.production.zone_a.data.search_node
+    to: cloud.paris.production.zone_b.data.search_node
+    label: index replication
+    both_ways: true
+  - from: cloud.paris.production.zone_b.data.search_node
+    to: cloud.paris.production.zone_c.data.search_node
+    label: index replication
+    both_ways: true
+  - from: cloud.paris.production.zone_a.application.storefront_api
+    to: cloud.paris.production.zone_a.application.queue_endpoint
+    label: validated orders
+  - from: cloud.paris.production.zone_a.application.order_worker
+    to: cloud.paris.production.zone_a.application.queue_endpoint
+    label: orders to process
+  - from: cloud.paris.production.zone_a.application.queue_endpoint
+    to: cloud.paris.message_queue
+  - from: cloud.paris.production.zone_a.application.notification_worker
+    to: cloud.paris.production.zone_a.application.queue_endpoint
+    label: notifications to send
+  - from: cloud.paris.production.zone_a.application.notification_worker
+    to: cloud.paris.production.zone_a.application.email_endpoint
+    label: emails
+  - from: cloud.paris.production.zone_a.application.email_endpoint
+    to: cloud.paris.email_service
+  - from: cloud.paris.production.zone_b.application.storefront_api
+    to: cloud.paris.production.zone_b.application.queue_endpoint
+    label: validated orders
+  - from: cloud.paris.production.zone_b.application.order_worker
+    to: cloud.paris.production.zone_b.application.queue_endpoint
+    label: orders to process
+  - from: cloud.paris.production.zone_b.application.queue_endpoint
+    to: cloud.paris.message_queue
+  - from: cloud.paris.production.zone_b.application.notification_worker
+    to: cloud.paris.production.zone_b.application.queue_endpoint
+    label: notifications to send
+  - from: cloud.paris.production.zone_b.application.notification_worker
+    to: cloud.paris.production.zone_b.application.email_endpoint
+    label: emails
+  - from: cloud.paris.production.zone_b.application.email_endpoint
+    to: cloud.paris.email_service
+  - from: cloud.paris.production.zone_b.application.billing_batch
+    to: cloud.paris.production.zone_b.application.queue_endpoint
+    label: orders to invoice
+  - from: cloud.paris.production.zone_b.application.billing_batch
+    to: cloud.paris.production.zone_b.application.storage_endpoint
+    label: invoice files
+  - from: cloud.paris.production.zone_c.application.marketplace_api
+    to: cloud.paris.production.zone_c.application.storage_endpoint
+    label: catalogue images
+  - from: cloud.paris.production.zone_b.application.storage_endpoint
+    to: cloud.paris.object_storage
+  - from: cloud.paris.production.zone_c.application.storage_endpoint
+    to: cloud.paris.object_storage
+  - from: cloud.paris.production.zone_a.application.payment_service
+    to: cloud.paris.production.zone_a.application.secrets_endpoint
+    label: payment keys
+  - from: cloud.paris.production.zone_a.application.secrets_endpoint
+    to: cloud.paris.secrets_manager
+  - from: cloud.paris.production.zone_c.application.payment_service
+    to: cloud.paris.production.zone_c.application.secrets_endpoint
+    label: payment keys
+  - from: cloud.paris.production.zone_c.application.secrets_endpoint
+    to: cloud.paris.secrets_manager
+  - from: cloud.paris.production
+    to: cloud.paris.shared
+    label: peering
+    both_ways: true
+  - from: cloud.paris.shared.vpn_gateway
+    to: datacenter.vpn_router
+    label: VPN tunnel
+    both_ways: true
+  - from: datacenter.vpn_router
+    to: datacenter.erp
+  - from: datacenter.vpn_router
+    to: datacenter.wms
+  - from: datacenter.vpn_router
+    to: datacenter.directory
+  - from: datacenter.directory
+    to: cloud.paris.shared.zone_c.application.directory_replica
+    label: directory replication
+  - from: cloud.frankfurt.recovery.vpn_gateway
+    to: datacenter.vpn_router
+    label: VPN tunnel (standby)
+    both_ways: true
+  - from: datacenter.directory
+    to: cloud.frankfurt.recovery.zone_c.application.directory_replica
+    label: directory replication
+  - from: cloud.paris.shared.zone_a.application.bastion
+    to: cloud.paris.production
+    label: SSH through the peering
+  - from: cloud.paris.shared.zone_b.application.monitoring
+    to: cloud.paris.production
+    label: metrics collection through the peering
+  - from: cloud.paris.shared.zone_b.application.monitoring
+    to: cloud.paris.shared.zone_a.data.metrics_database
+    label: metrics
+  - from: cloud.paris.production
+    to: cloud.paris.shared.zone_b.application.log_collector
+    label: application logs
+  - from: cloud.paris.shared.zone_b.application.log_collector
+    to: cloud.paris.shared.zone_b.data.log_store
+    label: logs
+  - from: cloud.paris.shared.zone_a.application.ci_runner
+    to: cloud.paris.shared.zone_b.application.container_registry
+    label: image builds
+  - from: cloud.paris.shared.zone_a.application.ci_runner
+    to: cloud.paris.shared.zone_a.application.artifact_repository
+    label: build artefacts
+  - from: cloud.paris.shared.zone_b.application.monitoring
+    to: cloud.paris.shared.zone_b.application.alert_manager
+    label: alerts
+  - from: cloud.paris.production.zone_c.data.postgresql_replica
+    to: datacenter.data_warehouse
+    label: nightly export
+  - from: cloud.paris.shared.zone_a.application.backup_job
+    to: cloud.paris.production.zone_c.data.postgresql_replica
+    label: nightly dump
+  - from: cloud.paris.shared.zone_a.application.backup_job
+    to: cloud.paris.shared.zone_a.application.storage_endpoint
+    label: backups
+  - from: cloud.paris.production.zone_a.data.postgresql_primary
+    to: cloud.paris.transit_gateway
+    label: asynchronous replication
+  - from: cloud.paris.transit_gateway
+    to: cloud.frankfurt.transit_gateway
+    label: inter-region link
+  - from: cloud.frankfurt.transit_gateway
+    to: cloud.frankfurt.recovery.zone_a.data.postgresql_recovery
+    label: asynchronous replication
+  - from: cloud.paris.object_storage
+    to: cloud.frankfurt.object_storage
+    label: replication managed by the service
+  - from: cloud.paris.shared.zone_a.application.storage_endpoint
+    to: cloud.frankfurt.object_storage
+    label: backup writes
+  - from: internet
+    to: cloud.frankfurt.recovery.internet_gateway
+    label: HTTPS after a failover
+  - from: cloud.frankfurt.recovery.internet_gateway
+    to: cloud.frankfurt.recovery.zone_a.public.load_balancer
+  - from: cloud.frankfurt.recovery.zone_a.public.load_balancer
+    to: cloud.frankfurt.recovery.zone_a.application.storefront_api
+  - from: cloud.frankfurt.recovery.zone_a.public
+    to: cloud.frankfurt.recovery.internet_gateway
+    label: default route
+  - from: cloud.frankfurt.recovery.internet_gateway
+    to: cloud.frankfurt.recovery.zone_b.public.load_balancer
+  - from: cloud.frankfurt.recovery.zone_b.public.load_balancer
+    to: cloud.frankfurt.recovery.zone_b.application.storefront_api
+  - from: cloud.frankfurt.recovery.zone_b.public
+    to: cloud.frankfurt.recovery.internet_gateway
+    label: default route
+  - from: cloud.frankfurt.recovery.zone_a.public.load_balancer
+    to: cloud.frankfurt.recovery.zone_a.application.marketplace_api
+  - from: cloud.frankfurt.recovery.zone_a.application
+    to: cloud.frankfurt.recovery.zone_a.public.nat_gateway
+    label: default route
+  - from: cloud.frankfurt.recovery.zone_b.application
+    to: cloud.frankfurt.recovery.zone_a.public.nat_gateway
+    label: default route
+  - from: cloud.frankfurt.recovery.zone_c.application
+    to: cloud.frankfurt.recovery.zone_a.public.nat_gateway
+    label: default route
+  - from: cloud.frankfurt.recovery.zone_a.public.nat_gateway
+    to: cloud.frankfurt.recovery.network_firewall
+    label: outbound traffic
+  - from: cloud.frankfurt.recovery.network_firewall
+    to: cloud.frankfurt.recovery.internet_gateway
+    label: inspected outbound traffic
+  - from: cloud.frankfurt.recovery.zone_a.application.storefront_api
+    to: cloud.frankfurt.recovery.zone_a.data.postgresql_recovery
+    label: SQL
+  - from: cloud.frankfurt.recovery.zone_a.application.storefront_api
+    to: cloud.frankfurt.recovery.zone_a.data.redis_cache
+    label: sessions
+  - from: cloud.frankfurt.recovery.zone_a.application.storefront_api
+    to: cloud.frankfurt.recovery.zone_a.application.cart_service
+    label: cart calls
+  - from: cloud.frankfurt.recovery.zone_a.application.cart_service
+    to: cloud.frankfurt.recovery.zone_a.data.redis_cache
+    label: carts
+  - from: cloud.frankfurt.recovery.zone_b.application.storefront_api
+    to: cloud.frankfurt.recovery.zone_b.application.catalogue_service
+    label: catalogue calls
+  - from: cloud.frankfurt.recovery.zone_b.application.catalogue_service
+    to: cloud.frankfurt.recovery.zone_b.data.search_node
+    label: catalogue search
