@@ -1,11 +1,9 @@
-# The diagram test
+# Adopt'AI workshop: the diagram test
 
 One document, several formats, the same questions: this repository measures which formats a coding
 agent reads right, and what each one costs.
 
-It is the material of a workshop of the Adopt'AI training on agentic development. A group puts the
-questions to Claude Code on the picture of a diagram, then on its SVG and on its Mermaid text, and
-compares the answers. A benchmark runs the same test on every file, several times per model, and
+A benchmark runs the same test on every file, several times per model, and
 writes its table in [`benchmark/results.md`](benchmark/results.md).
 
 ![The deployment of an online shop at a cloud provider, as an architect draws it](sources/2_deployment/topology.png)
@@ -44,7 +42,7 @@ The three documents describe the same online shop.
   laid out the way a document passed from hand to hand ends up: headings without a heading style,
   every table pasted as screenshots, the footnotes typed by hand far from their numbers, the
   amendment as the scan of its signed page.
-- The PDFs are the Word files exported by Word. No script builds them.
+- The PDFs are the Word files exported by Word.
 
 ## Ask the questions yourself
 
@@ -63,47 +61,32 @@ and `topology.mmd`.
 
 ## Run the benchmark
 
-It needs Linux, with `python3`, `claude` and `unshare` on the PATH:
+It needs Linux, [mise](https://mise.jdx.dev), and `claude` and `unshare` on the PATH.
 
-    python3 benchmark/run.py
+    mise install
+    mise run benchmark
 
-It writes one JSON file per trial in `benchmark/results/`, then the table `benchmark/results.md`.
-Run again, it redoes only the trials in error, then writes the table again. A trial whose file is
-deleted is run again too. Each trial is a real session, billed like any other.
+`mise install` is run once: it installs the Python the benchmark runs on, along with the tools that
+build the sources.
 
-### Trials
+The benchmark writes one JSON file per trial in `benchmark/results/`, then the table
+`benchmark/results.md`. It runs only the trials that have no file there, or whose file records an
+error. This repository holds the files of a full run: as it stands, the command runs no trial and
+only writes the table again. To run trials again, delete their files. Each trial is a real session,
+billed like any other.
 
-- The benchmark runs on two models, Haiku and Sonnet, both at low effort.
-- A case is one file of `sources/`, except `topology.mermaid.svg`. Each case runs five trials per
-  model, ten trials at a time.
-- A trial is one `claude -p` call, in a working folder that holds its file only. It runs in safe
-  mode, without the machine's own CLAUDE.md, plugins, MCP servers, skills and hooks. A call that
-  takes more than five minutes is recorded as an error.
-- Each trial is shut in its own mount namespace (`unshare`, Linux only): it finds `/tmp`, `/var/tmp`
-  and `/dev/shm` empty and keeps them to itself, and it finds this repository empty. Trials name
-  their working files alike: in a shared `/tmp`, one read what another had extracted from another
-  format.
-- A trial's record keeps its tool calls, in order: they explain an answer.
+### How it works
 
-### Scoring
-
-- A trial answers as one JSON object, which its session checks against the schema of `questions/`
-  (`--json-schema`).
-- A script scores each answer against `answers/`, with no model in between. It compares names
-  without their case or their spacing, and a list as a set unless the expected answer says its order
-  counts. A partly right answer is wrong, and so is every answer of a trial that declines to answer.
-  An expected answer that changes re-scores the stored trials at the next table.
-- A trial succeeds when it answers every question right, whatever it costs.
-
-### Costs
-
-- A control case, a prompt that only replies "ok", gives for each model the cost of an empty session
-  that answers through a schema, which is subtracted from every trial of that model.
-- Before the trials, one discarded session per model and schema writes its prompt cache. Without it,
-  the first sessions of a schema pay for that write: the control case and a folder's first trials
-  would cost several times the others.
-- The relative cost is a file's cost as a percentage of the one of its subfolder's text format:
-  `order_model.mmd`, `topology.mmd` or `spec.md`.
+- The benchmark runs on two models, Haiku and Sonnet, both at low effort. Each file of `sources/`
+  gets five trials per model.
+- A trial is one `claude -p` call that finds its file and nothing else: not the other formats, not
+  the expected answers, not the machine's own CLAUDE.md, plugins, MCP servers, skills and hooks.
+- A trial answers as one JSON object, which a script scores against `answers/`, with no model in
+  between. A partly right answer is wrong. A trial succeeds when it answers every question right,
+  whatever it costs.
+- A cost is net of the cost of an empty session on the same model. The relative cost is a file's
+  cost as a percentage of the one of its subfolder's text format: `order_model.mmd`, `topology.mmd`
+  or `spec.md`.
 
 ### The table
 
@@ -111,20 +94,3 @@ The table has one section per model, and in it one row per file: its success, th
 that answered every question right, then its relative cost, then for each question the number of
 trials that answered it right, the mean cost of the trials and their mean number of turns. The files
 whose trials succeed most often come first, and among equals the cheapest first.
-
-## Rebuild the sources
-
-`order_model.mmd`, `build/topology.yaml` and `spec.md` are the sources of the diagrams and of the
-specification's HTML page and Word files. The deployment model gives both its Mermaid text
-(`build/topology.py`) and the architect's drawing (`build/architecture.py`), which the build stops
-on if two links ever have to share a lane.
-
-[mise](https://mise.jdx.dev) installs the tools of the build: Python, uv, Mermaid's CLI, pandoc and
-a headless Chrome.
-
-    mise install
-    mise exec -- uv run build/build.py
-    mise exec -- uv run build/degrade_docx.py
-
-`build.py` builds the diagrams, the HTML page and the good Word file: the same sources give the same
-files, byte for byte. `degrade_docx.py` builds the bad Word file.
