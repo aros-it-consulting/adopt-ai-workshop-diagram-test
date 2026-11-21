@@ -1,4 +1,5 @@
-# Tooling of the build (build/). Run `mise install` once; see README.md.
+# Tools of the benchmark (benchmark/) and of the build (build/). Run `mise install` once; see README.md
+# for the benchmark and AGENTS.md for the build.
 
 [tools]
 python = "3.14"
@@ -17,3 +18,7 @@ url = "https://storage.googleapis.com/chrome-for-testing-public/{{ version }}/li
 bin_path = "chrome-headless-shell-linux64"
 version_list_url = "https://googlechromelabs.github.io/chrome-for-testing/last-known-good-versions.json"
 version_json_path = ".channels.Stable.version"
+
+[tasks.benchmark]
+description = "Run the trials not done yet, then write benchmark/results.md"
+run = "python3 benchmark/run.py"
